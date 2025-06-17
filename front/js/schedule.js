@@ -39,7 +39,7 @@ scheduleContainer.appendChild(descriptionBox);
 
 // tagline 로고 이미지로 교체 및 클릭 시 홈 이동
 const tagline = document.querySelector(".tagline");
-tagline.innerHTML = `<a href="EP1LOG_main.html"><img src="images/ep1log_logo2.png" alt="EP1LOG 로고" class="tagline-logo"></a>`;
+tagline.innerHTML = `<a href="index.html"><img src="images/ep1log_logo2.png" alt="EP1LOG 로고" class="tagline-logo"></a>`;
 
 // 스타일 추가
 const style = document.createElement('style');

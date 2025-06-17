@@ -127,4 +127,18 @@
     box-shadow: 0 -1px 3px rgba(0,0,0,0.2);
   }
   
-  
+  @media (max-width: 768px) {
+  .logo-button .logo-image {
+    width: 90vw;  /* 화면 너비의 90%로 줄이기 */
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .menu-item {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+}
