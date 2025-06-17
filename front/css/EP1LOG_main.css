@@ -1,0 +1,130 @@
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom, #ffffff, #ffffff);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .container {
+    text-align: center;
+    transition: all 0.8s ease;
+    position: relative;
+  }
+  
+  .logo-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.8s ease-in-out;
+    transform-origin: center center;
+  }
+
+  .logo-button .logo-image {
+    width: 800px;
+    height: auto;
+    transition: transform 0.8s ease-in-out;
+  }
+  
+  .logo-button.animate-up .logo-image {
+    transform: scale(0.85) translateY(-100px);
+  }
+  
+  .logo-button.animate-down .logo-image {
+    transform: scale(1) translateY(0);
+  }
+  
+  .logo-button.heartbeat {
+    animation: heartbeat 2s infinite;
+  }
+  
+  .logo-button.animate-up {
+    transform: translateY(-10px) scale(0.65);
+  }
+  
+  .logo-button.animate-down {
+    transform: translateY(0) scale(1);
+  }
+  
+  .menu {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    opacity: 0;
+    transform: translateY(-30px);
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  .menu-item {
+    background: #d6d6d6;
+    color: #000000;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .menu-item:hover {
+    background: #009eb3;
+    color: white;
+  }
+  
+  .menu-tooltip {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: #424242;
+    height: 1.2rem;
+    transition: opacity 0.3s ease;
+  }
+
+  .tagline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 30px;
+    background-color: #e7e7e7; /* 푸터 바 배경 */
+    font-size: 1.2rem;
+    color: #353535;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #e7e7e7; /* 푸터 바 배경 */
+    font-size: 1.2rem;
+    color: #353535;
+    text-align: center;
+    box-shadow: 0 -1px 3px rgba(0,0,0,0.2);
+  }
+  
+  
