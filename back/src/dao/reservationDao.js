@@ -14,6 +14,6 @@ exports.getAll = () => {
 };
 
 exports.approve = (id) => {
-  const sql = `UPDATE reservations SET status = 'approved' WHERE id = ?`;
+  const sql = `UPDATE reservations SET status = 'completed' WHERE id = ?`;
   return db.execute(sql, [id]);
 };
