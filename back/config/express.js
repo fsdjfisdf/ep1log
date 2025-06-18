@@ -23,7 +23,8 @@ app.get("/", (req, res) => {
 
   /* 직접 구현해야 하는 모듈 */
   require("../src/routes/indexRoute")(app);
-  require("../src/routes/reservationRoute")(app);
+const reservationRoute = require("../src/routes/reservationRoute");
+app.use("/api", reservationRoute);  // ✅ 이렇게 고쳐야 함
 
   return app;
 };
