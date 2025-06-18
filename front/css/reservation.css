@@ -48,3 +48,13 @@ button {
 button:hover {
   background-color: #007c91;
 }
+
+.notice {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 1rem;
+  border: 1px solid #ffeeba;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}

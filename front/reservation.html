@@ -10,7 +10,11 @@
   <div class="tagline">START IT, LOG IT, END IT</div>
 
   <div class="form-container">
-    <h1>🎫 공연 예약 신청</h1>
+    <h1>공연 예매</h1>
+    <div class="notice">
+  <p>📅 공연 날짜: <strong>2025년 12월 20일 (토)</strong></p>
+  <p>❌ 예약 완료 후 환불은 불가하오니 신중히 신청해 주세요.</p>
+</div>
     <form id="reservation-form">
       <label>이름 (입금자명과 동일해야 합니다)</label>
       <input type="text" name="name" required />
@@ -38,8 +42,10 @@
         <option value="최상혁">최상혁</option>
         <option value="없음">없음</option>
       </select>
+      <label>티켓 수령 주소</label>
+      <input type="text" name="address" required />
 
-      <button type="submit">예약 신청</button>
+      <button type="submit">예매 하기</button>
     </form>
 
     <div id="confirmation-message"></div>

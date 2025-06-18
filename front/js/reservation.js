@@ -11,7 +11,7 @@ document.getElementById('reservation-form').addEventListener('submit', async fun
 const res = await fetch('http://43.201.204.91:3001/api/reservation', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ name, people_count: peopleCount, age_group: ageGroup, favorite_member: favoriteMember, amount })
+  body: JSON.stringify({ name, people_count: peopleCount, age_group: ageGroup, favorite_member: favoriteMember, address, amount })
 });
 
   if (res.ok) {
