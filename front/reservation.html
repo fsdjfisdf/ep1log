@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EP1LOG - 공연예약</title>
+  <link rel="stylesheet" href="css/reservation.css" />
+</head>
+<body>
+  <div class="tagline">START IT, LOG IT, END IT</div>
+
+  <div class="form-container">
+    <h1>🎫 공연 예약 신청</h1>
+    <form id="reservation-form">
+      <label>이름 (입금자명과 동일해야 합니다)</label>
+      <input type="text" name="name" required />
+
+      <label>예약 인원 수</label>
+      <input type="number" name="people_count" min="1" required />
+
+      <label>연령대</label>
+      <select name="age_group">
+        <option value="10대">10대</option>
+        <option value="20대">20대</option>
+        <option value="30대">30대</option>
+        <option value="40대">40대</option>
+        <option value="50대">50대</option>
+        <option value="60대">60대</option>
+      </select>
+
+      <label>어떤 멤버를 보러 오셨나요?</label>
+      <select name="favorite_member">
+        <option value="김성태">김성태</option>
+        <option value="정현우">정현우</option>
+        <option value="송바다">송바다</option>
+        <option value="김하영">김하영</option>
+        <option value="감지성">감지성</option>
+        <option value="최상혁">최상혁</option>
+        <option value="없음">없음</option>
+      </select>
+
+      <button type="submit">예약 신청</button>
+    </form>
+
+    <div id="confirmation-message"></div>
+  </div>
+
+  <script src="js/reservation.js"></script>
+</body>
+</html>

@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 
   /* 직접 구현해야 하는 모듈 */
   require("../src/routes/indexRoute")(app);
+  require("../src/routes/reservationRoute")(app);
 
   return app;
 };
