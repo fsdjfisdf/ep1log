@@ -8,11 +8,11 @@ document.getElementById('reservation-form').addEventListener('submit', async fun
   const favoriteMember = form.favorite_member.value;
   const amount = peopleCount * 15000;
 
-  const res = await fetch('/api/reservation', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, people_count: peopleCount, age_group: ageGroup, favorite_member: favoriteMember, amount })
-  });
+const res = await fetch('http://43.201.204.91:3001/api/reservation', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name, people_count: peopleCount, age_group: ageGroup, favorite_member: favoriteMember, amount })
+});
 
   if (res.ok) {
     document.getElementById('confirmation-message').innerHTML = `

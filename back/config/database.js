@@ -1,3 +1,4 @@
+// back/config/database.js
 const mysql = require("mysql2/promise");
 const { logger } = require("./winston");
 const secret = require("./secret");
@@ -10,6 +11,4 @@ const pool = mysql.createPool({
   database: secret.database,
 });
 
-module.exports = {
-  pool: pool,
-};
+module.exports = pool; // ✅ 이렇게만 내보내기
