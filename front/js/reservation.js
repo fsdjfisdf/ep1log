@@ -6,6 +6,7 @@ document.getElementById('reservation-form').addEventListener('submit', async fun
   const peopleCount = parseInt(form.people_count.value);
   const ageGroup = form.age_group.value;
   const favoriteMember = form.favorite_member.value;
+  const address = form.address.value;
   const amount = peopleCount * 15000;
 
 const res = await fetch('http://43.201.204.91:3001/api/reservation', {
