@@ -26,6 +26,12 @@ exports.getReservationStatus = async ({ name, age_group }) => {
     ORDER BY id DESC
     LIMIT 1
   `;
-  const [rows] = await pool.execute(sql, [name, age_group]);
-  return rows[0];
+
+  try {
+    const [rows, fields] = await pool.execute(sql, [name, age_group]);
+    return rows[0];  // 없으면 undefined 반환됨
+  } catch (error) {
+    console.error('Error in getReservationStatus:', error);
+    throw error;
+  }
 };
