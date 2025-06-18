@@ -1,21 +1,21 @@
-const db = require("../../config/database");
+const { pool } = require("../../config/database");
 
 exports.insertReservation = ({ name, people_count, age_group, favorite_member, address, amount }) => {
   const sql = `
     INSERT INTO reservations (name, people_count, age_group, favorite_member, address, amount)
     VALUES (?, ?, ?, ?, ?, ?)
   `;
-  return db.execute(sql, [name, people_count, age_group, favorite_member, address, amount]);
+  return pool.execute(sql, [name, people_count, age_group, favorite_member, address, amount]);
 };
 
 exports.getAll = () => {
   const sql = `SELECT * FROM reservations ORDER BY created_at DESC`;
-  return db.execute(sql);
+  return pool.execute(sql);
 };
 
 exports.approve = (id) => {
   const sql = `UPDATE reservations SET status = 'completed' WHERE id = ?`;
-  return db.execute(sql, [id]);
+  return pool.execute(sql, [id]);
 };
 
 exports.getReservationStatus = async ({ name, age_group }) => {
@@ -26,6 +26,6 @@ exports.getReservationStatus = async ({ name, age_group }) => {
     ORDER BY id DESC
     LIMIT 1
   `;
-  const [rows] = await pool.query(sql, [name, age_group]);
+  const [rows] = await pool.execute(sql, [name, age_group]);
   return rows[0];
 };

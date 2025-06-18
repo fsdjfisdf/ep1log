@@ -60,7 +60,8 @@ button:hover {
 }
 
 .modal {
-  display: none;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   z-index: 999;
   left: 0; top: 0;
@@ -68,6 +69,11 @@ button:hover {
   background: rgba(0,0,0,0.5);
   justify-content: center;
   align-items: center;
+}
+
+/* hidden 클래스로 숨길 때만 none 적용 */
+.modal.hidden {
+  display: none;
 }
 
 .modal-content {
