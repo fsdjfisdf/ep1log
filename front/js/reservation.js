@@ -20,7 +20,7 @@ const res = await fetch('http://43.201.204.91:3001/api/reservation', {
       <p>예약 신청이 완료되었습니다! 🎉<br><br>
       <strong>입금계좌:</strong> 국민은행 288001-04-217050 (정현우)<br>
       <strong>입금금액:</strong> ${amount.toLocaleString()}원<br><br>
-      입금 확인 후 예약이 확정됩니다.</p>
+      입금 확인 후 예약이 확정됩니다. (1일 이상 소요될 수 있습니다.)</p>
     `;
     form.reset();
   } else {
