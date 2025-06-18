@@ -5,4 +5,8 @@ console.log("✅ reservationRoute loaded");
 
 router.post('/reservation', controller.createReservation);
 
+
+router.get('/reservations', controller.getAllReservations);
+router.patch('/reservations/:id', controller.approveReservation);
+
 module.exports = router;
