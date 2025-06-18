@@ -12,7 +12,7 @@ async function loadReservations() {
       <td>${r.people_count}</td>
       <td>${r.age_group}</td>
       <td>${r.favorite_member}</td>
-      <td>${r.address}</td>
+      <td class="address-cell">${r.address}</td>
       <td>${r.status}</td>
       <td>
         ${r.status === 'pending' ? `<button onclick="approve('${r.id}')">승인</button>` : '완료'}

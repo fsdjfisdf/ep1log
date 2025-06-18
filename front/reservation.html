@@ -46,6 +46,29 @@
       <input type="text" name="address" required />
 
       <button type="submit">예매 하기</button>
+<button id="check-status-btn">내 예약 확인하기</button>
+
+<div id="status-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>예약 조회</h2>
+    <form id="status-form">
+      <label>이름</label>
+      <input type="text" name="status_name" required />
+      <label>연령대</label>
+      <select name="status_age_group">
+        <option value="10대">10대</option>
+        <option value="20대">20대</option>
+        <option value="30대">30대</option>
+        <option value="40대">40대</option>
+        <option value="50대">50대</option>
+        <option value="60대">60대</option>
+      </select>
+      <button type="submit">조회</button>
+    </form>
+    <div id="status-result"></div>
+  </div>
+</div>
     </form>
 
     <div id="confirmation-message"></div>

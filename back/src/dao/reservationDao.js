@@ -17,3 +17,15 @@ exports.approve = (id) => {
   const sql = `UPDATE reservations SET status = 'completed' WHERE id = ?`;
   return db.execute(sql, [id]);
 };
+
+exports.getReservationStatus = async ({ name, age_group }) => {
+  const sql = `
+    SELECT status, people_count, favorite_member, address
+    FROM reservations
+    WHERE name = ? AND age_group = ?
+    ORDER BY id DESC
+    LIMIT 1
+  `;
+  const [rows] = await pool.query(sql, [name, age_group]);
+  return rows[0];
+};

@@ -33,3 +33,18 @@ exports.approveReservation = async (req, res) => {
     res.status(500).json({ error: '승인 실패' });
   }
 };
+
+exports.getReservationStatus = async (req, res) => {
+  const { name, age_group } = req.query;
+  try {
+    const result = await dao.getReservationStatus({ name, age_group });
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ message: '예약 정보를 찾을 수 없습니다.' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: '예약 조회 중 오류 발생' });
+  }
+};

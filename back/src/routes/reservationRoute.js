@@ -8,5 +8,7 @@ router.post('/reservation', controller.createReservation);
 
 router.get('/reservations', controller.getAllReservations);
 router.patch('/reservations/:id', controller.approveReservation);
+router.get('/reservation/status', controller.getReservationStatus);
+
 
 module.exports = router;
