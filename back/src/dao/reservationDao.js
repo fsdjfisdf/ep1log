@@ -1,4 +1,4 @@
-const db = require('../config/db');
+const db = require("../../config/database");
 
 exports.insertReservation = ({ name, people_count, age_group, favorite_member, amount }) => {
   const sql = `
