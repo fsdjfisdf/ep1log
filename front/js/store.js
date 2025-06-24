@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <h2>${product.name}</h2>
       <img src="${product.image_url}" alt="${product.name}" />
       <p>${product.description}</p>
-      <p><strong>가격:</strong> ${product.price.toLocaleString()}원</p>
+      <p><strong></strong> ${product.price.toLocaleString()}원</p>
       <input type="hidden" name="product_id" value="${product.id}" />
     `;
     modal.classList.remove("hidden");
