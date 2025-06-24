@@ -1,4 +1,5 @@
 const dao = require('../dao/fanBoardDao');
+console.log("🧩 dao keys:", Object.keys(dao));
 
 const createPost = async (req, res) => {
   try {

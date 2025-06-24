@@ -2,32 +2,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('fanboard-form');
   const postsList = document.getElementById('posts-list');
   const confirmation = document.getElementById('confirmation-message');
+  const API_BASE = 'http://43.201.204.91:3001/api/fanboard';
 
   // 글 작성
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    const formData = new FormData(form);
-    const data = {
-      writer_name: formData.get('writer_name'),
-      password: formData.get('password'),
-      content: formData.get('content'),
-      is_secret: formData.get('is_secret') === 'on',
-      ip_address: ''
-    };
+
+    const writer_name = form.writer_name.value.trim();
+    const password = form.password.value.trim();
+    const content = form.content.value.trim();
+    const is_secret = form.is_secret.checked;
+
+    const payload = { writer_name, password, content, is_secret, ip_address: '' };
 
     try {
-      const res = await fetch('/api/fanboard', {
+      const res = await fetch(API_BASE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(payload)
       });
 
-      const result = await res.json();
-      confirmation.textContent = result.message;
-      form.reset();
-      loadPosts();
+      if (res.ok) {
+        const data = await res.json();
+        confirmation.innerHTML = `<p>✅ ${data.message}</p>`;
+        form.reset();
+        loadPosts();
+      } else {
+        const error = await res.text();
+        confirmation.innerHTML = `<p>❌ 오류: ${error}</p>`;
+      }
     } catch (err) {
-      confirmation.textContent = '❌ 오류 발생: ' + err.message;
+      confirmation.innerHTML = `<p>❌ 오류 발생: ${err.message}</p>`;
     }
   });
 
@@ -35,8 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadPosts() {
     postsList.innerHTML = '';
     try {
-      const res = await fetch('/api/fanboard');
+      const res = await fetch(API_BASE);
+      if (!res.ok) throw new Error('응답 실패');
+
       const posts = await res.json();
+      if (posts.length === 0) {
+        postsList.innerHTML = '<p>등록된 글이 없습니다.</p>';
+        return;
+      }
 
       posts.forEach(post => {
         const postEl = document.createElement('div');
@@ -48,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         postsList.appendChild(postEl);
       });
     } catch (err) {
-      postsList.innerHTML = '<p>글을 불러오지 못했습니다.</p>';
+      postsList.innerHTML = '<p>❌ 글을 불러오는 데 실패했습니다.</p>';
     }
   }
 
