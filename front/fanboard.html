@@ -3,41 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EP1LOG - 팬 방명록</title>
+  <title>EP1LOG - FANBOARD</title>
   <link rel="stylesheet" href="css/fanboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
 </head>
 <body>
   <div class="tagline">START IT, LOG IT, END IT</div>
 
-  <div class="form-container">
-    <h1>팬 방명록</h1>
+<div class="posts-container">
+  <button id="open-modal">INPUT MESSAGE</button>
+    <p class="guide-message">
+    EP1LOG 멤버들에게 하고 싶은 말, 공연 소감, 응원의 메시지 등을 자유롭게 남겨주세요.<br>
+  </p>
+  <div id="posts-list"></div>
+</div>
 
-    <form id="fanboard-form">
-      <label>이름 (닉네임)</label>
-      <input type="text" name="writer_name" required />
-
-      <label>비밀번호 (글 삭제용)</label>
-      <input type="password" name="password" required />
-
-      <label>내용</label>
-      <textarea name="content" rows="4" required></textarea>
-
-      <label>
-        <input type="checkbox" name="is_secret" />
-        비밀글로 작성
-      </label>
-
-      <button type="submit">글 남기기</button>
-    </form>
-
-    <div id="confirmation-message"></div>
-  </div>
-
-  <div class="posts-container">
-    <h2>📬 팬들의 메시지</h2>
-    <div id="posts-list"></div>
+  <!-- 작성 모달 -->
+  <div id="write-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <form id="fanboard-form">
+        <label>이름 (닉네임)</label>
+        <input type="text" name="writer_name" required />
+        <label>비밀번호 (글 삭제용)</label>
+        <input type="password" name="password" required autocomplete="current-password" />
+        <label>내용</label>
+        <textarea name="content" rows="4" required></textarea>
+        <label>
+          <input type="checkbox" name="is_secret" />
+          비밀글로 작성
+        </label>
+        <button type="submit">글 남기기</button>
+        <div id="confirmation-message"></div>
+      </form>
+    </div>
   </div>
 
   <script src="js/fanboard.js"></script>
+      <script src="js/introduce.js"></script>
 </body>
 </html>
