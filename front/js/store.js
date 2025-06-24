@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_PRODUCTS = "http://localhost:3001/api/products";
-  const API_PURCHASE = "http://localhost:3001/api/purchase";
+const API_BASE = "http://43.201.204.91:3001/api";
+const API_PRODUCTS = `${API_BASE}/products`;
+const API_PURCHASE = `${API_BASE}/purchase`;
 
   const productList = document.getElementById("product-list");
   const modal = document.getElementById("product-modal");
