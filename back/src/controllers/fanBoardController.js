@@ -1,5 +1,6 @@
 const dao = require('../dao/fanBoardDao');
 console.log("🧩 dao keys:", Object.keys(dao));
+console.log("🧩 dao module raw:", dao);  // 추가로 전체 출력
 
 const createPost = async (req, res) => {
   try {
