@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/fanBoardController');
 
+console.log('✅ fanBoardRoute loaded');
+console.log('📦 controller:', controller); // 추가
+console.log('📦 controller.createPost:', controller.createPost); // 추가
+
+
 
 console.log('✅ fanBoardRoute loaded');
 
