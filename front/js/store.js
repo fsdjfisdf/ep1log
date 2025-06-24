@@ -27,7 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const item = document.createElement("div");
         item.className = "product-card";
         item.innerHTML = `
-          <img src="${product.image_url}" alt="${product.name}" />
+          <img src="http://43.201.204.91:3001${product.image_url}" alt="${product.name}" style="width: 200px; height: auto;" />
+
           <h3>${product.name}</h3>
           <p>${product.price.toLocaleString()}원</p>
         `;
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function showProductDetail(product) {
   modalContent.innerHTML = `
     <h2>${product.name}</h2>
-    <img src="${product.image_url}" alt="${product.name}" />
+    <img src="http://43.201.204.91:3001${product.image_url}" alt="${product.name}" style="width: 200px; height: auto;" />
     <p>${product.description}</p>
     <p><strong>가격:</strong> ${product.price.toLocaleString()}원</p>
   `;
