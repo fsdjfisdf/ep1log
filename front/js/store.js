@@ -41,17 +41,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ✅ 상세 모달 열기
-  function showProductDetail(product) {
-    modalContent.innerHTML = `
-      <h2>${product.name}</h2>
-      <img src="${product.image_url}" alt="${product.name}" />
-      <p>${product.description}</p>
-      <p><strong></strong> ${product.price.toLocaleString()}원</p>
-      <input type="hidden" name="product_id" value="${product.id}" />
-    `;
-    modal.classList.remove("hidden");
-    purchaseResult.textContent = "";
-  }
+function showProductDetail(product) {
+  modalContent.innerHTML = `
+    <h2>${product.name}</h2>
+    <img src="${product.image_url}" alt="${product.name}" />
+    <p>${product.description}</p>
+    <p><strong>가격:</strong> ${product.price.toLocaleString()}원</p>
+  `;
+
+  // product_id를 form 내부에 넣어주기
+  const hiddenInput = document.createElement("input");
+  hiddenInput.type = "hidden";
+  hiddenInput.name = "product_id";
+  hiddenInput.value = product.id;
+
+  // 기존 hidden이 있다면 제거
+  const existing = purchaseForm.querySelector('input[name="product_id"]');
+  if (existing) existing.remove();
+
+  purchaseForm.appendChild(hiddenInput); // 폼에 삽입
+
+  modal.classList.remove("hidden");
+}
 
   // ✅ 모달 닫기
   closeButton.addEventListener("click", () => {

@@ -33,6 +33,9 @@ app.use('/api', fanBoardRoute);
 const storeRoute = require('../src/routes/storeRoute');
 app.use('/api', storeRoute);
 
+app.use('/uploads', express.static('uploads')); // 정적 폴더로 설정
+
+
 
 
 
