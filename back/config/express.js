@@ -39,6 +39,11 @@ const uploadRoute = require('../src/routes/uploadRoute');
 app.use('/api', uploadRoute);  // ✅ 이 줄이 반드시 있어야 함
 app.use('/uploads', express.static('uploads'));
 
+app.listen(3001, () => {
+  console.log('🚀 API Server started on http://localhost:3001');
+});
+
+
 
 
 
