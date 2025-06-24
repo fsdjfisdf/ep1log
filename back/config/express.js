@@ -31,7 +31,7 @@ const fanBoardRoute = require('../src/routes/fanBoardRoute');
 app.use('/api', fanBoardRoute);
 
 const storeRoute = require('../src/routes/storeRoute');
-app.use('/api/store', storeRoute);
+app.use('/api', storeRoute);
 
 
 
