@@ -27,8 +27,9 @@ const reservationRoute = require("../src/routes/reservationRoute");
 app.use("/api", reservationRoute);  // ✅ 이렇게 고쳐야 함
 
 // index.js 또는 express.js 설정 파일에 추가
-const fanBoardRoute = require('./routes/fanBoardRoute');
+const fanBoardRoute = require('../src/routes/fanBoardRoute');
 app.use('/api', fanBoardRoute);
+
 
 
   return app;
