@@ -30,7 +30,7 @@ app.use("/api", reservationRoute);  // ✅ 이렇게 고쳐야 함
 const fanBoardRoute = require('../src/routes/fanBoardRoute');
 app.use('/api', fanBoardRoute);
 
-const storeRoute = require('./src/routes/storeRoute');
+const storeRoute = require('../src/routes/storeRoute');
 app.use('/api/store', storeRoute);
 
 
