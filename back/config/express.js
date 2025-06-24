@@ -37,6 +37,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const uploadRoute = require('../src/routes/uploadRoute');
 app.use('/api', uploadRoute);  // ✅ 이 줄이 반드시 있어야 함
+app.use('/uploads', express.static('uploads'));
 
 
 
