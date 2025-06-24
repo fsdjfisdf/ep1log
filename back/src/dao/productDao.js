@@ -13,3 +13,12 @@ exports.getProductById = async (id) => {
   const [rows] = await pool.execute(sql, [id]);
   return rows[0];
 };
+
+// 상품 등록
+exports.createProduct = async ({ name, price, description, image_url }) => {
+  const sql = `
+    INSERT INTO products (name, price, description, image_url)
+    VALUES (?, ?, ?, ?)
+  `;
+  await pool.execute(sql, [name, price, description, image_url]);
+};

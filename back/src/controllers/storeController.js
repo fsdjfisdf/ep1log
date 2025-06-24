@@ -33,3 +33,14 @@ exports.requestPurchase = async (req, res) => {
     res.status(500).json({ error: '구매 요청 처리 중 오류' });
   }
 };
+
+exports.registerProduct = async (req, res) => {
+  try {
+    const { name, price, description, image_url } = req.body;
+    await productDao.createProduct({ name, price, description, image_url });
+    res.json({ message: '상품 등록 완료' });
+  } catch (err) {
+    console.error('registerProduct error:', err);
+    res.status(500).json({ error: '상품 등록 실패' });
+  }
+};
