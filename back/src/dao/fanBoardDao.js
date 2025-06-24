@@ -1,13 +1,13 @@
 const pool = require('../../config/database');
 const bcrypt = require('bcrypt');
 
-const insertPost = async ({ writer_name, password, content, reply_to, is_secret, ip_address }) => {
+const insertPost = async ({ writer_name, password, content, is_secret, ip_address }) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const sql = `
-    INSERT INTO fan_board (writer_name, password, content, reply_to, is_secret, ip_address)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO fanboard (writer_name, password, content, is_secret, ip_address)
+    VALUES (?, ?, ?, ?, ?)
   `;
-  return pool.execute(sql, [writer_name, hashedPassword, content, reply_to || null, is_secret || false, ip_address || null]);
+  return await pool.query(sql, [writer_name, hashedPassword, content, is_secret, ip_address]);
 };
 
 const getAllPosts = async () => {

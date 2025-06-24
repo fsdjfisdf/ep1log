@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EP1LOG STORE</title>
+  <link rel="stylesheet" href="css/store.css" />
+</head>
+<body>
+  <div class="store-container">
+    <h1 class="store-title">🛍 EP1LOG STORE</h1>
+    <div id="product-list" class="product-list"></div>
+  </div>
+
+  <!-- 상세보기 모달 -->
+  <div id="product-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <div id="product-details"></div>
+      <form id="purchase-form">
+        <h3>📦 구매 신청</h3>
+        <input type="text" name="buyer_name" placeholder="이름" required />
+        <input type="text" name="phone" placeholder="전화번호" required />
+        <input type="text" name="address" placeholder="주소" required />
+        <textarea name="message" placeholder="요청사항 (선택)" rows="3"></textarea>
+        <button type="submit">계좌이체 구매 신청</button>
+        <p class="account-info">💳 계좌번호: 신한은행 123-456-789012 (예금주: EP1LOG)</p>
+        <div id="purchase-result"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/store.js"></script>
+</body>
+</html>
