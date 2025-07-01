@@ -2,7 +2,7 @@ const pool = require('../../config/database');
 
 // 전체 제품 목록 조회
 exports.getAllProducts = async () => {
-  const sql = `SELECT id, name, price, image_url FROM products`;
+  const sql = `SELECT id, name, price, image_url, description FROM products`;
   const [rows] = await pool.execute(sql);
   return rows;
 };

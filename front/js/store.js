@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch(API_PRODUCTS);
       if (!res.ok) throw new Error(`Fetch 실패: ${res.status}`);
       const products = await res.json();
+      console.log(products);
 
       if (products.length === 0) {
         productList.innerHTML = "<p>등록된 제품이 없습니다.</p>";
