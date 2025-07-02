@@ -36,8 +36,12 @@ exports.requestPurchase = async (req, res) => {
 
 exports.registerProduct = async (req, res) => {
   try {
-    const { name, price, description, image_url } = req.body;
-    await productDao.createProduct({ name, price, description, image_url });
+    const { name, price, description, image_urls } = req.body;
+
+    // image_urls는 JSON 배열이어야 함
+    const imageUrlsString = JSON.stringify(image_urls);
+
+    await productDao.createProduct({ name, price, description, image_urls: imageUrlsString });
     res.json({ message: '상품 등록 완료' });
   } catch (err) {
     console.error('registerProduct error:', err);

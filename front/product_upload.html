@@ -115,6 +115,22 @@
         font-size: 0.95rem;
       }
     }
+
+  #preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  #preview-container img {
+    width: calc(50% - 10px);
+    max-height: 150px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
   </style>
 </head>
 <body>
@@ -124,79 +140,84 @@
     <input type="number" name="price" placeholder="가격 (숫자만)" required />
     <textarea name="description" placeholder="상세 설명" required></textarea>
 
-    <input type="file" id="image" accept="image/*" required />
-    <img id="preview" class="preview" src="#" alt="미리보기" style="display:none" />
+    <input type="file" id="image" accept="image/*" multiple required />
+    <div id="preview-container"></div>
 
-    <input type="hidden" name="image_url" id="image_url" />
+    <input type="hidden" name="image_urls" id="image_urls" />
     <button type="submit">등록하기</button>
   </form>
 
   <div id="result"></div>
 
-  <script>
-    const uploadForm = document.getElementById('upload-form');
-    const imageInput = document.getElementById('image');
-    const imageUrlInput = document.getElementById('image_url');
-    const preview = document.getElementById('preview');
-    const result = document.getElementById('result');
+<script>
+  const uploadForm = document.getElementById('upload-form');
+  const imageInput = document.getElementById('image');
+  const imageUrlsInput = document.getElementById('image_urls');
+  const previewContainer = document.getElementById('preview-container');
+  const result = document.getElementById('result');
 
-    const API_UPLOAD = 'http://43.201.204.91:3001/api/upload';
-    const API_PRODUCTS = 'http://43.201.204.91:3001/api/products';
+  const API_UPLOAD = 'http://43.201.204.91:3001/api/upload';
+  const API_PRODUCTS = 'http://43.201.204.91:3001/api/products';
 
-    imageInput.addEventListener('change', () => {
-      const file = imageInput.files[0];
-      if (file) {
-        preview.src = URL.createObjectURL(file);
-        preview.style.display = 'block';
+  // ✅ 여러 이미지 미리보기
+  imageInput.addEventListener('change', () => {
+    previewContainer.innerHTML = '';
+    const files = imageInput.files;
+    for (const file of files) {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      previewContainer.appendChild(img);
+    }
+  });
+
+  uploadForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const files = imageInput.files;
+    if (!files.length) {
+      alert('이미지를 선택해주세요.');
+      return;
+    }
+
+    try {
+      // ✅ 1단계: 이미지 여러 장 업로드
+      const formData = new FormData();
+      for (const file of files) {
+        formData.append('images', file); // 백엔드에서 images[] 배열로 받아야 함
       }
-    });
 
-    uploadForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+      const uploadRes = await fetch(API_UPLOAD, {
+        method: 'POST',
+        body: formData
+      });
 
-      const file = imageInput.files[0];
-      if (!file) {
-        alert('이미지를 선택해주세요.');
-        return;
-      }
+      if (!uploadRes.ok) throw new Error('이미지 업로드 실패');
+      const uploadData = await uploadRes.json(); // { imageUrls: [...] }
 
-      try {
-        // 1단계: 이미지 업로드
-        const formData = new FormData();
-        formData.append('image', file);
+      const imageUrls = uploadData.imageUrls;
+      imageUrlsInput.value = JSON.stringify(imageUrls); // 문자열로 전달
 
-        const uploadRes = await fetch(API_UPLOAD, {
-          method: 'POST',
-          body: formData
-        });
+      // ✅ 2단계: 상품 등록
+      const payload = {
+        name: uploadForm.name.value.trim(),
+        price: parseInt(uploadForm.price.value),
+        description: uploadForm.description.value.trim(),
+        image_urls: imageUrls // 배열 그대로 보냄
+      };
 
-        if (!uploadRes.ok) throw new Error('이미지 업로드 실패');
-        const uploadData = await uploadRes.json();
-        const imageUrl = uploadData.imageUrl;
-        imageUrlInput.value = imageUrl;
+      const productRes = await fetch(API_PRODUCTS, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
 
-        // 2단계: 상품 등록
-        const payload = {
-          name: uploadForm.name.value.trim(),
-          price: parseInt(uploadForm.price.value),
-          description: uploadForm.description.value.trim(),
-          image_url: imageUrl
-        };
-
-        const productRes = await fetch(API_PRODUCTS, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (!productRes.ok) throw new Error('상품 등록 실패');
-        result.innerHTML = '<p class="success">상품이 성공적으로 등록되어 바다야</p>';
-        uploadForm.reset();
-        preview.style.display = 'none';
-      } catch (err) {
-        result.innerHTML = `<p class="error">❌ 오류 발생: ${err.message}</p>`;
-      }
-    });
-  </script>
+      if (!productRes.ok) throw new Error('상품 등록 실패');
+      result.innerHTML = '<p class="success">✅ 상품이 성공적으로 등록되었습니다!</p>';
+      uploadForm.reset();
+      previewContainer.innerHTML = '';
+    } catch (err) {
+      result.innerHTML = `<p class="error">❌ 오류 발생: ${err.message}</p>`;
+    }
+  });
+</script>
 </body>
 </html>
