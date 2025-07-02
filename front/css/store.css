@@ -31,7 +31,7 @@ body {
 
 .product-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, 1fr); /* 👉 기본 2열로 고정 */
   gap: 1.5rem;
 }
 
@@ -69,14 +69,21 @@ body {
 }
 
 .product-image-wrapper {
-  border-radius: 10px;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 정사각형 고정 (모바일 대응도 좋음) */
   overflow: hidden;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-image-wrapper img {
   width: 100%;
-  height: auto;
-  transition: transform 0.3s ease;
+  height: 100%;
+  object-fit: cover; /* 또는 contain */
+  display: block;
 }
 
 .product-card:hover .product-image-wrapper img {
@@ -215,10 +222,11 @@ body {
     font-size: 1.6rem;
   }
 
+@media (max-width: 768px) {
   .product-list {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1rem;
+    grid-template-columns: 1fr; /* 👉 모바일은 1열 */
   }
+}
 
   .modal-content {
     padding: 1.2rem;
@@ -243,4 +251,79 @@ body {
     max-width: 95%;
     max-height: 90vh;
   }
+}
+
+.slider-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 20px 0; /* 버튼이 공간에 안 겹치도록 약간 여유 */
+}
+
+.slider-track {
+  display: flex;
+  will-change: transform;
+}
+
+.slide {
+  min-width: 100%; /* 중요: 한 장씩 정확히 채움 */
+  box-sizing: border-box;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+}
+
+.indicator-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 12px;
+}
+
+.indicators {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.modal-content .nav-button {
+  background-color: rgba(200, 200, 200, 0.3); /* 연한 회색 */
+  color: #444;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-content .nav-button:hover {
+  background-color: rgba(180, 180, 180, 0.5);
+  opacity: 0.9;
+}
+
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.indicator.active {
+  background: #333;
 }
