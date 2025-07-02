@@ -118,7 +118,7 @@
   </style>
 </head>
 <body>
-  <h1>🛒 상품 등록</h1>
+  <h1>상품 등록</h1>
   <form id="upload-form">
     <input type="text" name="name" placeholder="상품명" required />
     <input type="number" name="price" placeholder="가격 (숫자만)" required />
@@ -128,7 +128,7 @@
     <img id="preview" class="preview" src="#" alt="미리보기" style="display:none" />
 
     <input type="hidden" name="image_url" id="image_url" />
-    <button type="submit">✅ 등록하기</button>
+    <button type="submit">등록하기</button>
   </form>
 
   <div id="result"></div>
@@ -190,7 +190,7 @@
         });
 
         if (!productRes.ok) throw new Error('상품 등록 실패');
-        result.innerHTML = '<p class="success">✅ 상품이 성공적으로 등록되었습니다.</p>';
+        result.innerHTML = '<p class="success">상품이 성공적으로 등록되어 바다야</p>';
         uploadForm.reset();
         preview.style.display = 'none';
       } catch (err) {
