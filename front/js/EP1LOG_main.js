@@ -42,7 +42,9 @@ logoButton.addEventListener('click', () => {
 const descriptions = {
   '멤버소개': 'EP1LOG의 멤버들을 확인할 수 있어요.',
   '공연일정': '다가오는 공연 일정을 확인하세요.',
-  '공연예약': '공연에 참여하고 싶다면 여기서 예약하세요.'
+  '공연예약': '공연에 참여하고 싶다면 여기서 예약하세요.',
+  '방명록': '저희에게 해주고 싶은 말들을 남겨주세요.',
+  '스토어': '저희가 자체 제작한 굿즈를 확인해보세요.'
 };
 
 document.querySelectorAll('.menu-item').forEach(item => {
