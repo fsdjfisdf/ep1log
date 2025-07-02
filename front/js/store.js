@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch(API_PRODUCTS);
       if (!res.ok) throw new Error(`Fetch 실패: ${res.status}`);
       const products = await res.json();
-      console.log(products);
 
       if (products.length === 0) {
         productList.innerHTML = "<p>등록된 제품이 없습니다.</p>";
@@ -28,10 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const item = document.createElement("div");
         item.className = "product-card";
         item.innerHTML = `
-          <img src="http://43.201.204.91:3001${product.image_url}" alt="${product.name}" style="width: 200px; height: auto;" />
-
-          <h3>${product.name}</h3>
-          <p>${product.price.toLocaleString()}원</p>
+          <div class="product-image-wrapper">
+            <img src="http://43.201.204.91:3001${product.image_url}" alt="${product.name}" />
+          </div>
+          <div class="product-info">
+            <h3>${product.name}</h3>
+            <p class="price">${product.price.toLocaleString()}원</p>
+          </div>
         `;
         item.addEventListener("click", () => showProductDetail(product));
         productList.appendChild(item);
@@ -43,32 +45,35 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ✅ 상세 모달 열기
-function showProductDetail(product) {
-  modalContent.innerHTML = `
-    <h2>${product.name}</h2>
-    <img src="http://43.201.204.91:3001${product.image_url}" alt="${product.name}" style="width: 200px; height: auto;" />
-    <p>${product.description}</p>
-    <p><strong>가격:</strong> ${product.price.toLocaleString()}원</p>
-  `;
+  function showProductDetail(product) {
+    modalContent.innerHTML = `
+      <div class="modal-product-image">
+        <img src="http://43.201.204.91:3001${product.image_url}" alt="${product.name}" />
+      </div>
+      <div class="modal-product-info">
+        <h2>${product.name}</h2>
+        <p class="modal-description">${product.description || "설명이 등록되지 않았습니다."}</p>
+        <p class="modal-price"><strong>${product.price.toLocaleString()}원</strong></p>
+      </div>
+    `;
 
-  // product_id를 form 내부에 넣어주기
-  const hiddenInput = document.createElement("input");
-  hiddenInput.type = "hidden";
-  hiddenInput.name = "product_id";
-  hiddenInput.value = product.id;
+    const hiddenInput = document.createElement("input");
+    hiddenInput.type = "hidden";
+    hiddenInput.name = "product_id";
+    hiddenInput.value = product.id;
 
-  // 기존 hidden이 있다면 제거
-  const existing = purchaseForm.querySelector('input[name="product_id"]');
-  if (existing) existing.remove();
+    const existing = purchaseForm.querySelector('input[name="product_id"]');
+    if (existing) existing.remove();
 
-  purchaseForm.appendChild(hiddenInput); // 폼에 삽입
-
-  modal.classList.remove("hidden");
-}
+    purchaseForm.appendChild(hiddenInput);
+    modal.classList.remove("hidden");
+    modal.classList.add("fade-in");
+  }
 
   // ✅ 모달 닫기
   closeButton.addEventListener("click", () => {
     modal.classList.add("hidden");
+    modal.classList.remove("fade-in");
     purchaseForm.reset();
     purchaseResult.textContent = "";
   });
