@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const purchaseForm = document.getElementById("purchase-form");
   const purchaseResult = document.getElementById("purchase-result");
 
-  // ✅ 제품 목록 불러오기
   async function loadProducts() {
     productList.innerHTML = '';
     try {
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ✅ 상세 모달 열기
   function showProductDetail(product) {
     modalContent.innerHTML = `
       <div class="modal-product-image">
@@ -70,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.classList.add("fade-in");
   }
 
-  // ✅ 모달 닫기
   closeButton.addEventListener("click", () => {
     modal.classList.add("hidden");
     modal.classList.remove("fade-in");
@@ -78,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
     purchaseResult.textContent = "";
   });
 
-  // ✅ 구매 신청
   purchaseForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(purchaseForm);

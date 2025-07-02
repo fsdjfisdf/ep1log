@@ -5,9 +5,116 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>상품 등록</title>
   <style>
-    body { font-family: sans-serif; max-width: 500px; margin: 2rem auto; }
-    input, textarea, button { width: 100%; margin-bottom: 1rem; padding: 0.5rem; }
-    img.preview { width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1rem; }
+    :root {
+      --primary-color: #2c3e50;
+      --accent-color: #3498db;
+      --error-color: #e74c3c;
+      --border-color: #ddd;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+      padding: 2rem;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+    }
+
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #2b85c7;
+    }
+
+    img.preview {
+      display: block;
+      width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+
+    #result {
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    #result p {
+      margin: 0;
+      padding: 0.5rem;
+      border-radius: 6px;
+    }
+
+    #result p:has(.error) {
+      background-color: #ffe5e5;
+      color: var(--error-color);
+    }
+
+    #result p:has(.success) {
+      background-color: #e0f7e9;
+      color: #2e7d32;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      form {
+        padding: 1.5rem;
+      }
+
+      input, textarea, button {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -16,12 +123,12 @@
     <input type="text" name="name" placeholder="상품명" required />
     <input type="number" name="price" placeholder="가격 (숫자만)" required />
     <textarea name="description" placeholder="상세 설명" required></textarea>
-    
+
     <input type="file" id="image" accept="image/*" required />
     <img id="preview" class="preview" src="#" alt="미리보기" style="display:none" />
 
     <input type="hidden" name="image_url" id="image_url" />
-    <button type="submit">등록하기</button>
+    <button type="submit">✅ 등록하기</button>
   </form>
 
   <div id="result"></div>
@@ -36,7 +143,6 @@
     const API_UPLOAD = 'http://43.201.204.91:3001/api/upload';
     const API_PRODUCTS = 'http://43.201.204.91:3001/api/products';
 
-    // 이미지 미리보기
     imageInput.addEventListener('change', () => {
       const file = imageInput.files[0];
       if (file) {
@@ -66,8 +172,7 @@
 
         if (!uploadRes.ok) throw new Error('이미지 업로드 실패');
         const uploadData = await uploadRes.json();
-
-        const imageUrl = uploadData.imageUrl; // 서버에서 받은 경로
+        const imageUrl = uploadData.imageUrl;
         imageUrlInput.value = imageUrl;
 
         // 2단계: 상품 등록
@@ -85,11 +190,11 @@
         });
 
         if (!productRes.ok) throw new Error('상품 등록 실패');
-        result.innerHTML = '<p>✅ 상품이 성공적으로 등록되었습니다.</p>';
+        result.innerHTML = '<p class="success">✅ 상품이 성공적으로 등록되었습니다.</p>';
         uploadForm.reset();
         preview.style.display = 'none';
       } catch (err) {
-        result.innerHTML = `<p>❌ 오류 발생: ${err.message}</p>`;
+        result.innerHTML = `<p class="error">❌ 오류 발생: ${err.message}</p>`;
       }
     });
   </script>

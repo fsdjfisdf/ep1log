@@ -69,8 +69,8 @@ body {
 }
 
 .product-image-wrapper {
+  border-radius: 10px;
   overflow: hidden;
-  border-radius: 8px;
 }
 
 .product-image-wrapper img {
@@ -110,7 +110,21 @@ body {
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
+  max-height: 90vh; /* 화면 높이의 90%까지만 사용 */
+  overflow-y: auto; /* 넘치면 스크롤 생김 */
   position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;         /* Firefox */
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }
 
 .modal-description {
@@ -188,3 +202,45 @@ body {
     text-align: center;
     box-shadow: 0 -1px 3px rgba(0,0,0,0.2);
   }
+
+  img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+  .store-title {
+    font-size: 1.6rem;
+  }
+
+  .product-list {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .modal-content {
+    padding: 1.2rem;
+  }
+
+  .modal-product-info h2 {
+    font-size: 1.4rem;
+  }
+
+  .modal-description {
+    font-size: 0.9rem;
+  }
+
+  .modal-price {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 1.2rem;
+    max-width: 95%;
+    max-height: 90vh;
+  }
+}
