@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #f0f0f0, #e4e4e4);
+  overflow-x: hidden;
+}
+
+.tagline {
+  padding: 10px 30px;
+  background-color: #e7e7e7;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.tagline-logo {
+  height: 40px;
+}
+
+.stage-container {
+  position: relative;
+  perspective: 1000px;
+  padding: 2rem 0;
+  min-height: 600px;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  height: 600px;
+  background: radial-gradient(circle at center, #dcdcdc, #bbb);
+  border-radius: 20px;
+  transform: rotateX(20deg) rotateZ(0deg);
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+
+.member {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.member:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.member img {
+  width: 80px;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.info-box {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 1rem;
+  background: rgba(255,255,255,0.95);
+  border-radius: 10px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: opacity 0.4s ease;
+}
+
+.footer {
+  background-color: #e7e7e7;
+  text-align: center;
+  padding: 10px;
+  font-size: 1rem;
+  color: #353535;
+  margin-top: 2rem;
+}

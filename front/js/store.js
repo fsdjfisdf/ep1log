@@ -237,7 +237,7 @@ indicatorEls.forEach(indicator => {
 
       const result = await res.json();
       if (res.ok) {
-        purchaseResult.textContent = "✅ 신청이 완료되었습니다!";
+        purchaseResult.textContent = "✅ 신청이 완료되었습니다! 입금 시 배송해드려요!";
         purchaseForm.reset();
       } else {
         purchaseResult.textContent = `❌ ${result.error || "신청 실패"}`;
