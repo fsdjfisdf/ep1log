@@ -3,16 +3,19 @@ const compression = require("compression");
 const methodOverride = require("method-override");
 const cors = require("cors");
 const path = require("path");
+const morgan = require("morgan");
 
 module.exports = function () {
   const app = express();
 
   /* 미들웨어 설정 */
+  app.use(morgan('dev'));
   app.use(compression());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(methodOverride());
   app.use(cors());
+  
 
   // 정적 파일 제공
   app.use(express.static(path.join(__dirname, "../../front")));
