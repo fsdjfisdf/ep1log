@@ -1,12 +1,13 @@
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #ffffff, #f5f5f5);
-  font-family: 'Segoe UI', sans-serif;
-  color: #333;
+  background: #ffffff;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #222;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  letter-spacing: 0.03em;
 }
 
 .tagline {
@@ -21,61 +22,70 @@ body {
 }
 
 .intro-section {
-  padding: 2rem;
+  padding: 3rem 2rem 1rem;
   text-align: center;
 }
 
 .intro-section h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2.8rem;
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+  color: #111;
 }
 
 .meaning {
-  font-size: 1.2rem;
-  line-height: 1.8rem;
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
 }
 
 .meaning a {
-  color: #009eb3;
-  text-decoration: none;
+  color: #444;
+  text-decoration: underline dotted;
+  font-weight: 400;
 }
 
 .members {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 2rem 1rem;
-  gap: 1.5rem;
+  gap: 2rem;
+  padding: 2rem 2rem 3rem;
 }
 
 .member-card {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  padding: 1.2rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 1.5rem;
   width: 260px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .member-card:hover {
-  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transform: translateY(-2px);
 }
 
 .member-card h2 {
-  margin-top: 0;
-  font-size: 1.5rem;
-  color: #000;
+  margin: 0;
+  font-size: 1.4rem;
+  color: #111;
+  font-weight: 500;
 }
 
 .member-card p {
-  margin: 0.4rem 0;
-  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #555;
 }
 
 .member-card a {
-  color: #007ca6;
+  color: #111;
+  font-weight: 400;
   text-decoration: none;
+  border-bottom: 1px solid #aaa;
 }
 
 .footer {

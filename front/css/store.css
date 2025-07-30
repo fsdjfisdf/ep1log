@@ -180,7 +180,7 @@ body {
 }
 
 .modal-content button {
-  background-color: #4caf50;
+  background-color: #333;
   color: white;
   border: none;
   margin-top: 1rem;
@@ -188,7 +188,7 @@ body {
 }
 
 .modal-content button:hover {
-  background-color: #3e8e41;
+  background-color: #111
 }
 
 .account-info {

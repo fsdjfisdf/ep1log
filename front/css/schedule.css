@@ -1,13 +1,14 @@
 body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #ffffff, #f5f5f5);
-    font-family: 'Segoe UI', sans-serif;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  letter-spacing: 0.03em;
+}
   
   .tagline {
     width: 100%;
@@ -20,32 +21,56 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
   
-  .schedule-container {
-    flex-grow: 1;
-    padding: 4rem 2rem;
-    text-align: center;
-  }
+.schedule-container {
+  flex-grow: 1;
+  padding: 5rem 2rem;
+  text-align: center;
+}
   
-  .schedule-container h1 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: #000;
-  }
+.schedule-container h1 {
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
   
-  .schedule-info p {
-    font-size: 1.4rem;
-    margin: 0.5rem 0;
-  }
+.schedule-info p {
+  font-size: 1.3rem;
+  color: #444;
+  margin: 0.5rem 0;
+}
   
-  .reservation-message {
-    margin-top: 2rem;
-    padding: 1rem;
-    background-color: #009eb3;
-    color: white;
-    font-size: 1.2rem;
-    border-radius: 8px;
-    display: inline-block;
-  }
+.reservation-message {
+  margin-top: 2rem;
+  padding: 1.2rem 1.5rem;
+  border: 1px solid #ccc;
+  font-size: 1.1rem;
+  background: #fafafa;
+  color: #333;
+  display: inline-block;
+  border-radius: 8px;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+.reservation-message strong {
+  font-weight: 600;
+  color: #111;
+}
+
+.reserve-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #111;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.concert-description h2 {
+  font-weight: 500;
+  color: #555;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
   
   .footer {
     background-color: #e7e7e7;

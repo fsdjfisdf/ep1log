@@ -1,25 +1,48 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f8f8f8;
+  background-color: #ffffff;
+  color: #222;
+  letter-spacing: 0.03em;
 }
 
-.tagline {
-  padding: 10px 30px;
-  background-color: #e7e7e7;
-  font-size: 1.2rem;
-  color: #353535;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
+  .tagline {
+    width: 100%;
+    padding: 10px 30px;
+    background-color: #e7e7e7;
+    font-size: 1.2rem;
+    color: #353535;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
 
 .form-container {
   max-width: 500px;
   margin: 3rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background: #fafafa;
+  padding: 2.5rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 1.8rem;
+  color: #111;
+}
+
+.notice {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 form {
@@ -28,37 +51,53 @@ form {
 }
 
 label {
-  margin: 10px 0 5px;
+  font-size: 0.95rem;
+  margin: 0.8rem 0 0.3rem;
+  color: #333;
 }
 
-input, select, button {
-  padding: 10px;
-  margin-bottom: 15px;
+input, select {
+  padding: 0.7rem;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 1rem;
 }
 
 button {
-  background-color: #009eb3;
-  color: white;
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1.05rem;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #007c91;
-}
-
-.notice {
-  background-color: #fff3cd;
-  color: #856404;
-  padding: 1rem;
-  border: 1px solid #ffeeba;
   border-radius: 8px;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
 }
 
+/* 예매하기 버튼 (차분한 딥그레이) */
+form button[type="submit"] {
+  background-color: #333;
+  color: white;
+}
+form button[type="submit"]:hover {
+  background-color: #111;
+}
+
+/* 내 예약 확인 버튼 (밝은 그레이) */
+.status-check-container {
+  margin-top: 0rem;
+}
+.status-check-container button {
+  background-color: #d2d2d2;
+  color: #111;
+}
+.status-check-container button:hover {
+  background-color: #bbb;
+}
+
+/* 모달 */
 .modal {
   display: flex;
   flex-direction: column;
@@ -70,48 +109,37 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
-
-/* hidden 클래스로 숨길 때만 none 적용 */
 .modal.hidden {
   display: none;
 }
-
 .modal-content {
-  background: white;
+  background: #fff;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 14px;
   width: 90%;
   max-width: 500px;
   position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
-
 .close-btn {
   position: absolute;
-  top: 12px; right: 16px;
+  top: 14px;
+  right: 16px;
   cursor: pointer;
   font-size: 1.2rem;
+  color: #888;
+}
+.close-btn:hover {
+  color: #000;
 }
 
-.hidden {
-  display: none;
-}
-
-.status-check-container {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.status-check-container button {
-  background-color: #ff9800;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.status-check-container button:hover {
-  background-color: #e68900;
+#confirmation-message {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #222;
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 1.2rem;
+  border: 1px solid #e0e0e0;
 }
