@@ -1,145 +1,203 @@
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-  color: #222;
-  letter-spacing: 0.03em;
+/* =======================================================
+   NANSI — Reservation (Neo-Brutal Poster Theme, polished)
+   - Matches global theme styles.css
+   - Thick borders, offset shadows, strong focus states
+   ======================================================= */
+
+/* ---------- A11Y / Motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important}
 }
 
-  .tagline {
-    width: 100%;
-    padding: 10px 30px;
-    background-color: #e7e7e7;
-    font-size: 1.2rem;
-    color: #353535;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  }
-
-.form-container {
-  max-width: 500px;
-  margin: 3rem auto;
-  background: #fafafa;
-  padding: 2.5rem;
-  border-radius: 14px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+/* 로컬 타이밍 변수만 정의 (전역 토큰은 styles.css 사용) */
+:where(html){
+  --t-fast:.12s;
+  --t-base:.22s;
 }
 
-h1 {
-  font-size: 1.8rem;
-  font-weight: 500;
-  margin-bottom: 1.8rem;
-  color: #111;
+/* ---------- HERO ---------- */
+.resv-hero .display{
+  letter-spacing:.02em; line-height:.9; text-wrap: balance;
+}
+.resv-hero .display .outline{
+  -webkit-text-stroke: 2px var(--hair, #0b0b0b);
+  text-stroke: 2px var(--hair, #0b0b0b);
+}
+.resv-hero .hero-info{
+  margin: 8px 0 16px; padding:0; list-style:none; color: var(--ink-2, #1a1a1a);
+  font-family:'Space Mono', ui-monospace, monospace; font-weight:700; letter-spacing:.02em; font-size: 13px;
+}
+.resv-hero .hero-info li{ margin: 2px 0 }
+
+/* ---------- SECTION ---------- */
+.resv-section{
+  border-bottom:3px solid var(--hair, #0b0b0b);
+  background:#fff;
 }
 
-.notice {
-  background-color: #f0f0f0;
-  color: #333;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
+/* ---------- LAYOUT ---------- */
+.resv-grid{
+  display:grid; gap:16px; padding:16px 0 22px;
+  grid-template-columns: 1.35fr .65fr;
 }
+@media (max-width: 980px){ .resv-grid{ grid-template-columns: 1fr } }
 
-form {
-  display: flex;
-  flex-direction: column;
+/* ---------- CARD (common) ---------- */
+.card{
+  border:3px solid var(--hair, #0b0b0b);
+  border-radius: var(--radius, 12px);
+  background:#fff;
+  box-shadow: 10px 10px 0 var(--hair, #0b0b0b);
 }
+.card-head{
+  padding:12px 14px; border-bottom:3px solid var(--hair, #0b0b0b);
+}
+.card-head h2,.card-head h3{
+  margin:0; font: 800 22px/1 'Space Grotesk','Noto Sans KR',sans-serif; letter-spacing:.02em;
+}
+.card-head p{ margin:6px 0 0; color: var(--muted, #6f6f73) }
+.card-body{ padding:14px }
 
-label {
-  font-size: 0.95rem;
-  margin: 0.8rem 0 0.3rem;
-  color: #333;
-}
+/* ---------- FORM CARD ---------- */
+.form-card{ overflow:hidden }
 
-input, select {
-  padding: 0.7rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #fff;
-  margin-bottom: 1rem;
+/* grid inside form */
+.fgrid{
+  display:grid; gap:12px; padding:14px;
+  grid-template-columns: 1fr 1fr;
 }
+.fgrid .full{ grid-column: 1 / -1 }
+@media (max-width:760px){ .fgrid{ grid-template-columns: 1fr } }
 
-button {
-  width: 100%;
-  padding: 0.9rem;
-  font-size: 1.05rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-bottom: 1rem;
+/* groups */
+.fgroup{ display:grid; gap:6px }
+label{
+  font-weight:800; letter-spacing:.01em;
+  display:inline-flex; align-items:baseline; gap:6px;
 }
+label .sub{
+  font:700 12px/1 'Space Mono', ui-monospace; color: var(--ink-2, #1a1a1a); letter-spacing:.02em
+}
+.hint{ color: var(--muted, #6f6f73); font-size:12px }
 
-/* 예매하기 버튼 (차분한 딥그레이) */
-form button[type="submit"] {
-  background-color: #333;
-  color: white;
-}
-form button[type="submit"]:hover {
-  background-color: #111;
-}
-
-/* 내 예약 확인 버튼 (밝은 그레이) */
-.status-check-container {
-  margin-top: 0rem;
-}
-.status-check-container button {
-  background-color: #d2d2d2;
-  color: #111;
-}
-.status-check-container button:hover {
-  background-color: #bbb;
-}
-
-/* 모달 */
-.modal {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-}
-.modal.hidden {
-  display: none;
-}
-.modal-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 14px;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-.close-btn {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: #888;
-}
-.close-btn:hover {
-  color: #000;
-}
-
-#confirmation-message {
-  margin-top: 2rem;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #222;
-  background: #f7f7f7;
+/* inputs */
+input[type="text"], input[type="number"], select, textarea{
+  appearance:none; -webkit-appearance:none;
+  border:3px solid var(--hair, #0b0b0b);
   border-radius: 10px;
-  padding: 1.2rem;
-  border: 1px solid #e0e0e0;
+  background:#fff; color: var(--ink, #0b0b0b);
+  padding:10px 12px;
+  font: 700 16px/1.2 'Space Grotesk','Noto Sans KR',sans-serif;
+  transition: box-shadow var(--t-base) ease, transform var(--t-fast) ease, filter var(--t-fast) ease;
+}
+input[type="number"]{ width:100% }
+textarea{ min-height: 110px; resize: vertical }
+
+/* focus (키보드 접근성) */
+input:focus-visible, select:focus-visible, textarea:focus-visible{
+  outline: 3px solid var(--accent, #0066ff); outline-offset: 3px;
+}
+
+/* invalid soft state (브라우저 기본 검증 사용 시) */
+input:user-invalid, select:user-invalid, textarea:user-invalid{
+  box-shadow: inset 0 0 0 3px rgba(255,59,48,.2);
+}
+
+/* ---------- SUMMARY BAR ---------- */
+.summary{
+  border-top:3px solid var(--hair, #0b0b0b); background:#fff;
+  padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.sum-left{ display:flex; align-items:center; gap:10px }
+.price-label{
+  font:700 12px/1 'Space Mono', ui-monospace; color: var(--ink-2, #1a1a1a); letter-spacing:.02em
+}
+#total-amount{ font:800 20px/1 'Space Grotesk', sans-serif }
+.summary .btn.strong{
+  background:#000; color:#fff; border-color:#000;
+}
+.summary .btn.strong:hover{ box-shadow: 8px 8px 0 var(--hair, #0b0b0b) }
+
+/* ---------- MESSAGES ---------- */
+.msg{
+  margin:12px 14px 14px; padding:12px 12px;
+  border:3px dashed var(--hair, #0b0b0b); border-radius:10px; background:#fff;
+  font-weight:700; color: var(--ink-2, #1a1a1a);
+}
+.msg.ok{
+  border-style: solid;
+  background: linear-gradient(180deg, var(--acid, #b6ff2e), #eaff8a);
+}
+.msg.err{
+  border-color:#ff3b30; background:#fff0f0; color:#8e0000
+}
+
+/* ---------- SIDE CARD (bank / notes) ---------- */
+.mono{ font:700 12px/1 'Space Mono', ui-monospace; color: var(--ink-2, #1a1a1a); letter-spacing:.02em }
+.bank{
+  border:3px solid var(--hair, #0b0b0b); border-radius:10px;
+  padding:10px 12px; background:#fff; box-shadow: 6px 6px 0 var(--hair, #0b0b0b);
+  margin:6px 0 10px;
+}
+.notes{ margin:10px 0 0; padding-left: 18px }
+.notes li{ margin:6px 0; color: var(--ink-2, #1a1a1a) }
+.tiny{ margin-top:10px; color: var(--muted, #6f6f73); font-size:12px }
+
+/* ---------- MODAL (status) ---------- */
+.resv-modal{
+  position:fixed; inset:0; z-index:120; pointer-events:none; opacity:0; transform: translateY(-4px);
+  transition: opacity var(--t-base) ease, transform var(--t-base) ease;
+}
+.resv-modal.show{ opacity:1; pointer-events:auto; transform:none }
+.resv-modal-backdrop{
+  position:absolute; inset:0; background: rgba(11,11,11,.4); backdrop-filter: blur(2px);
+}
+.resv-modal-panel{
+  position:relative; width:min(560px, 92vw); margin: 8vh auto 0;
+  background:#fff; color:var(--ink, #0b0b0b);
+  border:3px solid var(--hair, #0b0b0b);
+  border-radius:12px; box-shadow: 14px 14px 0 var(--hair, #0b0b0b);
+  padding:16px 14px 14px;
+}
+.resv-modal-panel h2{
+  margin:0 0 10px; font:800 22px/1 'Space Grotesk', sans-serif; letter-spacing:.02em
+}
+.resv-close{
+  position:absolute; top:8px; right:8px;
+  border:3px solid var(--hair, #0b0b0b); background:#000; color:#fff; border-radius:8px;
+  font-weight:800; width:36px; height:36px; line-height:30px; text-align:center; cursor:pointer;
+}
+
+/* ---------- BUTTONS (page tweaks) ---------- */
+.btn.ghost{
+  background: var(--acid, #b6ff2e);
+  border:3px solid var(--hair, #0b0b0b);
+  color:#000;
+}
+
+/* ---------- PALETTE hint (global component micro-tweak) ---------- */
+.pal-hint{
+  margin:10px; color: var(--muted, #6f6f73);
+  font:700 12px/1 'Space Mono', ui-monospace;
+}
+
+/* ---------- Tiny Screens ---------- */
+@media (max-width:560px){
+  .summary{ flex-direction:column; align-items:stretch; gap:8px }
+}
+@media (max-width:380px){
+  .resv-modal-panel{ margin-top: 6vh }
+}
+
+/* ---------- Print / Forced colors ---------- */
+@media print{
+  .card, .resv-modal-panel{ box-shadow: none !important }
+  .msg{ border-style: solid }
+  .btn{ box-shadow:none !important }
+}
+@media (forced-colors: active){
+  .card, .bank, .resv-modal-panel, .btn, .msg{
+    border-width:2px;
+    box-shadow:none;
+  }
 }

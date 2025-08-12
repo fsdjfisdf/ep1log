@@ -1,329 +1,349 @@
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background-color: #f3f3f3;
-  color: #333;
+/* =======================================================
+   NANSI — GOODS STORE (Neo-Brutal Poster Theme, polished)
+   - Product grid + skeletons
+   - Modal: 2-column, INTERNAL SCROLL, mobile fullscreen
+   - Fix: PC에서 오른쪽 컬럼 가로 스크롤/클리핑 제거
+   ======================================================= */
+
+/* ---------- Global safeguards ---------- */
+*{ box-sizing:border-box }
+[hidden]{ display:none !important; }
+:where(button,a,input,textarea){ -webkit-tap-highlight-color: transparent; }
+
+/* Motion respect */
+@media (prefers-reduced-motion: reduce){
+  *{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+/* Local timings (global tokens live in styles.css) */
+:where(html){
+  --t-fast:.12s;
+  --t-base:.22s;
+}
+
+/* Focus ring fallback */
+:where(.pcard,.nav-button,.shop-close,.btn,input,textarea):focus-visible{
+  outline:3px solid var(--accent, #0066ff);
+  outline-offset:3px;
+}
+
+/* =======================================================
+   HERO (optional)
+   ======================================================= */
+.st-hero .display{
+  letter-spacing:.02em; line-height:.9; text-wrap: balance;
+}
+.st-hero .display .outline{
+  -webkit-text-stroke: 2px var(--hair, #0b0b0b);
+  text-stroke: 2px var(--hair, #0b0b0b);
+}
+
+/* =======================================================
+   PAGE SECTION
+   ======================================================= */
+.store-section{
+  border-bottom:3px solid var(--hair, #0b0b0b);
+  background:#fff;
+  padding:16px 0 26px;
+}
+
+/* =======================================================
+   PRODUCT GRID
+   ======================================================= */
+.p-grid{
+  display:grid; gap:16px;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width:1080px){ .p-grid{ grid-template-columns: repeat(3, 1fr) } }
+@media (max-width:760px){  .p-grid{ grid-template-columns: repeat(2, 1fr) } }
+@media (max-width:520px){  .p-grid{ grid-template-columns: 1fr } }
+
+/* Card */
+.pcard{
+  display:block; width:100%; text-align:left; cursor:pointer;
+  border:3px solid var(--hair, #0b0b0b); border-radius:12px; background:#fff;
+  box-shadow:8px 8px 0 var(--hair, #0b0b0b);
+  overflow:hidden;
+  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease, filter var(--t-fast) ease;
+  will-change: transform, box-shadow, filter;
+}
+.pcard:hover{ transform: translate(-2px,-2px); box-shadow:12px 12px 0 var(--hair, #0b0b0b) }
+.pcard:active{ filter:contrast(.97) }
+
+.pcard .shot{
+  aspect-ratio:4/3; background:#f1f1f1; overflow:hidden;
+}
+.pcard .shot img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter:saturate(.98) contrast(1.02);
+  image-rendering:-webkit-optimize-contrast;
+}
+.pcard .meta{ padding:12px 12px 14px }
+.pcard .meta h3{
+  margin:.2rem 0; font-size:18px; font-weight:800; letter-spacing:.02em;
+}
+.pcard .meta .price{ margin:0; color:var(--muted, #6f6f73) }
+
+/* Skeleton */
+.skeleton{
+  min-height:240px;
+  background: linear-gradient(90deg, rgba(0,0,0,.05), rgba(0,0,0,.08), rgba(0,0,0,.05));
+  background-size:200% 100%;
+  animation:sheen 1.2s linear infinite;
+}
+@keyframes sheen{
+  0%{ background-position:200% 0 } 100%{ background-position:-200% 0 }
+}
+
+/* Empty / Error */
+.card{
+  border:3px solid var(--hair, #0b0b0b);
+  border-radius:12px; background:#fff;
+  box-shadow:8px 8px 0 var(--hair, #0b0b0b);
+  padding:14px;
+}
+.msg{
+  margin:12px 0 0; padding:12px;
+  border:3px dashed var(--hair, #0b0b0b);
+  border-radius:10px; background:#fff;
+  font-weight:700; color:var(--ink-2, #1a1a1a);
+}
+.msg.ok{
+  border-style:solid;
+  background:linear-gradient(180deg, var(--acid, #b6ff2e), #eaff8a);
+}
+.msg.err{
+  border-color:#ff3b30; background:#fff0f0; color:#8e0000;
+}
+
+/* =======================================================
+   MODAL — DESKTOP (centered, internal scroll columns)
+   ======================================================= */
+.shop-modal{
+  position: fixed; inset: 0; z-index: 120;
+  display: grid; place-items: center;          /* 가운데 정렬 */
+  padding: 5vh 12px 4vh;                       /* 좌우 여백 확보(클리핑 방지) */
+  pointer-events: none; opacity: 0; transform: translateY(-4px);
+  transition: opacity var(--t-base, .22s) ease, transform var(--t-base, .22s) ease;
+}
+.shop-modal.show{ opacity:1; pointer-events:auto; transform:none }
+
+.shop-backdrop{
+  position:absolute; inset:0;
+  background: rgba(11,11,11,.44);
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+}
+
+.shop-panel{
+  box-sizing: border-box;                      /* 폭 계산에 border 포함 */
+  width: min(1120px, 100%);                    /* 컨테이너 내부폭 100% */
+  max-height: min(92vh, calc(100dvh - 9vh));   /* 상하 패딩 감안한 안전한 높이 */
   margin: 0;
-  padding-bottom: 60px;
+  background:#fff; color:var(--ink, #0b0b0b);
+  border:3px solid var(--hair, #0b0b0b); border-radius:12px;
+  box-shadow:18px 18px 0 var(--hair, #0b0b0b);
+  overflow: hidden;                            /* 내부 컬럼이 스크롤 */
+  will-change: transform, opacity;
 }
 
-.tagline {
-  padding: 10px 30px;
-  background-color: #e7e7e7;
-  font-size: 1.2rem;
-  color: #353535;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+.shop-close{
+  position:absolute; top:8px; right:8px;
+  border:3px solid var(--hair, #0b0b0b); border-radius:8px;
+  background:#000; color:#fff; width:36px; height:36px;
+  font-weight:800; line-height:30px; text-align:center; cursor:pointer;
 }
 
-.store-container {
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 1rem;
-}
-
-.store-title {
-  font-size: 2.4rem;
-  text-align: center;
-  margin-top: 2rem;
-  color: #1c1c1c;
-  font-weight: bold;
-  letter-spacing: -0.5px;
-}
-
-.product-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 👉 기본 2열로 고정 */
-  gap: 1.5rem;
-}
-
-.product-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  padding: 1rem;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.product-card img {
-  width: 100%;
-  object-fit: cover;
-  aspect-ratio: 1 / 1;
-}
-
-.product-card h3 {
-  font-size: 1.1rem;
-  margin: 10px 0 4px;
-  font-weight: 600;
-}
-
-.product-card p {
-  font-size: 0.95rem;
-  color: #666;
-  margin-bottom: 0.5rem;
-}
-
-.product-image-wrapper {
-  width: 100%;
-  aspect-ratio: 1 / 1; /* 정사각형 고정 (모바일 대응도 좋음) */
-  overflow: hidden;
-  border-radius: 10px;
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.product-image-wrapper img {
-  width: 100%;
+/* Modal grid */
+.pm-grid{
+  display:grid; grid-template-columns:1.25fr .75fr; gap:0;
   height: 100%;
-  object-fit: cover; /* 또는 contain */
-  display: block;
+  overflow: hidden;                             /* ← 내부 컬럼 경계 밖 넘침 차단 */
+}
+@media (max-width:980px){ .pm-grid{ grid-template-columns:1fr } }
+
+/* Internal scroll columns */
+.pm-left, .pm-right{
+  padding:14px;
+  overflow:auto; -webkit-overflow-scrolling:touch;
+  /* Windows 비오버레이 스크롤바 환경에서 폭 계산이 빡빡해지는 문제 방지 */
+  scrollbar-gutter:auto;
+  min-width:0;                                   /* ← grid child overflow 방지 핵심 */
+}
+.pm-left{ border-right:3px solid var(--hair, #0b0b0b) }
+@media (max-width:980px){
+  .pm-left{ border-right:none; border-bottom:3px solid var(--hair, #0b0b0b) }
 }
 
-.product-card:hover .product-image-wrapper img {
-  transform: scale(1.05);
+/* Ensure right column never overflows horizontally */
+.pm-right{
+  max-width:100%;
+  overflow-x:hidden;                              /* ← 가로 스크롤 차단 */
+}
+.pm-right, .pm-info, .pm-form, .fgrid, .fgroup{ min-width:0 } /* 모든 그리드/블록 최소폭 0 */
+.pm-right *{ max-width:100% }                     /* 긴 콘텐츠도 박스 내에 고정 */
+.pm-desc{
+  overflow-wrap:anywhere; word-break:keep-all;    /* 길게 붙는 텍스트 강제 줄바꿈 */
 }
 
-.price {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #111;
+/* Scrollbar (WebKit) */
+.pm-left::-webkit-scrollbar, .pm-right::-webkit-scrollbar{ height:10px; width:10px }
+.pm-left::-webkit-scrollbar-thumb, .pm-right::-webkit-scrollbar-thumb{
+  background:#d0d0d0; border:2px solid #fff; border-radius:10px;
 }
+.pm-left::-webkit-scrollbar-track, .pm-right::-webkit-scrollbar-track{ background:#f6f6f6 }
 
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+/* Left: slider */
+.pm-left-inner{ display:grid; gap:10px }
+.card-head{ padding:0 0 10px; border-bottom:3px solid var(--hair, #0b0b0b) }
+.pm-title{ margin:0; font-weight:800; letter-spacing:.02em }
+
+.slider-wrapper{
+  position:relative; overflow:hidden;
+  border:3px solid var(--hair, #0b0b0b); border-radius:12px; background:#fff;
 }
+.slider-track{ display:flex; transition: transform .3s ease; will-change: transform }
+.slide{ min-width:100%; background:#f6f6f6 }
+.slide img{ width:100%; height:100%; display:block; object-fit:cover }
 
-.modal.hidden {
-  display: none;
+.indicator-wrapper{
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
 }
-
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  max-height: 90vh; /* 화면 높이의 90%까지만 사용 */
-  overflow-y: auto; /* 넘치면 스크롤 생김 */
-  position: relative;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-  scroll-behavior: smooth;
-  scrollbar-width: thin;         /* Firefox */
+.nav-button{
+  border:3px solid var(--hair, #0b0b0b); border-radius:8px;
+  background:#fff; font-weight:800;
+  padding:10px 12px; box-shadow:4px 4px 0 var(--hair, #0b0b0b);
+  touch-action: manipulation;
 }
+.nav-button:active{ filter:contrast(.96) }
 
-.modal-content::-webkit-scrollbar {
-  width: 6px;
+.indicators{
+  display:flex; gap:6px; align-items:center; justify-content:center; flex:1
 }
-
-.modal-content::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+.indicator{
+  width:10px; height:10px; border:3px solid var(--hair, #0b0b0b); border-radius:50%;
+  background:#fff; box-shadow:2px 2px 0 var(--hair, #0b0b0b); cursor:pointer;
+  touch-action: manipulation;
 }
+.indicator.active{ background:var(--acid, #b6ff2e) }
 
-.modal-description {
-  margin: 1rem 0;
-  font-size: 0.95rem;
-  color: #555;
+/* Right: info + form */
+.pm-info{ padding:12px 0 6px }
+.pm-name{ margin:.4rem 0 .2rem; font-size:22px; font-weight:800; letter-spacing:.02em }
+.pm-desc{ margin:0; color:var(--ink-2, #1a1a1a); line-height:1.6 }
+.pm-price{ margin:.6rem 0 0; font-weight:800 }
+
+.pm-form{ padding:10px 0 0 }
+.fgrid{
+  display:grid; gap:12px; padding:12px 0;
+  grid-template-columns:1fr 1fr;
 }
+.fgroup{ display:grid; gap:6px }
+.fgroup.full{ grid-column:1 / -1 }
+.sub{ color:var(--muted, #6f6f73); font-size:12px }
 
-.modal-price {
-  font-size: 1.2rem;
-  color: #000;
+input[type="text"], textarea{
+  appearance:none; -webkit-appearance:none;
+  width:100%; max-width:100%;                   /* ← 입력 박스 폭 고정 */
+  border:3px solid var(--hair, #0b0b0b); border-radius:10px;
+  background:#fff; color:var(--ink, #0b0b0b);
+  padding:10px 12px;
+  font:700 16px/1.2 'Space Grotesk','Noto Sans KR',sans-serif;
+  transition: box-shadow var(--t-base) ease, transform var(--t-fast) ease, filter var(--t-fast) ease;
 }
+textarea{ resize:vertical; min-height:96px }
 
-.fade-in {
-  animation: fadeIn 0.3s ease;
+/* Account box */
+.account{
+  margin:6px 0 10px;
+  border:3px solid var(--hair, #0b0b0b); border-radius:12px; background:#fff;
+  box-shadow:6px 6px 0 var(--hair, #0b0b0b);
+  padding:12px;
 }
+.account .hint{ color:var(--muted, #6f6f73); font-size:12px }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Sticky actions */
+.pm-actions{
+  position:sticky; bottom:-1px; z-index:1;
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  padding:12px 0 0; margin-top:6px;
+  background: linear-gradient(to top, rgba(255,255,255,.98), rgba(255,255,255,.88) 40%, transparent);
+  border-top:3px solid var(--hair, #0b0b0b);
 }
+.btn.strong{ background:#000; color:#fff; border-color:#000 }
+.pm-actions .msg{ margin:0; padding:10px 12px }
 
-.close-button {
-  position: absolute;
-  top: 1rem; right: 1rem;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.modal-content img {
-  width: 100%;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-}
-
-.modal-content input,
-.modal-content textarea,
-.modal-content button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-.modal-content button {
-  background-color: #333;
-  color: white;
-  border: none;
-  margin-top: 1rem;
-  cursor: pointer;
-}
-
-.modal-content button:hover {
-  background-color: #111
-}
-
-.account-info {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-  .footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px 20px;
-    background-color: #e7e7e7; /* 푸터 바 배경 */
-    font-size: 1rem;
-    color: #353535;
-    text-align: center;
-    box-shadow: 0 -1px 3px rgba(0,0,0,0.2);
+/* =======================================================
+   MOBILE FULLSCREEN (<=760px)
+   ======================================================= */
+@media (max-width: 760px){
+  .shop-modal.mobile .shop-panel{
+    width: 100vw; max-height: 100dvh; height: 100dvh; margin: 0;
+    border-radius: 0; box-shadow: none;
+    padding-bottom: env(safe-area-inset-bottom);
   }
-
-  img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* 반응형 미디어 쿼리 */
-@media (max-width: 768px) {
-  .store-title {
-    font-size: 1.6rem;
+  .shop-modal.mobile .shop-close{
+    top: max(8px, env(safe-area-inset-top)); right: max(8px, env(safe-area-inset-right));
+    width: 44px; height: 44px; line-height: 38px; font-size: 20px;
   }
-
-@media (max-width: 768px) {
-  .product-list {
-    grid-template-columns: 1fr; /* 👉 모바일은 1열 */
+  .shop-modal.mobile .pm-grid{
+    grid-template-columns: 1fr;
+    height: calc(100dvh - max(8px, env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+  }
+  .shop-modal.mobile .pm-left,
+  .shop-modal.mobile .pm-right{
+    overflow: auto; -webkit-overflow-scrolling: touch;
+    padding: 12px 14px;
+  }
+  .shop-modal.mobile .pm-left{
+    border-right: none; border-bottom: 3px solid var(--hair, #0b0b0b);
+  }
+  .shop-modal.mobile .slider-wrapper{
+    height: 48dvh;
+  }
+  .shop-modal.mobile .slide{ height: 100% }
+  .shop-modal.mobile .slide img{
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .shop-modal.mobile .nav-button{
+    min-width: 44px; min-height: 44px; padding: 10px 12px; font-size: 16px;
+  }
+  .shop-modal.mobile .indicator{
+    width: 12px; height: 12px; margin: 2px;
+  }
+  .shop-modal.mobile .pm-name{ font-size: 20px }
+  .shop-modal.mobile .pm-price{ font-size: 18px }
+  .shop-modal.mobile .fgrid{ grid-template-columns: 1fr; gap: 10px }
+  .shop-modal.mobile input[type="text"],
+  .shop-modal.mobile textarea{
+    font-size: 16px; /* iOS 확대 방지 */
+    min-height: 44px;
+  }
+  .shop-modal.mobile .pm-actions{
+    position: sticky; bottom: 0; z-index: 2;
+    padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, rgba(255,255,255,.98), rgba(255,255,255,.88) 40%, transparent);
+  }
+  .shop-modal.mobile .btn.strong{
+    width: 100%; justify-content: center; padding: 14px 16px; font-size: 16px;
   }
 }
 
-  .modal-content {
-    padding: 1.2rem;
-  }
-
-  .modal-product-info h2 {
-    font-size: 1.4rem;
-  }
-
-  .modal-description {
-    font-size: 0.9rem;
-  }
-
-  .modal-price {
-    font-size: 1.1rem;
-  }
+/* =======================================================
+   Palette hint (fallback) / Print & forced-colors
+   ======================================================= */
+.pal-hint{
+  margin:10px; color:var(--muted, #6f6f73);
+  font:700 12px/1 'Space Mono', ui-monospace;
 }
 
-@media (max-width: 600px) {
-  .modal-content {
-    padding: 1.2rem;
-    max-width: 95%;
-    max-height: 90vh;
-  }
+@media print{
+  .pcard, .shop-panel{ box-shadow:none !important }
 }
-
-.slider-wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  padding: 20px 0; /* 버튼이 공간에 안 겹치도록 약간 여유 */
-}
-
-.slider-track {
-  display: flex;
-  will-change: transform;
-}
-
-.slide {
-  min-width: 100%; /* 중요: 한 장씩 정확히 채움 */
-  box-sizing: border-box;
-}
-
-.slide img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  border-radius: 8px;
-}
-
-.indicator-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  gap: 12px;
-}
-
-.indicators {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-}
-
-.modal-content .nav-button {
-  background-color: rgba(200, 200, 200, 0.3); /* 연한 회색 */
-  color: #444;
-  border: none;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.5;
-  transition: background 0.3s ease, opacity 0.3s ease;
-}
-
-.modal-content .nav-button:hover {
-  background-color: rgba(180, 180, 180, 0.5);
-  opacity: 0.9;
-}
-
-
-.indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ccc;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.indicator.active {
-  background: #333;
+@media (forced-colors: active){
+  .pcard, .shop-panel{ box-shadow:none; border-width:2px }
 }

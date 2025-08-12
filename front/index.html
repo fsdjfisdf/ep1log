@@ -1,29 +1,130 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NANSI</title>
-  <link rel="stylesheet" href="css/EP1LOG_main.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NANSI — NEW BRUTAL THEME</title>
+
+  <!-- 강한 타이포 조합 -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/styles.css" />
 </head>
-<body>
-  <div class="tagline">sing in blur</div>
-  <div class="container" id="container">
-    <button class="logo-button heartbeat" id="logo-button">
-        <img src="images/NANSI logo.png" alt="NANSI 로고" class="logo-image">
-      </button>
-      
-    <div class="menu" id="menu">
-      <a href="introduce.html" class="menu-item">MEMBERS</a>
-      <a href="schedule.html" class="menu-item">SCHEDULE</a>
-      <a href="reservation.html" class="menu-item">RESERVATION</a>
-      <a href="fanboard.html" class="menu-item">FAN BOARD</a>
-      <a href="store.html" class="menu-item">GOODS STORE</a>
+<body class="the-grid">
+  <!-- 상단 키트: 로고(팔레트 트리거) + 퀵 액션 -->
+  <header class="rail">
+    <button id="brandTrigger" class="brand-btn" aria-controls="palette" aria-expanded="false">
+      <span class="brand-mark">N</span>
+      <span class="brand-word">NANSI</span>
+    </button>
+    <nav class="quick">
+      <a href="introduce.html">MEMBERS</a>
+      <a href="schedule.html">SCHEDULE</a>
+      <a class="accent" href="reservation.html">RESERVE</a>
+    </nav>
+  </header>
+
+  <!-- 커맨드 팔레트형 오버레이 (로고 클릭 또는 ⌘/Ctrl+K) -->
+  <aside id="palette" class="palette" aria-hidden="true">
+    <div class="pal-body">
+      <div class="pal-head">
+        <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
+        <button id="palClose" class="pal-close" aria-label="닫기">×</button>
+      </div>
+      <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
+        <li><a href="index.html" aria-selected="true">→ Home</a></li>
+        <li><a href="introduce.html">→ Members</a></li>
+        <li><a href="schedule.html">→ Schedule</a></li>
+        <li><a href="reservation.html">→ Reservation</a></li>
+        <li><a href="fanboard.html">→ Fan Board</a></li>
+        <li><a href="store.html">→ Goods Store</a></li>
+      </ul>
+      <p class="pal-hint">ESC to close · ↑↓ to navigate · Enter to go</p>
     </div>
-  </div>
-  <footer class="footer">Developed by curr</footer>
-  <link rel="stylesheet" href="css/menu.css">
-  <script src="js/menu.js" defer></script>
-  <script src="js/EP1LOG_main.js"></script>
+  </aside>
+
+  <main>
+    <!-- HERO: 포스터 레이아웃 (텍스트 블록 + 하드 보더 썸네일) -->
+    <section class="poster">
+      <div class="poster-col text">
+        <p class="eyebrow">PYEONGTAEK / KR · BAND</p>
+        <h1 class="display">
+          NANSI<br><span class="outline">Sing in blur</span>
+        </h1>
+        <p class="lede">
+          흐림 속에서<br>선명해지는 사운드.
+        </p>
+        <div class="cta-row">
+          <a class="btn strong" href="schedule.html">NEXT SHOWS</a>
+          <a class="btn ghost" href="reservation.html">RESERVATION</a>
+        </div>
+      </div>
+
+      <div class="poster-col visual">
+        <figure class="frame">
+          <img src="images/ep1log_logo2.png" alt="NANSI live" />
+          <figcaption class="cap">NANSI — field recording / club set</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- MARQUEE: 소리나는 점선과 함께 흘러가는 타이포 -->
+    <section class="marquee">
+      <div class="track" aria-hidden="true">
+        <span>indie · atmospheric · groove · nansi.live — </span>
+        <span>indie · atmospheric · groove · nansi.live — </span>
+        <span>indie · atmospheric · groove · nansi.live — </span>
+      </div>
+    </section>
+
+    <!-- GRID CARDS: 굵은 보더 + 숫자 라벨 -->
+    <section class="grid-cards">
+      <a class="card" href="introduce.html">
+        <span class="idx">01</span>
+        <div class="shot"><img src="images/nansi.jpg" alt="Members" /></div>
+        <div class="meta">
+          <h3>MEMBERS</h3>
+          <p>밴드 멤버들</p>
+        </div>
+      </a>
+
+      <a class="card" href="store.html">
+        <span class="idx">02</span>
+        <div class="shot"><img src="images/NANSI logo.png" alt="Goods Store" /></div>
+        <div class="meta">
+          <h3>GOODS STORE</h3>
+          <p>무드가 살아있는 굿즈.</p>
+        </div>
+      </a>
+
+      <a class="card" href="fanboard.html">
+        <span class="idx">03</span>
+        <div class="shot"><img src="images/nansi.jpg" alt="Fan Board" /></div>
+        <div class="meta">
+          <h3>FAN BOARD</h3>
+          <p>메시지를 남겨주세요.</p>
+        </div>
+      </a>
+
+      <a class="card" href="schedule.html">
+        <span class="idx">04</span>
+        <div class="shot"><img src="images/NANSI logo.png" alt="Schedule" /></div>
+        <div class="meta">
+          <h3>SCHEDULE</h3>
+          <p>다가오는 무대를 확인하세요.</p>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="foot-inner">
+      <span>© <span id="year"></span> NANSI</span>
+      <span class="dot">•</span>
+      <span>Developed by curr</span>
+    </div>
+  </footer>
+
+  <script src="./js/app.js"></script>
 </body>
 </html>

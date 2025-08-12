@@ -2,79 +2,179 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NANSI - RESERVATION</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NANSI — Reservation</title>
+
+  <!-- 테마 폰트 -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- 글로벌 테마 & 페이지 전용 -->
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/reservation.css" />
 </head>
-<body>
-  <div class="tagline">NANSI</div>
+<body class="the-grid">
+  <!-- 상단 레일 -->
+  <header class="rail">
+    <button id="brandTrigger" class="brand-btn" aria-controls="palette" aria-expanded="false">
+      <span class="brand-mark">N</span>
+      <span class="brand-word">NANSI</span>
+    </button>
+    <nav class="quick">
+      <a href="introduce.html">MEMBERS</a>
+      <a href="schedule.html">SCHEDULE</a>
+      <a class="accent" href="reservation.html" aria-current="page">RESERVE</a>
+    </nav>
+  </header>
 
-  <div class="form-container">
-    <h1>RESERVATION</h1>
-    <div class="notice">
-  <p>공연 날짜: <strong>2026년 4월 11일 (토)</strong></p>
-  <p>예약 완료 후 환불은 불가하오니 신중히 신청해 주세요.</p>
-</div>
-    <form id="reservation-form">
-      <label>이름 (입금자명과 동일해야 합니다)</label>
-      <input type="text" name="name" required />
-
-      <label>예약 인원 수</label>
-      <input type="number" name="people_count" min="1" required />
-
-      <label>연령대</label>
-      <select name="age_group">
-        <option value="10대">10대</option>
-        <option value="20대">20대</option>
-        <option value="30대">30대</option>
-        <option value="40대">40대</option>
-        <option value="50대">50대</option>
-        <option value="60대">60대</option>
-      </select>
-
-      <label>어떤 멤버를 보러 오셨나요?</label>
-      <select name="favorite_member">
-        <option value="정현우">정현우</option>
-        <option value="송바다">송바다</option>
-        <option value="감지성">감지성</option>
-      </select>
-      <label>티켓 수령 주소</label>
-      <input type="text" name="address" required />
-
-      <button type="submit">예매</button>
-    <div class="status-check-container">
-      <button id="check-status-btn">예약 확인</button>
+  <!-- 커맨드 팔레트 -->
+  <aside id="palette" class="palette" aria-hidden="true">
+    <div class="pal-body">
+      <div class="pal-head">
+        <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
+        <button id="palClose" class="pal-close" aria-label="닫기">×</button>
+      </div>
+      <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
+        <li><a href="index.html">→ Home</a></li>
+        <li><a href="introduce.html">→ Members</a></li>
+        <li><a href="schedule.html">→ Schedule</a></li>
+        <li><a href="reservation.html" aria-selected="true">→ Reservation</a></li>
+        <li><a href="fanboard.html">→ Fan Board</a></li>
+        <li><a href="store.html">→ Goods Store</a></li>
+      </ul>
+      <p class="pal-hint">ESC to close · ↑↓ to navigate · Enter to go</p>
     </div>
-        </form>
+  </aside>
 
-<div id="status-modal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
-    <h2>예약 조회</h2>
-    <form id="status-form">
-      <label>이름</label>
-      <input type="text" name="status_name" required />
-      <label>연령대</label>
-      <select name="status_age_group">
-        <option value="10대">10대</option>
-        <option value="20대">20대</option>
-        <option value="30대">30대</option>
-        <option value="40대">40대</option>
-        <option value="50대">50대</option>
-        <option value="60대">60대</option>
-      </select>
-      <button type="submit">확인</button>
-    </form>
-    <div id="status-result"></div>
-  </div>
-</div>
+  <main>
+    <!-- HERO: 포스터 -->
+    <section class="poster resv-hero">
+      <div class="poster-col text">
+        <p class="eyebrow">TICKETS · SEOUL / KR</p>
+        <h1 class="display">RESER<span class="outline">VATION</span></h1>
+        <p class="lede">
+          아래 양식을 작성 후 제출하세요. 입금 확인 시 예약이 확정됩니다.
+        </p>
+        <ul class="hero-info">
+          <li><strong>공연</strong> · 2026년 4월 11일 (토)</li>
+          <li><strong>티켓</strong> · 15,000원 / 1인</li>
+          <li><strong>환불</strong> · 예약 완료 후 환불 불가</li>
+        </ul>
+      </div>
 
-    <div id="confirmation-message"></div>
-  </div>
+    </section>
 
+    <!-- FORM SECTION -->
+    <section class="resv-section" id="form">
+      <div class="wrap resv-grid">
+        <!-- 예약 폼 카드 -->
+        <article class="card form-card">
+          <header class="card-head">
+            <h2>Reservation Form</h2>
+            <p>모든 항목은 정확히 입력해주세요.</p>
+          </header>
+
+          <form id="reservation-form" novalidate>
+            <div class="fgrid">
+              <div class="fgroup">
+                <label for="name">이름 <span class="sub">(입금자명과 동일)</span></label>
+                <input id="name" name="name" type="text" required autocomplete="name" />
+                <small class="hint">예: 김나시</small>
+              </div>
+
+              <div class="fgroup">
+                <label for="people_count">예약 인원 수</label>
+                <input id="people_count" name="people_count" type="number" inputmode="numeric" min="1" step="1" required />
+                <small class="hint">동반 인원 포함 총 인원</small>
+              </div>
+
+              <div class="fgroup">
+                <label for="age_group">연령대</label>
+                <select id="age_group" name="age_group">
+                  <option>10대</option><option>20대</option><option>30대</option>
+                  <option>40대</option><option>50대</option><option>60대</option>
+                </select>
+              </div>
+
+              <div class="fgroup">
+                <label for="favorite_member">어떤 멤버를 보러 오셨나요?</label>
+                <select id="favorite_member" name="favorite_member">
+                  <option>정현우</option><option>송바다</option><option>감지성</option>
+                </select>
+              </div>
+
+              <div class="fgroup full">
+                <label for="address">티켓 수령 주소</label>
+                <input id="address" name="address" type="text" required autocomplete="street-address" />
+                <small class="hint">정확한 도로명 주소를 입력해주세요.</small>
+              </div>
+            </div>
+
+            <!-- 요약 바 -->
+            <div class="summary">
+              <div class="sum-left">
+                <span class="price-label">총 금액</span>
+                <strong id="total-amount">0원</strong>
+              </div>
+              <div class="sum-right">
+                <button class="btn strong" type="submit" id="submitBtn">예매</button>
+                <button class="btn ghost" type="button" id="checkStatusInline">예약 조회</button>
+              </div>
+            </div>
+
+            <!-- 메시지 -->
+            <div id="confirmation-message" class="msg" aria-live="polite"></div>
+          </form>
+        </article>
+
+        <!-- 결제/안내 카드 -->
+        <aside class="card side-card">
+          <header class="card-head">
+            <h3>결제 / 안내</h3>
+          </header>
+          <div class="card-body">
+            <p class="mono">입금계좌</p>
+            <div class="bank mono">
+              국민은행 <strong>288001-04-217050</strong><br />
+              예금주: <strong>정현우</strong>
+            </div>
+            <ul class="notes">
+              <li>예매 신청 후 <strong>24시간 이내</strong> 입금 부탁드립니다.</li>
+              <li>입금 확인 시 문자로 안내드려요.</li>
+              <li>예약 완료 후 <strong>환불은 불가</strong>합니다.</li>
+            </ul>
+            <p class="tiny">개인정보는 예약 확인 용도로만 사용됩니다.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- 예약 조회 모달 -->
+  <aside id="statusModal" class="resv-modal" aria-hidden="true" role="dialog" aria-label="예약 조회">
+    <div class="resv-modal-backdrop" data-close></div>
+    <div class="resv-modal-panel">
+      <button class="resv-close" id="statusClose" aria-label="닫기">×</button>
+      <h2>예약 조회</h2>
+      <form id="status-form">
+        <div class="fgroup">
+          <label for="status_name">이름</label>
+          <input id="status_name" type="text" name="status_name" required />
+        </div>
+        <div class="fgroup">
+          <label for="status_age_group">연령대</label>
+          <select id="status_age_group" name="status_age_group">
+            <option>10대</option><option>20대</option><option>30대</option>
+            <option>40대</option><option>50대</option><option>60대</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">확인</button>
+      </form>
+      <div id="status-result" class="msg" aria-live="polite"></div>
+    </div>
+  </aside>
+
+  <!-- 스크립트 -->
+  <script src="js/app.js"></script>
   <script src="js/reservation.js"></script>
-    <script src="js/introduce.js"></script>
-      <link rel="stylesheet" href="css/menu.css">
-  <script src="js/menu.js" defer></script>
 </body>
 </html>

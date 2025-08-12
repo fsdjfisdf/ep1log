@@ -1,16 +1,16 @@
-// introduce.js - EP1LOG 멤버 소개 페이지 전용 스크립트
+// introduce.js — members page micro-interactions
 
-// tagline 영역을 로고 이미지로 대체하고 클릭 시 홈으로 이동
-const tagline = document.querySelector(".tagline");
-if (tagline) {
-  tagline.innerHTML = `<a href="index.html"><img src="images/NANSI logo.png" alt="NANSI 로고" class="tagline-logo"></a>`;
+// 1) 연도 표기 (app.js가 이미 처리하지만, 혹시 누락될 경우를 대비)
+(() => {
+  const y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+})();
 
-  const style = document.createElement('style');
-  style.textContent = `
-    .tagline-logo {
-      height: 40px;
-      vertical-align: middle;
-    }
-  `;
-  document.head.appendChild(style);
-}
+// 2) 아바타에 이미지가 있으면 이니셜을 숨기는 로직 (추후 확장 대비)
+document.querySelectorAll('.avatar').forEach(av => {
+  const img = av.querySelector('img');
+  if (img) av.classList.add('has-img');
+});
+
+// 3) 접근성: 키보드 포커스가 카드에 도달했을 때 살짝 강조(이미 CSS :focus-visible 있음)
+// 스크립트 추가 동작은 지금은 불필요 — 깔끔 유지

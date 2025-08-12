@@ -2,37 +2,144 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NANSI STORE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NANSI — Goods Store</title>
+
+  <!-- 글로벌 테마 (이미 프로젝트에 있음) -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- 스토어 전용 스타일 -->
   <link rel="stylesheet" href="css/store.css" />
 </head>
-<body>
-  <div class="tagline">NANSI</div>
-  <div class="store-container">
-    <h1 class="store-title">NANSI STORE</h1>
-    <div id="product-list" class="product-list"></div>
-  </div>
+<body class="the-grid">
+  <!-- 상단 레일 -->
+  <header class="rail">
+    <button id="brandTrigger" class="brand-btn" aria-controls="palette" aria-expanded="false">
+      <span class="brand-mark">N</span>
+      <span class="brand-word">NANSI</span>
+    </button>
+    <nav class="quick">
+      <a href="introduce.html">MEMBERS</a>
+      <a href="schedule.html">SCHEDULE</a>
+      <a class="accent" href="reservation.html">RESERVE</a>
+    </nav>
+  </header>
 
-  <!-- 상세보기 모달 -->
-  <div id="product-modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close-button">&times;</span>
-      <div id="product-details"></div>
-      <form id="purchase-form">
-        <input type="text" name="buyer_name" placeholder="이름" required />
-        <input type="text" name="phone" placeholder="전화번호" required />
-        <input type="text" name="address" placeholder="주소" required />
-        <textarea name="message" placeholder="요청사항 (선택)" rows="3"></textarea>
-        <button type="submit">구매 신청</button>
-        <p class="account-info">💳 계좌번호: 카카오뱅크 7942-13-90776 (예금주: 감지성)</p>
-        <div id="purchase-result"></div>
-      </form>
+  <!-- 커맨드 팔레트 -->
+  <aside id="palette" class="palette" aria-hidden="true">
+    <div class="pal-body">
+      <div class="pal-head">
+        <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
+        <button id="palClose" class="pal-close" aria-label="닫기">×</button>
+      </div>
+      <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
+        <li><a href="introduce.html">→ Members</a></li>
+        <li><a href="schedule.html">→ Schedule</a></li>
+        <li><a href="reservation.html">→ Reservation</a></li>
+        <li><a href="fanboard.html">→ Fan Board</a></li>
+        <li><a href="store.html" aria-selected="true">→ Goods Store</a></li>
+      </ul>
+      <p class="pal-hint">ESC to close · ↑↓ to navigate · Enter to go</p>
+    </div>
+  </aside>
+
+  <main>
+    <!-- HERO -->
+    <section class="poster st-hero">
+      <div class="poster-col text">
+        <p class="eyebrow">GOODS STORE · LIMITED</p>
+        <h1 class="display">GOOD<span class="outline">S</span></h1>
+        <p class="lede">무드가 살아있는 NANSI 굿즈—한정 수량 발매.</p>
+      </div>
+      <div class="poster-col visual">
+        <figure class="frame">
+          <img src="images/g-5.jpg" alt="NANSI goods" loading="lazy" />
+          <figcaption class="cap">NANSI — shop selection</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- PRODUCT GRID -->
+    <section class="store-section">
+      <div class="wrap">
+        <div id="product-list" class="p-grid" aria-live="polite"></div>
+
+        <!-- 상태 영역 -->
+        <div id="store-empty" class="card empty" hidden>
+          <p class="mono">등록된 제품이 없습니다.</p>
+        </div>
+        <div id="store-error" class="msg err" hidden>❌ 제품을 불러오는 데 실패했습니다.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="foot-inner">
+      <span>© <span id="year"></span> NANSI</span>
+      <span class="dot">•</span>
+      <span>Developed by curr</span>
+    </div>
+  </footer>
+
+  <!-- PRODUCT MODAL -->
+  <div id="product-modal" class="shop-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <div class="shop-backdrop" data-close="backdrop"></div>
+
+    <div class="shop-panel">
+      <button class="shop-close" id="pmClose" aria-label="닫기">×</button>
+
+      <div class="pm-grid">
+        <!-- 왼쪽: 슬라이더 -->
+        <div class="pm-left">
+          <div class="pm-left-inner" id="product-details"><!-- JS inject --></div>
+        </div>
+
+        <!-- 오른쪽: 정보 + 구매 -->
+        <div class="pm-right" id="pmRight">
+          <header class="card-head">
+            <h2 id="pmTitle" class="pm-title">구매 신청</h2>
+          </header>
+
+          <div class="pm-info" id="pmInfo"><!-- JS inject --></div>
+
+          <form id="purchase-form" class="pm-form" novalidate>
+            <div class="fgrid">
+              <div class="fgroup">
+                <label>이름</label>
+                <input type="text" name="buyer_name" autocomplete="name" required />
+              </div>
+              <div class="fgroup">
+                <label>전화번호</label>
+                <input type="text" name="phone" inputmode="tel" placeholder="010-0000-0000" required />
+              </div>
+              <div class="fgroup full">
+                <label>주소</label>
+                <input type="text" name="address" autocomplete="shipping street-address" required />
+              </div>
+              <div class="fgroup full">
+                <label>요청사항 <span class="sub">(선택)</span></label>
+                <textarea name="message" rows="3" placeholder="문 앞에 놓아주세요 등"></textarea>
+              </div>
+            </div>
+
+            <div class="account card">
+              <p class="mono">입금계좌</p>
+              <p><strong>카카오뱅크 7942-13-90776 (예금주: 감지성)</strong></p>
+              <p class="hint">입금 확인 후 배송됩니다.</p>
+            </div>
+
+            <div class="pm-actions">
+              <button type="submit" class="btn strong">구매 신청</button>
+              <div id="purchase-result" class="msg" hidden aria-live="polite"></div>
+            </div>
+          </form>
+        </div>
+      </div><!-- /pm-grid -->
     </div>
   </div>
-  
-  <script src="js/introduce.js"></script>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
   <script src="js/store.js"></script>
-    <link rel="stylesheet" href="css/menu.css">
-  <script src="js/menu.js" defer></script>
 </body>
 </html>
