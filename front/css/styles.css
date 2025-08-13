@@ -1,287 +1,369 @@
-/* =========================================================
-   NANSI — NEO-BRUTAL POSTER THEME (polished)
-   - same vibe, refined spacing/typography/accessibility
-   ========================================================= */
+/* ==========================================================================
+   EP1LOG — Scrapbook / Collage Theme (Centered Hero, refined & accessible)
+   - 단일 마퀴 점선(겹침 제거)
+   - 히어로 워터마크(타일 + 메인) 자연스럽게 다수 노출
+   - INTRO 카드/소셜 중앙 정렬
+   - 포커스/호버/모션 배려
+   ========================================================================== */
 
-/* ---------------- Tokens ---------------- */
+/* 0) Design Tokens --------------------------------------------------------- */
 :root{
-  /* Surfaces */
-  --paper:#fcfbf8;
-  --paper-2:#f4f2ec;
+  /* Surface */
+  --paper:#faf7ef;           /* 배경 종이 */
+  --paper-2:#f2eee4;         /* 배경 그라데이션 하단 */
+  --card:#fffaf2;            /* 카드 표면 */
+  --tape:#f1e4b8;            /* 와시 테이프 */
 
-  /* Text */
-  --ink:#0b0b0b;
-  --ink-2:#1a1a1a;
-  --muted:#6f6f73;
+  /* Ink */
+  --ink:#231f20;             /* 본문 잉크 */
+  --ink-2:#4a4341;           /* 보조 텍스트 */
+  --muted:#756d69;           /* 설명/힌트 */
 
-  /* Lines / Accents */
-  --hair:#0b0b0b;           /* brute hairline */
-  --acid:#b6ff2e;           /* neon lime */
-  --accent:#0066ff;         /* sub accent (focus/active) */
+  /* Accents (chips) */
+  --chip-red:#d94b4b;
+  --chip-teal:#2aa79b;
+  --chip-violet:#6b4aa0;
+  --chip-gold:#f0b83a;
+  --chip-orange:#e6772e;
 
-  /* Rounding */
-  --radius:12px;
+  /* Lines / shadows */
+  --hair:#1b1716;            /* 진한 가는 선 */
+  --dash:#9e8f86;            /* 점선 색상 */
+  --shadow-paper: 0 1px 0 rgba(0,0,0,.04), 0 10px 24px rgba(0,0,0,.10);
+  --shadow-chip: 0 3px 14px rgba(0,0,0,.20);
 
-  /* Timing */
-  --t-fast: .12s;
-  --t-base: .22s;
+  /* Radii */
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  /* Type & motion */
+  --fs:17px;
+  --lh:1.75;
+  --t:.22s;
+
+  /* Z */
+  --z-rail:40;
+  --z-overlay:100;
+  --z-skip:9999;
+
+  /* Social brand */
+  --yt:#ff0000;
+  --ig-gradient: radial-gradient(circle at 30% 107%,
+                    #fdf497 0%, #fdf497 5%,
+                    #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+/* 1) Base & A11y ----------------------------------------------------------- */
+*{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+  margin:0; color:var(--ink);
+  background:
+    radial-gradient(70% 40% at 10% 0%, rgba(243,235,216,.65), transparent 60%),
+    linear-gradient(180deg, var(--paper), var(--paper-2));
+  font-family: 'Space Grotesk','Noto Sans KR',ui-sans-serif,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  font-size: var(--fs); line-height: var(--lh);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+img{ display:block; max-width:100%; height:auto }
+a{ color:inherit; text-decoration:none }
+a:hover{
+  text-decoration: underline;
+  text-underline-offset:2px;
+  text-decoration-color: rgba(0,0,0,.35)
+}
+::selection{ background: rgba(217,75,75,.18) }
+:focus-visible{
+  outline: 3px solid var(--chip-teal);
+  outline-offset: 3px;
+}
+
+/* Skip link */
+.skip-link{
+  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden
+}
+.skip-link:focus{
+  position:fixed; left:16px; top:16px; padding:8px 12px;
+  background: var(--chip-violet); color:#fff; border-radius:8px; z-index: var(--z-skip);
+  box-shadow: var(--shadow-paper)
 }
 
 /* Motion respect */
 @media (prefers-reduced-motion: reduce){
-  *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important}
+  *{
+    animation-duration:.0001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.0001ms !important;
+    scroll-behavior:auto !important
+  }
 }
 
-/* ---------------- Base ---------------- */
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; color:var(--ink);
-  background:
-    /* subtle grid */
-    repeating-linear-gradient(0deg,
-      transparent, transparent 38px,
-      rgba(0,0,0,.035) 39px,
-      transparent 40px),
-    linear-gradient(180deg, var(--paper), var(--paper-2));
-  font-family: 'Space Grotesk','Noto Sans KR',ui-sans-serif,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* Small helper for containers (if needed elsewhere) */
-.container,.wrap{max-width:1200px; margin:0 auto; padding:0 20px}
-
-/* Focus visibility (keyboard) */
-:focus-visible{
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
-.brand-btn:focus-visible,
-.quick a:focus-visible,
-.pal-close:focus-visible,
-.pal-input:focus-visible,
-.pal-list a:focus-visible,
-.btn:focus-visible,
-.card:focus-visible{
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* ---------------- Header / Rail ---------------- */
+/* 2) Header / Rail --------------------------------------------------------- */
 .rail{
-  position:sticky; top:0; z-index:40;
-  display:flex; align-items:center; justify-content:space-between; gap:16px;
-  padding:14px 16px;
-  border-bottom:3px solid var(--hair);
-  background: rgba(252,251,248,.86);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  position:sticky; top:0; z-index: var(--z-rail);
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:10px 14px;
+  border-bottom:2px dotted var(--dash);
+  background: rgba(250,247,239,.85);
+  backdrop-filter: blur(4px);
 }
 
-/* Brand (palette trigger) */
 .brand-btn{
-  display:flex; align-items:center; gap:12px; cursor:pointer;
-  background:#fff; border:3px solid var(--hair); border-radius:10px; padding:8px 12px;
-  box-shadow: 6px 6px 0 var(--hair);
-  font-family:'Space Mono',ui-monospace,SFMono-Regular,monospace;
-  transition: transform var(--t-fast) ease, box-shadow var(--t-base) ease, filter var(--t-base) ease;
-  will-change: transform, box-shadow, filter;
+  display:flex; align-items:center; gap:10px; color:var(--ink);
+  padding:6px 10px;
+  border:2px solid var(--hair); border-radius:10px;
+  background: linear-gradient(180deg,#fffdf7,#fff7e9);
+  box-shadow: var(--shadow-paper);
+  transform: rotate(-0.3deg);
 }
-.brand-btn:hover{ transform: translate(-1px,-1px) }
-.brand-btn:active{ transform: translate(0,0); filter: contrast(.96) }
+.brand-btn:hover{ transform: rotate(-0.3deg) translateY(-1px) }
 
-/* Square mark */
 .brand-mark{
   display:grid; place-items:center;
-  width:28px; height:28px; border:3px solid var(--hair); border-radius:6px;
-  background: var(--acid); color:#000; font-weight:800;
+  width:28px; height:28px; border:2px solid var(--hair); border-radius:6px;
+  background: var(--chip-gold); color:#000; font-weight:800;
+  font-family:'Space Mono', monospace; font-size:14px;
+  box-shadow: var(--shadow-chip);
+  transform: rotate(-2deg);
+}
+.brand-word{
+  font-weight:800; letter-spacing:.02em;
+  background: var(--chip-red); color:#fff;
+  padding:4px 8px; border-radius:6px; border:2px solid var(--hair);
+  box-shadow: var(--shadow-chip);
+  transform: rotate(1.5deg);
 }
 
-/* Wordmark */
-.brand-word{ font-weight:700; letter-spacing:.03em }
-
-/* Quick nav */
-.quick{ display:flex; gap:12px; align-items:center }
-.quick a{
-  color:var(--ink); text-decoration:none; font-weight:700; letter-spacing:.02em;
-  padding:8px 10px; border:2px solid var(--hair); border-radius:8px; background:#fff;
-  transition: transform var(--t-fast) ease, box-shadow var(--t-base) ease, filter var(--t-base) ease;
+.menu-toggle{
+  background: var(--chip-teal); color:#06221f;
+  border:2px solid var(--hair); border-radius:999px; padding:8px 14px;
+  font-weight:900; letter-spacing:.05em; cursor:pointer;
+  box-shadow: var(--shadow-paper);
+  transform: rotate(0.5deg);
 }
-.quick a:hover{ transform: translateY(-1px) }
-.quick a:active{ transform:none; filter: contrast(.96) }
-.quick .accent{ background: var(--ink); color:#fff }
+.menu-toggle:hover{ filter: saturate(1.05) brightness(1.02) }
 
-/* ---------------- Command Palette (Overlay) ---------------- */
+/* 3) Overlay MENU ---------------------------------------------------------- */
 .palette{
-  position:fixed; inset:0; z-index:100; display:grid; place-items:center;
-  background: rgba(11,11,11,.4);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  opacity:0; pointer-events:none; transform: translateY(-4px);
-  transition: opacity var(--t-base) ease, transform var(--t-base) ease;
+  position:fixed; inset:0; z-index: var(--z-overlay);
+  display:grid; place-items:center;
+  background: rgba(35,31,32,.35);
+  opacity:0; pointer-events:none; transition: opacity var(--t) ease;
 }
-.palette.show{ opacity:1; pointer-events:auto; transform:none }
+.palette.show{ opacity:1; pointer-events:auto }
 
 .pal-body{
-  width:min(800px, 92vw); background:#fff; border:3px solid var(--hair);
+  width:min(760px, 92vw);
+  background: var(--card);
+  border:2px solid var(--hair);
   border-radius:14px; overflow:hidden;
-  box-shadow: 14px 14px 0 var(--hair);
+  box-shadow: var(--shadow-paper);
 }
-
 .pal-head{
-  display:flex; align-items:center; gap:10px;
-  padding:10px; border-bottom:3px solid var(--hair);
+  display:flex; gap:10px; align-items:center;
+  padding:10px; border-bottom:2px dashed var(--dash); background:#fffaf0
 }
 .pal-input{
-  flex:1; font: 600 16px/1 'Space Grotesk', sans-serif; padding:10px 12px;
-  border:2px solid var(--hair); border-radius:8px; outline:none;
-  transition: box-shadow var(--t-base) ease, background var(--t-base) ease;
+  flex:1; font:700 16px/1 'Space Grotesk', sans-serif; padding:12px 12px;
+  border:2px solid var(--hair); border-radius:8px; background:#fff; color:var(--ink);
 }
-.pal-input:focus{ box-shadow: 0 0 0 4px rgba(0,102,255,.14) }
+.pal-input::placeholder{ color:#9e8f86 }
+.pal-input:focus{ outline: 3px solid rgba(42,167,155,.25) }
 .pal-close{
-  border:2px solid var(--hair); background:#000; color:#fff; font-weight:700; padding:10px 12px; border-radius:8px; cursor:pointer;
+  border:2px solid var(--hair); background: var(--chip-orange); color:#2b1003;
+  padding:10px 12px; border-radius:8px; font-weight:900; cursor:pointer;
+  box-shadow: var(--shadow-paper)
 }
 
-.pal-list{ list-style:none; margin:0; padding:0 }
-.pal-list li{ border-bottom:2px dashed var(--hair) }
+.pal-list{ list-style:none; margin:0; padding:0; max-height:min(60vh,540px); overflow:auto }
+.pal-list li{ border-bottom:2px dashed var(--dash) }
 .pal-list a{
-  display:block; padding:14px 16px; text-decoration:none; color:var(--ink); font-weight:700;
-  transition: background var(--t-fast) ease, transform var(--t-fast) ease;
+  display:block; padding:14px 16px; font-weight:800; letter-spacing:.01em; color:var(--ink);
 }
 .pal-list a:hover,
-.pal-list a[aria-selected="true"]{ background: var(--acid) }
-.pal-list a:active{ transform: translateY(1px) }
-
-/* ---------------- Poster / Hero ---------------- */
-.poster{
-  display:grid; grid-template-columns: 1.1fr 1fr; gap:24px;
-  padding:28px 16px 16px;
-  border-bottom:3px solid var(--hair);
+.pal-list a[aria-selected="true"]{
+  background: linear-gradient(90deg, rgba(248,216,86,.25), rgba(126,200,186,.25))
 }
-@media (max-width: 980px){ .poster{ grid-template-columns:1fr } }
+.pal-hint{
+  margin:0; padding:10px 12px; border-top:2px dashed var(--dash);
+  font:700 12px/1 'Space Mono', monospace; color: var(--muted); background:#fffaf0
+}
+
+/* 4) HERO — 중앙 집중, 겹침 없는 마퀴 대비 ------------------------------- */
+.hero{
+  position: relative;
+  min-height: clamp(420px, 72vh, 860px);
+  display: grid; place-items: center;
+  padding: clamp(18px, 7vw, 64px) 16px clamp(18px, 5vw, 48px);
+  /* 마퀴와 경계 중복을 없애기 위해 보더 제거 */
+  border-bottom: none;
+  background:
+    radial-gradient(60% 40% at 50% 100%, rgba(174,141,116,.18), transparent 60%);
+  text-align: center;
+  max-width: 1200px; margin: 0 auto;
+}
+
+/* 워터마크: 타일 + 중앙 큰 로고 */
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image: url("../images/ep1log_logo2.png");
+  background-repeat: repeat;
+  background-size: clamp(140px, 16vw, 220px) auto; /* 더 자주 보이도록 작은 타일 */
+  background-position: 0 0;
+  opacity:.025;            /* 매우 은은하게 */
+  pointer-events:none;
+  filter: saturate(.95) contrast(1.02);
+}
+.hero::after{
+  content: "";
+  position: absolute; inset: auto 0 6% 0; margin: 0 auto;
+  width: clamp(200px, 34vw, 420px); height: clamp(200px, 34vw, 420px);
+  background: url("../images/ep1log_logo2.png") center/contain no-repeat;
+  opacity: .04;            /* 중앙 로고는 살짝 더 진하게 */
+  pointer-events: none; filter: saturate(.9) contrast(1.05);
+}
 
 .eyebrow{
-  margin:0 0 10px; color:var(--ink-2);
-  font: 700 12px/1.2 'Space Mono', ui-monospace;
-  letter-spacing:.18em;
+  margin: 2px 0 10px; color:var(--ink-2);
+  font:900 12px/1 'Space Mono', ui-monospace; letter-spacing:.22em; text-transform: uppercase;
 }
+.eyebrow--center{ display:block; text-align:center }
 
-.display{
-  margin:0; font-family:'Bebas Neue', system-ui;
-  letter-spacing:.02em; line-height:.9;
-  /* 조금 더 일관된 최대치 */
-  font-size: clamp(56px, 14vw, 150px);
-  text-wrap: balance;
+/* 한 줄 타이틀 */
+.display{ margin:0; font-family:'Bebas Neue', system-ui }
+.display--one{
+  font-size: clamp(72px, 18vw, 200px);
+  line-height: .86; letter-spacing: .008em;
 }
-.display .outline{
-  color:transparent; -webkit-text-stroke: 2px var(--hair); text-stroke: 2px var(--hair);
-}
+.display--center{ text-align:center }
+.display .outline{ color:transparent; -webkit-text-stroke: 2px var(--hair) }
 
+/* 슬로건 — 스티커(노란 테이프) 제거 */
 .lede{
   margin:12px 0 18px; color: var(--ink-2);
-  font-size: clamp(15px, 2.2vw, 18px); line-height: 1.65;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(18px, 2.4vw, 22px);
+  line-height:1.65; position:relative;
 }
+.lede--center{ text-align:center }
+.lede--center::before{ display:none !important } /* 요청 반영 */
 
-/* CTAs */
-.cta-row{ display:flex; gap:10px; flex-wrap:wrap }
+/* CTA 3개 */
+.cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px }
+.cta-row--center{ justify-content:center }
 .btn{
-  display:inline-block; text-decoration:none; font-weight:800; letter-spacing:.02em;
-  padding:12px 14px; border-radius:10px;
+  display:inline-block; text-decoration:none; font-weight:900; letter-spacing:.02em;
+  padding:16px 22px; border-radius:12px;
   border:3px solid var(--hair); background:#fff; color:var(--ink);
-  box-shadow: 6px 6px 0 var(--hair);
-  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease, filter var(--t-fast) ease;
+  box-shadow: 8px 8px 0 var(--hair);
+  transition: transform var(--t) ease, box-shadow var(--t) ease, filter var(--t) ease;
 }
-.btn:hover{ transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--hair) }
+.btn:hover{ transform: translate(-2px,-2px); box-shadow: 10px 10px 0 var(--hair) }
 .btn:active{ transform: translate(-1px,-1px); filter: contrast(.96) }
-.btn.ghost{ background: var(--acid) }
+.btn:focus-visible{ outline: 3px solid rgba(42,167,155,.35); outline-offset: 3px }
+.btn--primary{ background: var(--chip-gold); color:#2b1a00 }
+.btn--accent{ background: var(--chip-teal); color:#06221f }
+.btn--ghost{ background: #fff }
 
-/* Visual frame */
-.frame{
-  border:3px solid var(--hair); border-radius:12px; overflow:hidden; background:#fff;
-  box-shadow: 10px 10px 0 var(--hair);
-  image-rendering: -webkit-optimize-contrast;
+/* 5) INTRO Card — 가운데 정렬 -------------------------------------------- */
+.intro-card{
+  margin-top: clamp(16px, 4vw, 28px);
+  width:min(920px, 92vw);
+  margin-left:auto; margin-right:auto; /* 가운데 배치 */
+  border:2px solid var(--hair);
+  border-radius:14px;
+  background: var(--card);
+  box-shadow: var(--shadow-paper);
+  padding: clamp(12px, 3vw, 18px);
+  text-align:center; /* 내용 가운데 정렬 */
+  position:relative;
 }
-.frame img{
-  width:100%; display:block; object-fit:cover;
-  /* 미세 보정: 컬러 밴딩/탁함 줄이기 */
-  filter: saturate(.98) contrast(1.02);
+.intro-card::before,
+.intro-card::after{
+  content:""; position:absolute; z-index:1;
+  width: 84px; height: 18px; background: var(--tape);
+  border:1px dashed rgba(0,0,0,.15); box-shadow: var(--shadow-paper);
 }
-.cap{
-  margin:0; padding:8px 10px;
-  border-top:3px solid var(--hair); background:#fff;
-  font: 700 12px/1 'Space Mono', monospace; color: var(--ink-2);
+.intro-card::before{ left: 16px; top: -10px; transform: rotate(-6deg) }
+.intro-card::after{ right: 18px; top: -8px; transform: rotate(6deg) }
+
+.intro-head{
+  padding-bottom:8px; border-bottom:2px dashed var(--dash);
+}
+.intro-title{ margin:0; font-weight:900; letter-spacing:.02em; font-size:18px }
+.intro-lead{
+  margin:10px auto 10px; color:var(--ink-2); line-height:1.75;
+  max-width: 68ch; /* 읽기 폭 제한 */
 }
 
-/* ---------------- Marquee ---------------- */
+/* 6) Social Links — 중앙 정렬 버튼형 ------------------------------------- */
+.social-links{
+  display: flex; flex-wrap: wrap; justify-content:center; gap: 12px;
+  margin-top: 8px;
+}
+.social{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border-radius: 10px;
+  font-weight: 800; letter-spacing: .01em;
+  border: 2px solid var(--hair);
+  color: #fff; text-decoration: none;
+  transition: transform var(--t) ease, box-shadow var(--t) ease, filter var(--t) ease, opacity var(--t) ease;
+  box-shadow: var(--shadow-paper);
+}
+.social i{ font-size: 18px }
+.social span{ line-height: 1 }
+
+.social--yt{ background: var(--yt) }
+.social--yt:hover{ transform: translateY(-1px); opacity: .92 }
+.social--yt:active{ transform: translateY(0); filter: contrast(.96) }
+
+.social--ig{ background: var(--ig-gradient) }
+.social--ig:hover{ transform: translateY(-1px); opacity: .92 }
+.social--ig:active{ transform: translateY(0); filter: contrast(.96) }
+
+.social:focus-visible{
+  outline: 3px solid rgba(40, 90, 235, .35);
+  outline-offset: 3px;
+}
+
+/* 7) Marquee — 상/하단 각 1줄만 ----------------------------------------- */
 .marquee{
-  border-top:3px solid var(--hair); border-bottom:3px solid var(--hair);
-  background: repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(0,0,0,.08) 13px, transparent 14px);
+  border-top: 2px dotted var(--dash);   /* 위쪽 줄 1개 */
+  border-bottom: 2px dotted var(--dash);/* 아래쪽 줄 1개 */
+  background: none;                     /* 짧은 선처럼 보이던 스트라이프 제거 */
   overflow:hidden;
+  padding-block:18px;
+  margin-top: 0;
 }
 .track{
   display:flex; gap:32px; white-space:nowrap;
-  font: 800 18px/1 'Space Grotesk', sans-serif; padding:10px 0;
+  font:900 16px/1 'Space Grotesk', sans-serif;
   animation: scroll 22s linear infinite;
 }
 @keyframes scroll{ 0%{ transform: translateX(0) } 100%{ transform: translateX(-50%) } }
-@media (max-width:560px){
-  .track{ animation-duration: 34s } /* 모바일에선 좀 더 느리게 */
+@media (max-width:560px){ .track{ animation-duration: 34s } }
+
+/* 8) Footer — 마퀴와 경계 겹침 방지 ------------------------------------- */
+.footer{
+  border-top: none; /* 마퀴 하단 점선과 겹치지 않도록 제거 */
+  background: linear-gradient(180deg,#fff,#f6efe4);
 }
-
-/* ---------------- Grid Cards ---------------- */
-.grid-cards{
-  display:grid; grid-template-columns: repeat(4, 1fr); gap:16px;
-  padding:16px; border-bottom:3px solid var(--hair);
-}
-@media (max-width: 1080px){ .grid-cards{ grid-template-columns: repeat(3, 1fr) } }
-@media (max-width: 760px){  .grid-cards{ grid-template-columns: repeat(2, 1fr) } }
-@media (max-width: 520px){  .grid-cards{ grid-template-columns: 1fr } }
-
-.card{
-  position:relative; display:block; text-decoration:none; color:inherit; background:#fff;
-  border:3px solid var(--hair); border-radius:12px; overflow:hidden;
-  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease, filter var(--t-fast) ease;
-  box-shadow: 6px 6px 0 var(--hair);
-}
-.card:hover{ transform: translate(-2px,-2px); box-shadow: 10px 10px 0 var(--hair) }
-.card:active{ transform: translate(-1px,-1px); filter: contrast(.96) }
-
-.idx{
-  position:absolute; top:8px; left:8px; z-index:1;
-  background:#000; color:#fff; font:700 12px/1 'Space Mono', monospace;
-  padding:6px 8px; border-radius:6px; border:2px solid var(--hair);
-}
-
-.shot{ aspect-ratio: 4/3; background:#f1f1f1; overflow:hidden }
-.shot.dark{ background:#0f0f0f }
-.shot img{
-  width:100%; height:100%; display:block; object-fit:cover;
-  filter: saturate(.98) contrast(1.02);
-}
-
-.meta{ padding:12px 12px 14px }
-.meta h3{ margin:.2rem 0; font-size:18px; font-weight:800; letter-spacing:.02em }
-.meta p{ margin:0; color: var(--muted); line-height: 1.6 }
-
-/* ---------------- Footer ---------------- */
-.footer{ border-top:3px solid var(--hair); background:#fff }
 .foot-inner{
-  display:flex; align-items:center; gap:10px; padding:14px 16px;
-  font: 700 12px/1 'Space Mono', monospace; color: var(--ink-2)
+  display:flex; align-items:center; gap:10px; padding:12px 16px;
+  font: 900 12px/1 'Space Mono', monospace; color: var(--ink-2)
 }
 
-/* ---------------- Tiny screens polish ---------------- */
-@media (max-width:380px){
-  .brand-word{ display:none }         /* 공간 확보 */
-  .quick a{ padding:8px 8px }
-  .display{ font-size: clamp(44px, 16vw, 120px) }
+/* 9) Tiny Screens ---------------------------------------------------------- */
+@media (max-width:620px){
+  .btn{ width:100%; text-align:center }
+}
+@media (max-width:420px){
+  .brand-word{ display:none }
+  .display--one{ font-size: clamp(54px, 20vw, 120px) }
 }
 
-/* ---------------- Optional: tone-down switch ---------------- */
-/* 필요시 과한 형광을 줄이고 싶으면 아래 주석 해제
-:root{ --acid:#e9f8c9 }
-.pal-list a:hover,.pal-list a[aria-selected="true"]{ background: var(--acid) }
-.btn.ghost{ background: var(--acid) }
-.brand-mark{ background: var(--acid) }
-*/
+/* 10) Clean-ups ------------------------------------------------------------ */
+/* 임시 스티커 요소가 HTML에 남아있어도 숨김 */
+.sticker{ display:none !important }

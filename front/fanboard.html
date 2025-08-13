@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NANSI — Fan Board</title>
+  <title>EP1LOG — Fan Board</title>
 
   <!-- Theme fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,48 +12,70 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/fanboard.css" />
 </head>
-<body class="the-grid">
+<body>
+  <a href="#main" class="skip-link">본문 바로가기</a>
+
   <!-- Rail header -->
   <header class="rail">
-    <button id="brandTrigger" class="brand-btn" aria-controls="palette" aria-expanded="false">
-      <span class="brand-mark">N</span>
-      <span class="brand-word">NANSI</span>
+    <!-- EP1LOG: 홈으로 이동 -->
+    <a href="index.html" class="brand-btn" aria-label="EP1LOG 홈">
+      <span class="brand-mark" aria-hidden="true">E</span>
+      <span class="brand-word">EP1LOG</span>
+    </a>
+
+    <!-- MENU: 팔레트(오버레이) 열기 -->
+    <button
+      id="menuToggle"
+      class="menu-toggle"
+      aria-controls="palette"
+      aria-expanded="false"
+      aria-label="메뉴 열기"
+    >
+      MENU
     </button>
-    <nav class="quick">
-      <a href="introduce.html">MEMBERS</a>
-      <a href="schedule.html">SCHEDULE</a>
-      <a class="accent" href="reservation.html">RESERVE</a>
-    </nav>
   </header>
 
-  <!-- Command palette -->
-  <aside id="palette" class="palette" aria-hidden="true">
+  <!-- MENU 팔레트(⌘/Ctrl+K 가능) -->
+  <aside
+    id="palette"
+    class="palette"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="palInput"
+  >
     <div class="pal-body">
       <div class="pal-head">
-        <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
+        <input
+          id="palInput"
+          class="pal-input"
+          type="text"
+          placeholder="Type to jump…  ⌘/Ctrl + K"
+          aria-label="빠른 이동"
+        />
         <button id="palClose" class="pal-close" aria-label="닫기">×</button>
       </div>
+
       <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
-        <li><a href="index.html">→ Home</a></li>
-        <li><a href="introduce.html">→ Members</a></li>
-        <li><a href="schedule.html">→ Schedule</a></li>
+        <li><a href="introduce.html" aria-selected="true">→ Members</a></li>
         <li><a href="reservation.html">→ Reservation</a></li>
-        <li><a href="fanboard.html" aria-selected="true">→ Fan Board</a></li>
+        <li><a href="fanboard.html">→ Fan Board</a></li>
         <li><a href="store.html">→ Goods Store</a></li>
       </ul>
+
       <p class="pal-hint">ESC to close · ↑↓ to navigate · Enter to go</p>
     </div>
   </aside>
 
-  <main>
-    <!-- HERO -->
+  <main id="main">
+    <!-- HERO (콜라주/워터마크 포함) -->
     <section class="poster fb-hero">
       <div class="poster-col text">
         <p class="eyebrow">MESSAGE BOARD · COMMUNITY</p>
         <h1 class="display">FAN <span class="outline">BOARD</span></h1>
-        <p class="lede">NANSI에게 전하고 싶은 이야기, 공연 소감, 응원 메시지를 남겨주세요.</p>
+        <p class="lede">응원, 후기, 건의 — 하나하나가 EP1LOG의 기록이 됩니다.</p>
         <div class="cta-row">
-          <button id="open-modal" class="btn">INPUT MESSAGE</button>
+          <button id="open-modal" class="btn btn--accent">INPUT MESSAGE</button>
         </div>
       </div>
     </section>
@@ -61,17 +83,17 @@
     <!-- BOARD -->
     <section class="fb-section">
       <div class="wrap">
-        <p class="guide mono">비방/욕설/개인정보 노출 글은 예고 없이 삭제될 수 있습니다.</p>
+        <p class="guide mono">※ 비방/욕설/개인정보 노출 글은 예고 없이 삭제될 수 있습니다.</p>
 
-        <div id="board" class="board">
+        <div id="board" class="board card">
           <div class="board-head">
             <div class="count mono"><span id="postCount">0</span> posts</div>
-            <button id="open-modal-2" class="btn ghost">WRITE</button>
+            <button id="open-modal-2" class="btn btn--ghost">WRITE</button>
           </div>
 
-          <div id="posts-list" class="posts"></div>
+          <div id="posts-list" class="posts" aria-live="polite"></div>
 
-          <div id="empty" class="empty card" hidden>
+          <div id="empty" class="empty" hidden>
             <p class="mono">아직 등록된 글이 없습니다. 첫 메시지를 남겨보세요!</p>
           </div>
 
@@ -83,7 +105,7 @@
 
   <footer class="footer">
     <div class="foot-inner">
-      <span>© <span id="year"></span> NANSI</span>
+      <span>© <span id="year"></span> EP1LOG</span>
       <span class="dot">•</span>
       <span>Developed by curr</span>
     </div>
@@ -94,6 +116,10 @@
     <div class="fb-modal-backdrop" data-close="backdrop"></div>
     <div class="fb-modal-panel">
       <button class="fb-close" id="close-modal" aria-label="닫기">×</button>
+      <header class="card-head">
+        <h2 id="wTitle">Write a message</h2>
+        <p>개인정보는 포함하지 마세요.</p>
+      </header>
       <form id="fanboard-form" class="card-body fgrid">
         <div class="fgroup">
           <label>이름 <span class="sub">(닉네임)</span></label>
@@ -106,14 +132,14 @@
         <div class="fgroup full">
           <label>내용</label>
           <textarea name="content" rows="5" required></textarea>
-          <p class="hint">개인정보를 포함하지 마세요. (줄바꿈 가능)</p>
+          <p class="hint">줄바꿈 가능 · 비방/개인정보 금지</p>
         </div>
         <div class="frow">
           <label class="chk">
             <input type="checkbox" name="is_secret" />
             비밀글로 작성
           </label>
-          <button type="submit" class="btn strong">글 남기기</button>
+          <button type="submit" class="btn btn--primary">글 남기기</button>
         </div>
         <div id="confirmation-message" class="msg" hidden></div>
       </form>

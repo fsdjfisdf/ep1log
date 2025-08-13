@@ -1,279 +1,367 @@
-/* =======================================================
-   NANSI — Fan Board (Neo-Brutal Poster Theme, refined)
-   - Strong borders & offset shadows
-   - Polished board-head (count + WRITE)
-   - Safe readable post cards, modal form
-   ======================================================= */
+/* ==========================================================================
+   EP1LOG — Fan Board (Scrapbook / Collage)
+   Page-specific stylesheet for fanboard.html
 
-/* Motion respect */
+   Goals
+   - 콜라주/스크랩북 톤을 유지(종이질감, 와시테이프, 점선)
+   - 접근성/반응형/가독성 강화
+   - 긴 글/긴 단어/다국어/이모지 안정 렌더링
+   - 모션 선호/프린트 대응
+   ========================================================================== */
+
+/* 0) Fallback Tokens (글로벌 토큰 부재 시 대비) --------------------------- */
+:root{
+  --paper:#faf7ef; --paper-2:#f2eee4; --card:#fffaf2; --tape:#f1e4b8;
+  --ink:#231f20; --ink-2:#4a4341; --muted:#756d69;
+  --chip-red:#d94b4b; --chip-teal:#2aa79b; --chip-violet:#6b4aa0; --chip-gold:#f0b83a; --chip-orange:#e6772e;
+  --hair:#1b1716; --dash:#9e8f86;
+  --shadow-paper: 0 1px 0 rgba(0,0,0,.04), 0 10px 24px rgba(0,0,0,.10);
+  --shadow-chip: 0 3px 14px rgba(0,0,0,.20);
+  --radius: 12px; --radius-sm: 8px;
+  --t:.22s; --z-overlay:100;
+}
+
+/* 기본 안전장치 (wrap 미정의 시) */
+.wrap{ max-width:1200px; margin:0 auto; padding:0 16px }
+
+/* ==========================================================================
+   1) HERO (워터마크 + 콜라주 톤)
+   ========================================================================== */
+.fb-hero{
+  position: relative;
+  padding: clamp(24px, 6vw, 60px) 16px clamp(18px, 5vw, 44px);
+  border-bottom: none;
+  background: radial-gradient(60% 40% at 50% 100%, rgba(174,141,116,.16), transparent 60%);
+  max-width: 1200px; margin: 0 auto;
+  text-align: center; color: var(--ink);
+  isolation: isolate; /* 워터마크 레이어 분리 */
+}
+
+/* 반복 워터마크 (많이 보이되 과하지 않게) */
+.fb-hero::before{
+  content:""; position:absolute; inset:0;
+  background-image: url("../images/ep1log_logo2.png");
+  background-repeat: repeat;
+  background-size: clamp(120px, 14vw, 200px) auto;
+  background-position: 0 0;
+  opacity: .025; pointer-events:none;
+  filter: saturate(.95) contrast(1.02);
+  z-index: -1;
+}
+
+/* 바닥 워터마크 (큰 로고 한 장) */
+.fb-hero::after{
+  content:""; position:absolute; inset:auto 0 6% 0; margin:0 auto;
+  width: clamp(160px, 28vw, 360px); height: clamp(160px, 28vw, 360px);
+  background: url("../images/ep1log_logo2.png") center/contain no-repeat;
+  opacity:.05; pointer-events:none; z-index:-1;
+}
+
+.fb-hero .eyebrow{
+  margin: 2px 0 10px; color:var(--ink-2);
+  font:900 12px/1 'Space Mono', ui-monospace; letter-spacing:.22em; text-transform: uppercase;
+}
+
+.fb-hero .display{
+  margin:0; font-family:'Bebas Neue', system-ui, ui-sans-serif;
+  font-size: clamp(62px, 16vw, 180px);
+  line-height:.88; letter-spacing:.01em; text-wrap: balance;
+}
+.fb-hero .display .outline{
+  color:transparent; -webkit-text-stroke:2px var(--hair); text-stroke:2px var(--hair);
+}
+
+.fb-hero .lede{
+  margin:12px 0 14px; color:var(--ink-2);
+  font-family: 'Space Grotesk','Noto Sans KR', ui-sans-serif;
+  font-size: clamp(17px, 2.1vw, 20px); line-height:1.7;
+}
+
+.fb-hero .cta-row{ justify-content:center }
+
+/* ==========================================================================
+   2) SECTION BODY
+   ========================================================================== */
+.fb-section{
+  border-top: 2px dotted var(--dash); /* 위쪽 점선 한 줄만 */
+  background: linear-gradient(180deg, var(--paper), #fff);
+  padding: clamp(16px, 4vw, 28px) 0 clamp(20px, 6vw, 40px);
+  color: var(--ink);
+}
+.fb-section .wrap{ max-width:1200px; margin:0 auto }
+
+/* 안내 문구 */
+.guide{
+  margin: 0 16px 10px;
+  color: var(--muted);
+  font: 900 12px/1.6 'Space Mono', monospace;
+}
+
+/* ==========================================================================
+   3) BOARD WRAP (종이 카드 + 테이프)
+   ========================================================================== */
+.board{
+  position: relative;
+  margin: 0 16px;
+  padding: 14px;
+  border: 2px solid var(--hair);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow-paper);
+  transform: rotate(calc(var(--tilt, -0.2deg)));
+}
+
+/* 와시테이프 장식 */
+.board::before,
+.board::after{
+  content:""; position:absolute; z-index:1;
+  width: 82px; height: 18px; background: var(--tape);
+  border:1px dashed rgba(0,0,0,.16); box-shadow: var(--shadow-paper);
+}
+.board::before{ left: 16px; top: -10px; transform: rotate(-6deg) }
+.board::after { right: 18px; top:  -8px; transform: rotate( 6deg) }
+
+/* 헤더: 카운트 + 쓰기 버튼 */
+.board-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding-bottom: 8px; border-bottom: 2px dashed var(--dash); margin-bottom: 8px;
+}
+.board-head .count{ color: var(--ink-2) }
+
+/* ==========================================================================
+   4) POSTS LIST & ITEM
+   ========================================================================== */
+.posts{
+  display: grid;
+  gap: 12px;
+}
+
+/* 빈 상태 */
+.empty{
+  margin-top: 6px; padding: 14px;
+  border: 2px dashed var(--dash); border-radius: var(--radius);
+  background: #fff; color: var(--ink-2);
+}
+
+/* 단일 게시물 카드 */
+.pitem{
+  position:relative;
+  border: 2px solid var(--hair);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow-paper);
+  padding: 12px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* 각 아이템 상단 테이프 */
+.pitem::before{
+  content:""; position:absolute; left: 10px; top: -8px;
+  width: 54px; height: 16px; background: var(--tape);
+  border: 1px dashed rgba(0,0,0,.16);
+  transform: rotate(-5deg);
+  box-shadow: var(--shadow-paper);
+  border-radius: 6px;
+}
+
+/* 아이템 헤더: 작성자/시간 + 삭제 버튼 */
+.phead{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+  padding-bottom: 8px; border-bottom: 2px dashed var(--dash); margin-bottom: 8px;
+}
+.phead .left{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+.writer{ font-weight: 900; letter-spacing:.01em }
+.date{ font: 900 12px/1 'Space Mono', monospace; color: var(--muted) }
+
+/* 본문 텍스트 */
+.pcontent .text{
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.7;
+  white-space: pre-wrap; /* 줄바꿈 유지 */
+}
+
+/* 비밀글 뱃지 */
+.pill.secret{
+  display:inline-block;
+  font: 900 11px/1 'Space Mono', monospace;
+  border:2px solid var(--hair); border-radius:999px;
+  padding:6px 8px; background: var(--chip-violet); color:#fff;
+  margin-right: 6px;
+}
+
+/* 삭제 버튼 (작게 + 위험) */
+.btn.small{
+  padding: 8px 12px; border-width: 2px; border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--hair);
+}
+.btn.danger{ background: var(--chip-red); color:#fff }
+
+/* ==========================================================================
+   5) SKELETON LOADING
+   ========================================================================== */
+.skeletons{ display:grid; gap:12px }
+.skeleton{
+  min-height: 84px;
+  background: linear-gradient(90deg, rgba(0,0,0,.04), rgba(0,0,0,.06), rgba(0,0,0,.04));
+  border:2px dashed var(--dash);
+  border-radius: var(--radius);
+  animation: fbShimmer 1.6s linear infinite;
+}
+@keyframes fbShimmer{
+  0% { filter: brightness(0.96) }
+  50%{ filter: brightness(1.02) }
+  100%{ filter: brightness(0.96) }
+}
+
+/* ==========================================================================
+   6) WRITE MODAL
+   ========================================================================== */
+.fb-modal{
+  position: fixed; inset: 0; z-index: var(--z-overlay);
+  display:grid; place-items:center;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--t) ease;
+}
+.fb-modal.show{ opacity: 1; pointer-events: auto }
+
+.fb-modal-backdrop{
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.fb-modal-panel{
+  position: relative; z-index: 1;
+  width: min(720px, 94vw);
+  background: var(--card);
+  border: 2px solid var(--hair);
+  border-radius: 14px;
+  box-shadow: var(--shadow-paper);
+  padding: 14px;
+  transform: rotate(-0.3deg);
+}
+
+/* 닫기 버튼 */
+.fb-close{
+  position: absolute; right: 10px; top: 10px;
+  border: 2px solid var(--hair);
+  background: var(--chip-orange);
+  color: #2b1003;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* 모달 내 폼 (reservation 톤과 일치) */
+.fgrid{
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.fgrid .full{ grid-column: 1 / -1 }
+@media (max-width: 720px){ .fgrid{ grid-template-columns: 1fr } }
+
+.fgroup label{
+  display:block; font-weight:800; margin-bottom:6px; letter-spacing:.01em;
+}
+.fgroup .sub{ color:var(--muted); font-weight:700; font-size:.9em }
+
+.fgroup input,
+.fgroup textarea{
+  width:100%;
+  padding:12px 12px;
+  border-radius:10px;
+  border:2px solid var(--hair);
+  background:#fff; color: var(--ink);
+  font: 600 16px/1 'Space Grotesk','Noto Sans KR', ui-sans-serif;
+  transition: box-shadow var(--t) ease, border-color var(--t) ease;
+}
+.fgroup textarea{ resize: vertical; min-height: 120px }
+.fgroup input:focus,
+.fgroup textarea:focus{
+  outline: 3px solid rgba(42,167,155,.25);
+  box-shadow: 0 0 0 2px rgba(42,167,155,.14) inset;
+}
+
+/* submit row */
+.frow{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+}
+.chk{
+  display:flex; align-items:center; gap:8px;
+  font-weight:800;
+}
+
+/* 제출 결과 메시지 */
+#confirmation-message{
+  margin-top: 6px;
+}
+
+/* ==========================================================================
+   7) MESSAGES / UTILITIES
+   ========================================================================== */
+.msg{
+  margin-top:10px; padding:10px; border:2px solid var(--hair);
+  border-radius:10px; background:#fff; color:var(--ink);
+}
+.msg.ok{ background:#e8f7ef; border-color:#1b7f4a }
+.msg.err{ background:#fde8e8; border-color:#b64040 }
+
+/* 포커스 가시성 (키보드) */
+:focus-visible{ outline: 3px solid var(--chip-teal); outline-offset: 3px }
+
+/* 버튼 비활성/포커스 */
+.btn[aria-disabled="true"],
+.btn[data-disabled="true"],
+.btn:disabled{
+  opacity:.6; cursor:not-allowed;
+  transform:none !important;
+  box-shadow: 6px 6px 0 var(--hair) !important;
+}
+.btn:focus-visible{
+  outline: 3px solid var(--chip-teal);
+  outline-offset: 3px;
+}
+
+/* 긴 URL/단어 대응 */
+.posts, .pcontent, .pitem{
+  overflow-wrap:anywhere;
+  word-break: break-word;
+}
+
+/* ==========================================================================
+   8) Reduced Motion / High Contrast / Print
+   ========================================================================== */
 @media (prefers-reduced-motion: reduce){
   *{
-    animation-duration:.001ms !important;
+    animation-duration:.0001ms !important;
     animation-iteration-count:1 !important;
-    transition-duration:.001ms !important;
+    transition-duration:.0001ms !important;
     scroll-behavior:auto !important;
   }
 }
 
-/* Local timings */
-:where(html){
-  --t-fast:.12s;
-  --t-base:.22s;
-}
-
-/* ---------- HERO ---------- */
-.fb-hero .display{
-  letter-spacing:.02em; line-height:.9; text-wrap: balance;
-}
-.fb-hero .display .outline{
-  -webkit-text-stroke: 2px var(--hair, #0b0b0b);
-  text-stroke: 2px var(--hair, #0b0b0b);
-}
-
-/* ---------- SECTION ---------- */
-.fb-section{
-  border-bottom:3px solid var(--hair, #0b0b0b);
-  background:#fff;
-  padding:16px 0 26px;
-}
-.guide{
-  color:var(--ink-2, #1a1a1a);
-  margin:8px 0 12px;
-}
-
-/* ---------- BOARD LAYOUT ---------- */
-.board{
-  display:grid;
-  gap:12px;
-}
-
-/* ===== Board Head (refined) ===== */
-.board-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 14px;
-  border:3px solid var(--hair, #0b0b0b);
-  border-radius:12px;
-  background:#fff;
-  box-shadow:8px 8px 0 var(--hair, #0b0b0b);
-}
-
-/* Count: show number as a badge, keep original "posts" text but restyle it */
-.count{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  /* visually restyle the trailing 'posts' word while keeping DOM text */
-  color:transparent;                     /* hide original text color */
-}
-.count #postCount{
-  color:var(--ink-2, #1a1a1a);          /* re-apply color to number */
-  display:inline-grid;
-  place-items:center;
-  min-width:36px; height:28px; padding:0 10px;
-  border:3px solid var(--hair, #0b0b0b);
-  border-radius:8px; background:#fff;
-  box-shadow:4px 4px 0 var(--hair, #0b0b0b);
-  font-weight:800; letter-spacing:.02em;
-  font-variant-numeric: tabular-nums;
-}
-.count::after{
-  content:"posts";
-  color:var(--muted, #6f6f73);
-  font:700 12px/1 'Space Mono', ui-monospace;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-}
-
-/* WRITE button harmony */
-.board-head .btn{
-  height:36px; line-height:1; padding:10px 12px;
-  border-radius:10px;
-  box-shadow:6px 6px 0 var(--hair, #0b0b0b);
-}
-.board-head .btn.ghost{
-  background: var(--acid, #b6ff2e);
-  border:3px solid var(--hair, #0b0b0b);
-  color:#000;
-}
-@media (max-width:520px){
-  .board-head{
-    flex-wrap:wrap;
-    align-items:flex-start;
-  }
-  .count{ order:1 }
-  .board-head .btn{ order:2 }
-}
-
-/* posts grid */
-.posts{
-  display:grid; gap:12px;
-}
-
-/* ---------- POST ITEM ---------- */
-.pitem{
-  border:3px solid var(--hair, #0b0b0b);
-  border-radius:12px;
-  background:#fff;
-  box-shadow:8px 8px 0 var(--hair, #0b0b0b);
-  overflow:hidden;
-  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease;
-}
-.pitem:hover{ transform: translate(-1px,-1px); box-shadow:10px 10px 0 var(--hair, #0b0b0b) }
-
-.phead{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding:12px 14px;
-  border-bottom:3px solid var(--hair, #0b0b0b);
-}
-.writer{ font-weight:800; letter-spacing:.02em }
-.date{
-  margin-left:8px;
-  color:var(--muted, #6f6f73);
-  font:700 12px/1 'Space Mono', ui-monospace;
-  letter-spacing:.02em;
-}
-.left{ display:flex; align-items:center; gap:6px; flex-wrap:wrap }
-.right{ display:flex; align-items:center; gap:6px }
-
-.pcontent{ padding:14px; background:#fff }
-.pcontent .text{
-  margin:0;
-  white-space:pre-wrap; /* 줄바꿈 보존 */
-  line-height:1.7;
-  color:var(--ink-2, #1a1a1a);
-}
-
-/* secret indicator */
-.pill.secret{
-  margin-right:8px;
-  background:#000; color:#fff;
-  border:3px solid var(--hair, #0b0b0b);
-  border-radius:8px; padding:4px 8px;
-  font:700 12px/1 'Space Mono', ui-monospace;
-  box-shadow:4px 4px 0 var(--hair, #0b0b0b);
-}
-
-/* ---------- BUTTONS ---------- */
-.btn.small{
-  padding:8px 10px;
-  border:3px solid var(--hair, #0b0b0b);
-  border-radius:8px;
-  background:#fff;
-  font-weight:800;
-  box-shadow:4px 4px 0 var(--hair, #0b0b0b);
-  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease, filter var(--t-fast) ease;
-}
-.btn.small:hover{ transform: translate(-1px,-1px); box-shadow:6px 6px 0 var(--hair, #0b0b0b) }
-.btn.small:active{ transform:none; filter:contrast(.96) }
-.btn.small.danger{
-  background:#000; color:#fff; border-color:#000;
-}
-
-/* ---------- EMPTY / ERROR / CONFIRM ---------- */
-.card{
-  border:3px solid var(--hair, #0b0b0b);
-  border-radius:12px;
-  background:#fff;
-  box-shadow:8px 8px 0 var(--hair, #0b0b0b);
-  padding:14px;
-}
-.msg{
-  margin:12px 0 0; padding:12px;
-  border:3px dashed var(--hair, #0b0b0b); border-radius:10px; background:#fff;
-  font-weight:700; color:var(--ink-2, #1a1a1a);
-}
-.msg.ok{
-  border-style:solid;
-  background:linear-gradient(180deg, var(--acid, #b6ff2e), #eaff8a);
-}
-.msg.err{
-  border-color:#ff3b30; background:#fff0f0; color:#8e0000;
-}
-
-/* ---------- SKELETON ---------- */
-.skeletons{ display:grid; gap:12px }
-.skeleton{
-  height:84px; background:
-    linear-gradient(90deg, rgba(0,0,0,.05), rgba(0,0,0,.08), rgba(0,0,0,.05));
-  background-size:200% 100%;
-  animation:sheen 1.2s linear infinite;
-}
-@keyframes sheen{
-  0%{ background-position:200% 0 } 100%{ background-position:-200% 0 }
-}
-
-/* ---------- MODAL ---------- */
-.fb-modal{
-  position:fixed; inset:0; z-index:120;
-  pointer-events:none; opacity:0; transform: translateY(-4px);
-  transition: opacity var(--t-base) ease, transform var(--t-base) ease;
-}
-.fb-modal.show{ opacity:1; pointer-events:auto; transform:none }
-.fb-modal-backdrop{
-  position:absolute; inset:0; background: rgba(11,11,11,.4);
-  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
-}
-.fb-modal-panel{
-  position:relative; width:min(680px, 92vw); margin: 8vh auto 0;
-  background:#fff; color:var(--ink, #0b0b0b);
-  border:3px solid var(--hair, #0b0b0b); border-radius:12px;
-  box-shadow: 14px 14px 0 var(--hair, #0b0b0b);
-  overflow:hidden;
-}
-.fb-close{
-  position:absolute; top:8px; right:8px;
-  border:3px solid var(--hair, #0b0b0b);
-  background:#000; color:#fff; border-radius:8px;
-  font-weight:800; width:36px; height:36px; line-height:30px; text-align:center; cursor:pointer;
-}
-
-/* form grid */
-.fgrid{
-  display:grid; gap:12px; padding:14px;
-  grid-template-columns: 1fr 1fr;
-}
-.fgroup{ display:grid; gap:6px }
-.fgroup.full{ grid-column: 1 / -1 }
-.frow{
-  grid-column: 1 / -1;
-  display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
-}
-.chk{ display:flex; align-items:center; gap:8px; font-weight:800 }
-.hint{ color:var(--muted, #6f6f73); font-size:12px }
-
-/* inputs */
-input[type="text"], input[type="password"], textarea{
-  appearance:none; -webkit-appearance:none;
-  border:3px solid var(--hair, #0b0b0b);
-  border-radius:10px; background:#fff; color:var(--ink, #0b0b0b);
-  padding:10px 12px;
-  font:700 16px/1.2 'Space Grotesk','Noto Sans KR',sans-serif;
-  transition: box-shadow var(--t-base) ease, transform var(--t-fast) ease, filter var(--t-fast) ease;
-}
-textarea{ resize:vertical; min-height:110px }
-input:focus-visible, textarea:focus-visible{
-  outline:3px solid var(--accent, #0066ff); outline-offset:3px;
-}
-
-/* responsive */
-@media (max-width:760px){
-  .fgrid{ grid-template-columns:1fr }
-  .frow{ justify-content:space-between }
-}
-
-/* Palette hint fallback */
-.pal-hint{
-  margin:10px; color:var(--muted, #6f6f73);
-  font:700 12px/1 'Space Mono', ui-monospace;
-}
-
-/* Print & forced-colors */
-@media print{
-  .board-head, .pitem, .card{ box-shadow:none !important }
-}
 @media (forced-colors: active){
-  .pitem, .board-head, .card{ box-shadow:none; border-width:2px }
+  .board, .pitem, .fb-modal-panel{
+    border: 1px solid CanvasText;
+    box-shadow: none;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .btn{ box-shadow:none }
+}
+
+@media print{
+  .rail, .menu-toggle, .palette, .fb-modal{ display:none !important }
+  .fb-hero::before, .fb-hero::after{ display:none !important }
+  .board, .pitem{
+    transform:none !important;
+    box-shadow:none !important;
+    border-color:#000 !important;
+  }
+  .board::before, .board::after, .pitem::before{ display:none !important }
+  .btn{ box-shadow:none !important }
 }

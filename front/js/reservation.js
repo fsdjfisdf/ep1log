@@ -1,4 +1,4 @@
-// reservation.js — Neo-Brutal UX with robust states
+// reservation.js — Minimal (no event card), EP1LOG Reservation UX
 
 (() => {
   const API_BASE = 'http://43.201.204.91:3001/api';
@@ -6,6 +6,7 @@
   const ENDPOINT_STATUS = `${API_BASE}/reservation/status`;
   const PRICE_PER_TICKET = 15000;
 
+  // DOM
   const form = document.getElementById('reservation-form');
   const peopleEl = document.getElementById('people_count');
   const nameEl = document.getElementById('name');
@@ -16,7 +17,6 @@
   const confirmBox = document.getElementById('confirmation-message');
   const submitBtn = document.getElementById('submitBtn');
 
-  const openStatusBtn = document.getElementById('openStatus');
   const checkStatusInline = document.getElementById('checkStatusInline');
   const modal = document.getElementById('statusModal');
   const modalBackdrop = modal.querySelector('.resv-modal-backdrop');
@@ -25,11 +25,7 @@
   const statusResult = document.getElementById('status-result');
 
   // helpers
-  const fmt = (n) => n.toLocaleString('ko-KR') + '원';
-  const calc = () => {
-    const c = Math.max(1, parseInt(peopleEl.value || '0', 10) || 0);
-    amountEl.textContent = fmt(c * PRICE_PER_TICKET);
-  };
+  const fmtKRW = (n) => n.toLocaleString('ko-KR') + '원';
   const setMsg = (html, ok=false, err=false) => {
     confirmBox.className = 'msg' + (ok ? ' ok' : '') + (err ? ' err' : '');
     confirmBox.innerHTML = html;
@@ -37,15 +33,19 @@
   };
 
   // live total
-  peopleEl.addEventListener('input', calc);
-  peopleEl.addEventListener('blur', calc);
-  calc();
+  const recalc = () => {
+    const c = Math.max(1, parseInt(peopleEl.value || '0', 10) || 0);
+    amountEl.textContent = fmtKRW(c * PRICE_PER_TICKET);
+  };
+  peopleEl.addEventListener('input', recalc);
+  peopleEl.addEventListener('blur', recalc);
+  recalc();
 
   // submit
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // basic client checks
+    // basic checks
     if (!nameEl.value.trim()) { nameEl.focus(); return setMsg('❌ 이름을 입력해주세요.', false, true); }
     const count = parseInt(peopleEl.value, 10);
     if (!count || count < 1) { peopleEl.focus(); return setMsg('❌ 인원 수를 1명 이상으로 입력해주세요.', false, true); }
@@ -74,12 +74,12 @@
         setMsg(
           `✅ 예약 신청이 완료되었습니다!<br><br>
            <strong>입금계좌</strong> · 국민은행 288001-04-217050 (정현우)<br>
-           <strong>입금금액</strong> · ${fmt(payload.amount)}<br><br>
+           <strong>입금금액</strong> · ${fmtKRW(payload.amount)}<br><br>
            입금 확인 후 예약이 확정됩니다. (최대 1일 소요)`,
           true, false
         );
         form.reset();
-        calc();
+        recalc();
       } else {
         const txt = await res.text().catch(()=> '서버 오류');
         setMsg(`❌ 예약 중 오류가 발생했습니다.<br>${txt}`, false, true);
@@ -104,7 +104,6 @@
     modal.setAttribute('aria-hidden','true');
   }
 
-  openStatusBtn?.addEventListener('click', openModal);
   checkStatusInline?.addEventListener('click', openModal);
   modalBackdrop.addEventListener('click', (e)=>{ if (e.target.hasAttribute('data-close')) closeModal(); });
   modalClose.addEventListener('click', closeModal);

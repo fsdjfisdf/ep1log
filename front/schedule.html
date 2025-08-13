@@ -15,32 +15,54 @@
 <body class="the-grid">
   <!-- Rail header -->
   <header class="rail">
-    <button id="brandTrigger" class="brand-btn" aria-controls="palette" aria-expanded="false">
-      <span class="brand-mark">N</span>
+    <!-- NANSI: 홈으로 이동 -->
+    <a href="index.html" class="brand-btn" aria-label="NANSI 홈">
+      <span class="brand-mark" aria-hidden="true">N</span>
       <span class="brand-word">NANSI</span>
+    </a>
+
+    <!-- MENU: 팔레트(오버레이) 열기 -->
+    <button
+      id="menuToggle"
+      class="menu-toggle"
+      aria-controls="palette"
+      aria-expanded="false"
+      aria-label="메뉴 열기"
+    >
+      MENU
     </button>
-    <nav class="quick">
-      <a href="introduce.html">MEMBERS</a>
-      <a href="schedule.html" aria-current="page">SCHEDULE</a>
-      <a class="accent" href="reservation.html">RESERVE</a>
-    </nav>
   </header>
 
-  <!-- Command palette -->
-  <aside id="palette" class="palette" aria-hidden="true">
+  <!-- MENU 팔레트(로고 대신 MENU로 열림, ⌘/Ctrl+K도 가능) -->
+  <aside
+    id="palette"
+    class="palette"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="palInput"
+  >
     <div class="pal-body">
       <div class="pal-head">
-        <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
+        <input
+          id="palInput"
+          class="pal-input"
+          type="text"
+          placeholder="Type to jump…  ⌘/Ctrl + K"
+          aria-label="빠른 이동"
+        />
         <button id="palClose" class="pal-close" aria-label="닫기">×</button>
       </div>
+
+      <!-- 요청하신 MENU 항목 그대로 -->
       <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
-        <li><a href="index.html">→ Home</a></li>
-        <li><a href="introduce.html">→ Members</a></li>
-        <li><a href="schedule.html" aria-selected="true">→ Schedule</a></li>
+        <li><a href="introduce.html" aria-selected="true">→ Members</a></li>
+        <li><a href="schedule.html">→ Schedule</a></li>
         <li><a href="reservation.html">→ Reservation</a></li>
         <li><a href="fanboard.html">→ Fan Board</a></li>
         <li><a href="store.html">→ Goods Store</a></li>
       </ul>
+
       <p class="pal-hint">ESC to close · ↑↓ to navigate · Enter to go</p>
     </div>
   </aside>

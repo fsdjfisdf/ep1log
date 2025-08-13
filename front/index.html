@@ -3,38 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NANSI — NEW BRUTAL THEME</title>
+  <title>EP1LOG — Scrapbook Theme</title>
 
-  <!-- 강한 타이포 조합 -->
+  <!-- 타이포: 디스플레이 + 산세리프 + 모노 -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- 아이콘: Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
-<body class="the-grid">
-  <!-- 상단 키트: 로고(팔레트 트리거) + 퀵 액션 -->
+<body>
+  <a href="#main" class="skip-link">본문 바로가기</a>
+
   <header class="rail">
-    <button id="brandTrigger" class="brand-btn" aria-controls="palette" aria-expanded="false">
-      <span class="brand-mark">N</span>
-      <span class="brand-word">NANSI</span>
-    </button>
-    <nav class="quick">
-      <a href="introduce.html">MEMBERS</a>
-      <a href="schedule.html">SCHEDULE</a>
-      <a class="accent" href="reservation.html">RESERVE</a>
-    </nav>
+    <!-- EP1LOG: 홈으로 이동 -->
+    <a href="index.html" class="brand-btn" aria-label="EP1LOG 홈">
+      <span class="brand-mark" aria-hidden="true">E</span>
+      <span class="brand-word">EP1LOG</span>
+    </a>
+    <!-- MENU: 오버레이 열기 -->
+    <button id="menuToggle" class="menu-toggle" aria-controls="palette" aria-expanded="false" aria-label="메뉴 열기">MENU</button>
   </header>
 
-  <!-- 커맨드 팔레트형 오버레이 (로고 클릭 또는 ⌘/Ctrl+K) -->
-  <aside id="palette" class="palette" aria-hidden="true">
+  <!-- MENU 오버레이 -->
+  <aside id="palette" class="palette" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="palInput">
     <div class="pal-body">
       <div class="pal-head">
         <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
         <button id="palClose" class="pal-close" aria-label="닫기">×</button>
       </div>
       <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
-        <li><a href="index.html" aria-selected="true">→ Home</a></li>
         <li><a href="introduce.html">→ Members</a></li>
-        <li><a href="schedule.html">→ Schedule</a></li>
         <li><a href="reservation.html">→ Reservation</a></li>
         <li><a href="fanboard.html">→ Fan Board</a></li>
         <li><a href="store.html">→ Goods Store</a></li>
@@ -43,84 +43,52 @@
     </div>
   </aside>
 
-  <main>
-    <!-- HERO: 포스터 레이아웃 (텍스트 블록 + 하드 보더 썸네일) -->
-    <section class="poster">
-      <div class="poster-col text">
-        <p class="eyebrow">PYEONGTAEK / KR · BAND</p>
-        <h1 class="display">
-          NANSI<br><span class="outline">Sing in blur</span>
-        </h1>
-        <p class="lede">
-          흐림 속에서<br>선명해지는 사운드.
-        </p>
-        <div class="cta-row">
-          <a class="btn strong" href="schedule.html">NEXT SHOWS</a>
-          <a class="btn ghost" href="reservation.html">RESERVATION</a>
-        </div>
-      </div>
+  <main id="main">
+    <!-- HERO: 중앙 집중 레이아웃 -->
+    <section class="hero hero--center">
+      <p class="eyebrow eyebrow--center">PYEONGTAEK / KR · BAND</p>
 
-      <div class="poster-col visual">
-        <figure class="frame">
-          <img src="images/ep1log_logo2.png" alt="NANSI live" />
-          <figcaption class="cap">NANSI — field recording / club set</figcaption>
-        </figure>
-      </div>
-    </section>
+      <!-- 한 줄 타이틀 -->
+      <h1 class="display display--one display--center">
+        EP1<span class="outline">LOG</span>
+      </h1>
 
-    <!-- MARQUEE: 소리나는 점선과 함께 흘러가는 타이포 -->
-    <section class="marquee">
-      <div class="track" aria-hidden="true">
-        <span>indie · atmospheric · groove · nansi.live — </span>
-        <span>indie · atmospheric · groove · nansi.live — </span>
-        <span>indie · atmospheric · groove · nansi.live — </span>
-      </div>
-    </section>
+      <!-- 슬로건 -->
+      <p class="lede lede--center">Start it. Log it. End it.</p>
 
-    <!-- GRID CARDS: 굵은 보더 + 숫자 라벨 -->
-    <section class="grid-cards">
-      <a class="card" href="introduce.html">
-        <span class="idx">01</span>
-        <div class="shot"><img src="images/nansi.jpg" alt="Members" /></div>
-        <div class="meta">
-          <h3>MEMBERS</h3>
-          <p>밴드 멤버들</p>
-        </div>
-      </a>
+      <!-- CTA 3개: 멤버소개 / 예약 / 팬보드 -->
+      <nav class="cta-row cta-row--center" aria-label="주요 바로가기">
+        <a class="btn btn--primary" href="introduce.html" aria-label="멤버 소개">MEMBERS</a>
+        <a class="btn btn--accent"  href="reservation.html" aria-label="예약">RESERVATION</a>
+        <a class="btn btn--ghost"   href="fanboard.html" aria-label="팬보드">FAN BOARD</a>
+      </nav>
 
-      <a class="card" href="store.html">
-        <span class="idx">02</span>
-        <div class="shot"><img src="images/NANSI logo.png" alt="Goods Store" /></div>
-        <div class="meta">
-          <h3>GOODS STORE</h3>
-          <p>무드가 살아있는 굿즈.</p>
-        </div>
-      </a>
+      <!-- 팀 소개 + SNS -->
+<section class="intro-card" aria-labelledby="introTitle">
+  <header class="intro-head">
+    <h2 id="introTitle" class="intro-title">About EP1LOG</h2>
+  </header>
+  <p class="intro-lead">
+    EP1LOG는 시작하고(EP1), 기록하고(LOG), 어쩌고 저쩌고 BTS, 봉준호, 손흥민, ep1log Let's go
+  </p>
 
-      <a class="card" href="fanboard.html">
-        <span class="idx">03</span>
-        <div class="shot"><img src="images/nansi.jpg" alt="Fan Board" /></div>
-        <div class="meta">
-          <h3>FAN BOARD</h3>
-          <p>메시지를 남겨주세요.</p>
-        </div>
-      </a>
+  <!-- 소셜 링크 -->
+  <div class="social-links" role="group" aria-label="소셜 링크">
+    <a class="social social--yt" href="https://www.youtube.com/@ep1log" target="_blank" rel="noopener noreferrer" aria-label="YouTube로 이동">
+      <i class="fab fa-youtube" aria-hidden="true"></i><span>YouTube</span>
+    </a>
+    <a class="social social--ig" href="https://www.instagram.com/ep1log" target="_blank" rel="noopener noreferrer" aria-label="Instagram으로 이동">
+      <i class="fab fa-instagram" aria-hidden="true"></i><span>Instagram</span>
+    </a>
+  </div>
+</section>
 
-      <a class="card" href="schedule.html">
-        <span class="idx">04</span>
-        <div class="shot"><img src="images/NANSI logo.png" alt="Schedule" /></div>
-        <div class="meta">
-          <h3>SCHEDULE</h3>
-          <p>다가오는 무대를 확인하세요.</p>
-        </div>
-      </a>
-    </section>
   </main>
 
   <footer class="footer">
     <div class="foot-inner">
-      <span>© <span id="year"></span> NANSI</span>
-      <span class="dot">•</span>
+      <span>© <span id="year"></span> EP1LOG</span>
+      <span class="dot" aria-hidden="true">•</span>
       <span>Developed by curr</span>
     </div>
   </footer>

@@ -3,59 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NANSI — Goods Store</title>
+  <title>EP1LOG — Goods Store</title>
 
-  <!-- 글로벌 테마 (이미 프로젝트에 있음) -->
+  <!-- 폰트 & 글로벌 -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" />
-  <!-- 스토어 전용 스타일 -->
+  <!-- 스토어 전용 테마 -->
   <link rel="stylesheet" href="css/store.css" />
 </head>
-<body class="the-grid">
+<body>
+  <a href="#main" class="skip-link">본문 바로가기</a>
+
   <!-- 상단 레일 -->
   <header class="rail">
-    <button id="brandTrigger" class="brand-btn" aria-controls="palette" aria-expanded="false">
-      <span class="brand-mark">N</span>
-      <span class="brand-word">NANSI</span>
+    <a href="index.html" class="brand-btn" aria-label="EP1LOG 홈">
+      <span class="brand-mark" aria-hidden="true">E</span>
+      <span class="brand-word">EP1LOG</span>
+    </a>
+
+    <button
+      id="menuToggle"
+      class="menu-toggle"
+      aria-controls="palette"
+      aria-expanded="false"
+      aria-label="메뉴 열기"
+    >
+      MENU
     </button>
-    <nav class="quick">
-      <a href="introduce.html">MEMBERS</a>
-      <a href="schedule.html">SCHEDULE</a>
-      <a class="accent" href="reservation.html">RESERVE</a>
-    </nav>
   </header>
 
-  <!-- 커맨드 팔레트 -->
-  <aside id="palette" class="palette" aria-hidden="true">
+  <!-- MENU 팔레트 -->
+  <aside
+    id="palette"
+    class="palette"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="palInput"
+  >
     <div class="pal-body">
       <div class="pal-head">
-        <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
+        <input
+          id="palInput"
+          class="pal-input"
+          type="text"
+          placeholder="Type to jump…  ⌘/Ctrl + K"
+          aria-label="빠른 이동"
+        />
         <button id="palClose" class="pal-close" aria-label="닫기">×</button>
       </div>
+
       <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
         <li><a href="introduce.html">→ Members</a></li>
-        <li><a href="schedule.html">→ Schedule</a></li>
         <li><a href="reservation.html">→ Reservation</a></li>
         <li><a href="fanboard.html">→ Fan Board</a></li>
         <li><a href="store.html" aria-selected="true">→ Goods Store</a></li>
       </ul>
+
       <p class="pal-hint">ESC to close · ↑↓ to navigate · Enter to go</p>
     </div>
   </aside>
 
-  <main>
+  <main id="main">
     <!-- HERO -->
     <section class="poster st-hero">
       <div class="poster-col text">
         <p class="eyebrow">GOODS STORE · LIMITED</p>
         <h1 class="display">GOOD<span class="outline">S</span></h1>
-        <p class="lede">무드가 살아있는 NANSI 굿즈—한정 수량 발매.</p>
-      </div>
-      <div class="poster-col visual">
-        <figure class="frame">
-          <img src="images/g-5.jpg" alt="NANSI goods" loading="lazy" />
-          <figcaption class="cap">NANSI — shop selection</figcaption>
-        </figure>
+        <p class="lede">무드가 살아있는 EP1LOG 굿즈 — 한정 수량 발매.</p>
+
+        <ul class="hero-chips" role="list" aria-label="스토어 핵심 정보">
+          <li class="chip"><strong>배송</strong><span>입금 확인 후 3~5일</span></li>
+          <li class="chip"><strong>교환/환불</strong><span>단순변심 불가</span></li>
+        </ul>
       </div>
     </section>
 
@@ -65,78 +85,95 @@
         <div id="product-list" class="p-grid" aria-live="polite"></div>
 
         <!-- 상태 영역 -->
-        <div id="store-empty" class="card empty" hidden>
+        <article id="store-empty" class="card empty" hidden>
+          <header class="card-head">
+            <h2>상품 준비 중</h2>
+          </header>
           <p class="mono">등록된 제품이 없습니다.</p>
-        </div>
-        <div id="store-error" class="msg err" hidden>❌ 제품을 불러오는 데 실패했습니다.</div>
+        </article>
+
+        <div id="store-error" class="msg err" hidden role="alert">❌ 제품을 불러오는 데 실패했습니다.</div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="foot-inner">
-      <span>© <span id="year"></span> NANSI</span>
-      <span class="dot">•</span>
+      <span>© <span id="year"></span> EP1LOG</span>
+      <span class="dot" aria-hidden="true">•</span>
       <span>Developed by curr</span>
     </div>
   </footer>
 
   <!-- PRODUCT MODAL -->
-  <div id="product-modal" class="shop-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+  <aside
+    id="product-modal"
+    class="shop-modal"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="pmTitle"
+  >
     <div class="shop-backdrop" data-close="backdrop"></div>
 
-    <div class="shop-panel">
-      <button class="shop-close" id="pmClose" aria-label="닫기">×</button>
+    <!-- ✅ 닫기 버튼을 패널 바깥(모달 루트)에 두고, 화면 우상단 고정 -->
+    <button class="shop-close-fixed" id="pmClose" aria-label="닫기" type="button">×</button>
 
-      <div class="pm-grid">
-        <!-- 왼쪽: 슬라이더 -->
+    <!-- 패널(스크롤 컨테이너) -->
+    <div class="shop-panel">
+      <!-- 상단 제목(스티키) -->
+      <header class="card-head pm-head sticky-head">
+        <h2 id="pmTitle" class="pm-title">구매 신청</h2>
+      </header>
+
+      <!-- 콘텐츠: 좌(이미지) | 우(정보) -->
+      <section class="pm-content">
         <div class="pm-left">
           <div class="pm-left-inner" id="product-details"><!-- JS inject --></div>
         </div>
 
-        <!-- 오른쪽: 정보 + 구매 -->
-        <div class="pm-right" id="pmRight">
-          <header class="card-head">
-            <h2 id="pmTitle" class="pm-title">구매 신청</h2>
-          </header>
+        <aside class="pm-right" id="pmRight">
+          <div class="pm-info" id="pmInfo"><!-- JS inject (이름/설명/가격) --></div>
+        </aside>
+      </section>
 
-          <div class="pm-info" id="pmInfo"><!-- JS inject --></div>
-
-          <form id="purchase-form" class="pm-form" novalidate>
-            <div class="fgrid">
-              <div class="fgroup">
-                <label>이름</label>
-                <input type="text" name="buyer_name" autocomplete="name" required />
-              </div>
-              <div class="fgroup">
-                <label>전화번호</label>
-                <input type="text" name="phone" inputmode="tel" placeholder="010-0000-0000" required />
-              </div>
-              <div class="fgroup full">
-                <label>주소</label>
-                <input type="text" name="address" autocomplete="shipping street-address" required />
-              </div>
-              <div class="fgroup full">
-                <label>요청사항 <span class="sub">(선택)</span></label>
-                <textarea name="message" rows="3" placeholder="문 앞에 놓아주세요 등"></textarea>
-              </div>
-            </div>
-
-            <div class="account card">
-              <p class="mono">입금계좌</p>
-              <p><strong>카카오뱅크 7942-13-90776 (예금주: 감지성)</strong></p>
-              <p class="hint">입금 확인 후 배송됩니다.</p>
-            </div>
-
-            <div class="pm-actions">
-              <button type="submit" class="btn strong">구매 신청</button>
-              <div id="purchase-result" class="msg" hidden aria-live="polite"></div>
-            </div>
-          </form>
+      <!-- 폼 + 하단 고정 액션 -->
+      <form id="purchase-form" class="purchase-form" novalidate>
+        <div class="fgrid">
+          <div class="fgroup">
+            <label for="buyer_name">이름</label>
+            <input id="buyer_name" type="text" name="buyer_name" autocomplete="name" required />
+          </div>
+          <div class="fgroup">
+            <label for="phone">전화번호</label>
+            <input id="phone" type="text" name="phone" inputmode="tel" placeholder="010-0000-0000" required />
+          </div>
+          <div class="fgroup full">
+            <label for="address">주소</label>
+            <input id="address" type="text" name="address" autocomplete="shipping street-address" required />
+          </div>
+          <div class="fgroup full">
+            <label for="message">요청사항 <span class="sub">(선택)</span></label>
+            <textarea id="message" name="message" rows="3" placeholder="문 앞에 놓아주세요 등"></textarea>
+          </div>
         </div>
-      </div><!-- /pm-grid -->
+
+        <div class="account card">
+          <p class="mono">입금계좌</p>
+          <div class="bank mono">
+            카카오뱅크 <strong>7942-13-90776</strong><br />
+            예금주: <strong>감지성</strong>
+          </div>
+          <p class="hint">입금 확인 후 배송됩니다.</p>
+        </div>
+
+        <div class="pm-actions sticky-actions">
+          <button type="submit" class="btn btn--accent">구매 신청</button>
+          <div id="purchase-result" class="msg" hidden aria-live="polite"></div>
+        </div>
+      </form>
     </div>
-  </div>
+  </aside>
 
   <!-- Scripts -->
   <script src="js/app.js"></script>

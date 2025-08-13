@@ -3,74 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NANSI — Members</title>
+  <title>EP1LOG — Members</title>
 
-  <!-- 테마에서 사용하는 폰트 -->
+  <!-- 테마 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- 글로벌 테마 (index2의 styles.css) -->
+  <!-- 글로벌 테마 -->
   <link rel="stylesheet" href="css/styles.css" />
   <!-- 이 페이지 전용 스타일 -->
   <link rel="stylesheet" href="css/introduce.css" />
 </head>
-<body class="the-grid">
-  <!-- 상단 레일: 로고(팔레트 트리거) + 퀵 링크 -->
+<body>
+  <a href="#main" class="skip-link">본문 바로가기</a>
+
+  <!-- 상단 레일 -->
   <header class="rail">
-    <button id="brandTrigger" class="brand-btn" aria-controls="palette" aria-expanded="false">
-      <span class="brand-mark">N</span>
-      <span class="brand-word">NANSI</span>
+    <!-- EP1LOG: 홈으로 이동 -->
+    <a href="index.html" class="brand-btn" aria-label="EP1LOG 홈">
+      <span class="brand-mark" aria-hidden="true">E</span>
+      <span class="brand-word">EP1LOG</span>
+    </a>
+
+    <!-- MENU: 팔레트 열기 -->
+    <button
+      id="menuToggle"
+      class="menu-toggle"
+      aria-controls="palette"
+      aria-expanded="false"
+      aria-label="메뉴 열기"
+    >
+      MENU
     </button>
-    <nav class="quick">
-      <a href="introduce.html" aria-current="page">MEMBERS</a>
-      <a href="schedule.html">SCHEDULE</a>
-      <a class="accent" href="reservation.html">RESERVE</a>
-    </nav>
   </header>
 
-  <!-- 커맨드 팔레트 -->
-  <aside id="palette" class="palette" aria-hidden="true">
+  <!-- MENU 팔레트 -->
+  <aside
+    id="palette"
+    class="palette"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="palInput"
+  >
     <div class="pal-body">
       <div class="pal-head">
-        <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
+        <input
+          id="palInput"
+          class="pal-input"
+          type="text"
+          placeholder="Type to jump…  ⌘/Ctrl + K"
+          aria-label="빠른 이동"
+        />
         <button id="palClose" class="pal-close" aria-label="닫기">×</button>
       </div>
+
       <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
-        <li><a href="index.html">→ Home</a></li>
         <li><a href="introduce.html" aria-selected="true">→ Members</a></li>
-        <li><a href="schedule.html">→ Schedule</a></li>
         <li><a href="reservation.html">→ Reservation</a></li>
         <li><a href="fanboard.html">→ Fan Board</a></li>
         <li><a href="store.html">→ Goods Store</a></li>
       </ul>
+
       <p class="pal-hint">ESC to close · ↑↓ to navigate · Enter to go</p>
     </div>
   </aside>
 
-  <main>
+  <main id="main">
     <!-- HERO: 포스터 느낌의 섹션 -->
     <section class="poster member-hero">
       <div class="poster-col text">
         <p class="eyebrow">LINE-UP · PYEONGTAEK / KR</p>
         <h1 class="display">MEM<span class="outline">BERS</span></h1>
-        <p class="lede">NANSI의 야무진 멤버들을 소개합니다.</p>
-        <div class="cta-row">
-          <a class="btn" href="fanboard.html">FAN BOARD</a>
-          <a class="btn ghost" href="schedule.html">NEXT SHOWS</a>
-        </div>
+        <p class="lede">EP1LOG의 멤버들을 소개합니다.</p>
       </div>
-
     </section>
 
     <!-- MEMBERS GRID -->
-    <section class="members-section">
+    <section class="members-section" aria-labelledby="membersTitle">
       <div class="wrap">
-        <div class="m-grid">
+        <header class="members-head">
+          <h2 id="membersTitle" class="members-title">Line-up</h2>
+          <p class="members-sub">Start it · Log it · End it</p>
+        </header>
 
+        <div class="m-grid">
           <!-- 정현우 -->
           <article class="mcard">
-            <div class="avatar" data-initial="Curr" aria-hidden="true"></div>
             <header class="mhead">
-              <h2 class="mname">정현우 <span class="en">(curr)</span></h2>
+              <h3 class="mname">정현우 <span class="en">(curr)</span></h3>
               <p class="role">보컬 · 세컨기타</p>
             </header>
             <p class="bio">어쩌라고</p>
@@ -79,9 +99,8 @@
 
           <!-- 송바다 -->
           <article class="mcard">
-            <div class="avatar" data-initial="Socean" aria-hidden="true"></div>
             <header class="mhead">
-              <h2 class="mname">송바다</h2>
+              <h3 class="mname">송바다</h3>
               <p class="role">보컬 · 세컨기타 · 세컨건반</p>
             </header>
             <p class="bio">개 지리는 감성보컬</p>
@@ -90,15 +109,13 @@
 
           <!-- 감지성 -->
           <article class="mcard">
-            <div class="avatar" data-initial="Jisung" aria-hidden="true"></div>
             <header class="mhead">
-              <h2 class="mname">감지성</h2>
+              <h3 class="mname">감지성</h3>
               <p class="role">베이스</p>
             </header>
             <p class="bio">개 힙한 베이시스트</p>
             <span class="sns is-muted">—</span>
           </article>
-
         </div>
       </div>
     </section>
@@ -106,13 +123,13 @@
 
   <footer class="footer">
     <div class="foot-inner">
-      <span>© <span id="year"></span> NANSI</span>
-      <span class="dot">•</span>
+      <span>© <span id="year"></span> EP1LOG</span>
+      <span class="dot" aria-hidden="true">•</span>
       <span>Developed by curr</span>
     </div>
   </footer>
 
-  <!-- 글로벌 팔레트/헤더 스크립트 (index2와 동일) -->
+  <!-- 글로벌 스크립트 -->
   <script src="js/app.js"></script>
   <!-- 이 페이지 전용 스크립트 -->
   <script src="js/introduce.js"></script>
