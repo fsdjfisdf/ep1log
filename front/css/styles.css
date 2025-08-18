@@ -1,25 +1,25 @@
 /* ==========================================================================
-   EP1LOG — Scrapbook / Collage Theme (Centered Hero, refined & accessible)
-   - 단일 마퀴 점선(겹침 제거)
-   - 히어로 워터마크(타일 + 메인) 자연스럽게 다수 노출
+   EP1LOG — Scrapbook / Collage Theme (Mobile-first, Accessible)
+   - 모바일 우선 설계 + 안전영역 + 터치/가독 디테일
+   - 히어로 워터마크(타일 + 메인)
    - INTRO 카드/소셜 중앙 정렬
-   - 포커스/호버/모션 배려
+   - D-Day 배지(간결 버전) 포함
    ========================================================================== */
 
 /* 0) Design Tokens --------------------------------------------------------- */
 :root{
   /* Surface */
-  --paper:#faf7ef;           /* 배경 종이 */
-  --paper-2:#f2eee4;         /* 배경 그라데이션 하단 */
-  --card:#fffaf2;            /* 카드 표면 */
-  --tape:#f1e4b8;            /* 와시 테이프 */
+  --paper:#faf7ef;            /* 배경 종이 */
+  --paper-2:#f2eee4;          /* 배경 그라데이션 하단 */
+  --card:#fffaf2;             /* 카드 표면 */
+  --tape:#f1e4b8;             /* 와시 테이프 */
 
   /* Ink */
-  --ink:#231f20;             /* 본문 잉크 */
-  --ink-2:#4a4341;           /* 보조 텍스트 */
-  --muted:#756d69;           /* 설명/힌트 */
+  --ink:#231f20;              /* 본문 잉크 */
+  --ink-2:#4a4341;            /* 보조 텍스트 */
+  --muted:#756d69;            /* 설명/힌트 */
 
-  /* Accents (chips) */
+  /* Accents (chips/buttons) */
   --chip-red:#d94b4b;
   --chip-teal:#2aa79b;
   --chip-violet:#6b4aa0;
@@ -27,8 +27,8 @@
   --chip-orange:#e6772e;
 
   /* Lines / shadows */
-  --hair:#1b1716;            /* 진한 가는 선 */
-  --dash:#9e8f86;            /* 점선 색상 */
+  --hair:#1b1716;             /* 진한 가는 선 */
+  --dash:#9e8f86;             /* 점선 색상 */
   --shadow-paper: 0 1px 0 rgba(0,0,0,.04), 0 10px 24px rgba(0,0,0,.10);
   --shadow-chip: 0 3px 14px rgba(0,0,0,.20);
 
@@ -37,9 +37,9 @@
   --radius-sm: 8px;
 
   /* Type & motion */
-  --fs:17px;
+  --fs:16px;                  /* 모바일 기본 폰트 */
   --lh:1.75;
-  --t:.22s;
+  --t:.22s;                   /* 기본 전환 시간 */
 
   /* Z */
   --z-rail:40;
@@ -51,6 +51,9 @@
   --ig-gradient: radial-gradient(circle at 30% 107%,
                     #fdf497 0%, #fdf497 5%,
                     #fd5949 45%, #d6249f 60%, #285AEB 90%);
+
+  /* Layout widths */
+  --wrap: 1200px;
 }
 
 /* 1) Base & A11y ----------------------------------------------------------- */
@@ -65,9 +68,11 @@ body{
   font-size: var(--fs); line-height: var(--lh);
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* iOS 하단 홈 인디케이터 여백 */
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
-img{ display:block; max-width:100%; height:auto }
-a{ color:inherit; text-decoration:none }
+img{ display:block; max-width:100%; height:auto; border-style:none }
+a{ color:inherit; text-decoration:none; -webkit-tap-highlight-color: transparent }
 a:hover{
   text-decoration: underline;
   text-underline-offset:2px;
@@ -75,7 +80,7 @@ a:hover{
 }
 ::selection{ background: rgba(217,75,75,.18) }
 :focus-visible{
-  outline: 3px solid var(--chip-teal);
+  outline: 3px solid rgba(42,167,155,.35);
   outline-offset: 3px;
 }
 
@@ -103,19 +108,21 @@ a:hover{
 .rail{
   position:sticky; top:0; z-index: var(--z-rail);
   display:flex; align-items:center; justify-content:space-between; gap:12px;
-  padding:10px 14px;
+  padding: calc(10px + env(safe-area-inset-top,0)) 14px 10px;
   border-bottom:2px dotted var(--dash);
   background: rgba(250,247,239,.85);
   backdrop-filter: blur(4px);
 }
 
+/* 브랜드 버튼 (모바일에서도 터치 타깃 넉넉) */
 .brand-btn{
   display:flex; align-items:center; gap:10px; color:var(--ink);
-  padding:6px 10px;
+  padding:10px 12px;
   border:2px solid var(--hair); border-radius:10px;
   background: linear-gradient(180deg,#fffdf7,#fff7e9);
   box-shadow: var(--shadow-paper);
   transform: rotate(-0.3deg);
+  min-height:44px; /* 손가락 타깃 */
 }
 .brand-btn:hover{ transform: rotate(-0.3deg) translateY(-1px) }
 
@@ -137,10 +144,11 @@ a:hover{
 
 .menu-toggle{
   background: var(--chip-teal); color:#06221f;
-  border:2px solid var(--hair); border-radius:999px; padding:8px 14px;
+  border:2px solid var(--hair); border-radius:999px; padding:10px 16px;
   font-weight:900; letter-spacing:.05em; cursor:pointer;
   box-shadow: var(--shadow-paper);
   transform: rotate(0.5deg);
+  min-height:44px; /* 터치 타깃 */
 }
 .menu-toggle:hover{ filter: saturate(1.05) brightness(1.02) }
 
@@ -150,6 +158,7 @@ a:hover{
   display:grid; place-items:center;
   background: rgba(35,31,32,.35);
   opacity:0; pointer-events:none; transition: opacity var(--t) ease;
+  padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
 }
 .palette.show{ opacity:1; pointer-events:auto }
 
@@ -161,25 +170,26 @@ a:hover{
   box-shadow: var(--shadow-paper);
 }
 .pal-head{
-  display:flex; gap:10px; align-items:center;
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
   padding:10px; border-bottom:2px dashed var(--dash); background:#fffaf0
 }
 .pal-input{
-  flex:1; font:700 16px/1 'Space Grotesk', sans-serif; padding:12px 12px;
+  flex:1; min-width: 200px;
+  font:700 clamp(14px, 3.8vw, 16px)/1 'Space Grotesk', sans-serif; padding:12px 12px;
   border:2px solid var(--hair); border-radius:8px; background:#fff; color:var(--ink);
 }
 .pal-input::placeholder{ color:#9e8f86 }
 .pal-input:focus{ outline: 3px solid rgba(42,167,155,.25) }
 .pal-close{
   border:2px solid var(--hair); background: var(--chip-orange); color:#2b1003;
-  padding:10px 12px; border-radius:8px; font-weight:900; cursor:pointer;
-  box-shadow: var(--shadow-paper)
+  padding:12px 14px; border-radius:8px; font-weight:900; cursor:pointer;
+  box-shadow: var(--shadow-paper); min-height:44px;
 }
 
 .pal-list{ list-style:none; margin:0; padding:0; max-height:min(60vh,540px); overflow:auto }
 .pal-list li{ border-bottom:2px dashed var(--dash) }
 .pal-list a{
-  display:block; padding:14px 16px; font-weight:800; letter-spacing:.01em; color:var(--ink);
+  display:block; padding: clamp(12px, 3.5vw, 14px) 16px; font-weight:800; letter-spacing:.01em; color:var(--ink);
 }
 .pal-list a:hover,
 .pal-list a[aria-selected="true"]{
@@ -190,18 +200,17 @@ a:hover{
   font:700 12px/1 'Space Mono', monospace; color: var(--muted); background:#fffaf0
 }
 
-/* 4) HERO — 중앙 집중, 겹침 없는 마퀴 대비 ------------------------------- */
+/* 4) HERO — 중앙 집중 레이아웃 ------------------------------------------- */
 .hero{
   position: relative;
   min-height: clamp(420px, 72vh, 860px);
   display: grid; place-items: center;
   padding: clamp(18px, 7vw, 64px) 16px clamp(18px, 5vw, 48px);
-  /* 마퀴와 경계 중복을 없애기 위해 보더 제거 */
   border-bottom: none;
   background:
     radial-gradient(60% 40% at 50% 100%, rgba(174,141,116,.18), transparent 60%);
   text-align: center;
-  max-width: 1200px; margin: 0 auto;
+  max-width: var(--wrap); margin: 0 auto;
 }
 
 /* 워터마크: 타일 + 중앙 큰 로고 */
@@ -210,18 +219,18 @@ a:hover{
   position:absolute; inset:0;
   background-image: url("../images/ep1log_logo2.png");
   background-repeat: repeat;
-  background-size: clamp(140px, 16vw, 220px) auto; /* 더 자주 보이도록 작은 타일 */
+  background-size: clamp(120px, 16vw, 220px) auto;
   background-position: 0 0;
-  opacity:.025;            /* 매우 은은하게 */
+  opacity:.025;
   pointer-events:none;
   filter: saturate(.95) contrast(1.02);
 }
 .hero::after{
   content: "";
   position: absolute; inset: auto 0 6% 0; margin: 0 auto;
-  width: clamp(200px, 34vw, 420px); height: clamp(200px, 34vw, 420px);
+  width: clamp(180px, 34vw, 420px); height: clamp(180px, 34vw, 420px);
   background: url("../images/ep1log_logo2.png") center/contain no-repeat;
-  opacity: .04;            /* 중앙 로고는 살짝 더 진하게 */
+  opacity: .04;
   pointer-events: none; filter: saturate(.9) contrast(1.05);
 }
 
@@ -234,21 +243,20 @@ a:hover{
 /* 한 줄 타이틀 */
 .display{ margin:0; font-family:'Bebas Neue', system-ui }
 .display--one{
-  font-size: clamp(72px, 18vw, 200px);
+  font-size: clamp(60px, 18vw, 200px);
   line-height: .86; letter-spacing: .008em;
 }
 .display--center{ text-align:center }
 .display .outline{ color:transparent; -webkit-text-stroke: 2px var(--hair) }
 
-/* 슬로건 — 스티커(노란 테이프) 제거 */
+/* 슬로건(스티커 제거) */
 .lede{
   margin:12px 0 18px; color: var(--ink-2);
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(18px, 2.4vw, 22px);
-  line-height:1.65; position:relative;
+  font-size: clamp(17px, 2.4vw, 22px);
+  line-height:1.65;
 }
 .lede--center{ text-align:center }
-.lede--center::before{ display:none !important } /* 요청 반영 */
 
 /* CTA 3개 */
 .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px }
@@ -259,6 +267,7 @@ a:hover{
   border:3px solid var(--hair); background:#fff; color:var(--ink);
   box-shadow: 8px 8px 0 var(--hair);
   transition: transform var(--t) ease, box-shadow var(--t) ease, filter var(--t) ease;
+  min-height: 48px; /* 터치 타깃 */
 }
 .btn:hover{ transform: translate(-2px,-2px); box-shadow: 10px 10px 0 var(--hair) }
 .btn:active{ transform: translate(-1px,-1px); filter: contrast(.96) }
@@ -271,13 +280,13 @@ a:hover{
 .intro-card{
   margin-top: clamp(16px, 4vw, 28px);
   width:min(920px, 92vw);
-  margin-left:auto; margin-right:auto; /* 가운데 배치 */
+  margin-left:auto; margin-right:auto;
   border:2px solid var(--hair);
   border-radius:14px;
   background: var(--card);
   box-shadow: var(--shadow-paper);
   padding: clamp(12px, 3vw, 18px);
-  text-align:center; /* 내용 가운데 정렬 */
+  text-align:center;
   position:relative;
 }
 .intro-card::before,
@@ -295,22 +304,114 @@ a:hover{
 .intro-title{ margin:0; font-weight:900; letter-spacing:.02em; font-size:18px }
 .intro-lead{
   margin:10px auto 10px; color:var(--ink-2); line-height:1.75;
-  max-width: 68ch; /* 읽기 폭 제한 */
+  max-width: 68ch;
+  padding-inline: 4px;
 }
 
-/* 6) Social Links — 중앙 정렬 버튼형 ------------------------------------- */
+/* 6) D-Day 배지 (Intro 안, 담백 버전) ------------------------------------ */
+/* === NEXT SHOW: 모바일에서 답답함 해결 (스택 & 풀폭 카드화) =============== */
+/* 기본: 데스크톱/태블릿은 기존 느낌 유지 + 살짝 여유만 */
+.show-banner--intro{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px auto;
+  padding: 10px 14px;
+  border: 2px solid var(--hair);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: none;
+  max-width: 680px;
+  width: 100%;
+  justify-content: center;
+}
+
+.show-banner--intro .show-chip{
+  font: 900 11px/1 'Space Mono', monospace;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #06221f;
+  background: var(--chip-teal);
+  border: 2px solid var(--hair);
+  border-radius: 999px;
+  padding: 6px 10px;              /* 터치/가독성↑ */
+}
+
+.show-banner--intro #showDate{
+  font-weight: 800;
+  color: var(--ink-2);
+  letter-spacing: .01em;
+}
+
+.show-banner--intro #dday{
+  font: 900 12px/1 'Space Mono', monospace;
+  padding: 6px 10px;
+  border: 2px solid var(--hair);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+}
+
+/* --- 모바일(좁은 폭)에서는 "칩 / 날짜 / D-Day"를 세 줄로 스택 ---------- */
+@media (max-width: 560px){
+  .show-banner--intro{
+    display: flex;
+    flex-wrap: wrap;                 /* 아이템 줄바꿈은 허용… */
+    justify-content: center;
+    gap: 8px 10px;
+    padding: 12px 14px;
+    white-space: nowrap;             /* …하지만 텍스트 줄바꿈은 금지 */
+  }
+  .show-banner--intro .show-chip{
+    flex: 1 0 100%;                  /* 칩이 한 줄 통으로 차지 */
+    text-align: center;
+    padding: 6px 10px;
+  }
+  /* 날짜/구분점/D-Day가 같은 줄에서 함께 움직이도록 */
+  #showDate,
+  .show-sep,
+  #dday{
+    flex: 0 0 auto;                  /* 아이템 자체는 줄바꿈 없이 */
+    font-size: clamp(14px, 4.2vw, 16px);
+  }
+  /* 초소형 기기 대비: 전체 배지가 화면 밖으로 나가지 않게 살짝 압축 */
+  .show-banner--intro{ letter-spacing: .005em }
+}
+
+/* 초소형 폰(<=360px)에서 텍스트 줄바꿈 여유 */
+@media (max-width: 360px){
+  .show-banner--intro{
+    padding: 12px; 
+  }
+  .show-banner--intro #showDate,
+  .show-banner--intro #dday{
+    word-break: keep-all;         /* 한국어 단어 보존 */
+    white-space: normal;          /* 줄바꿈 허용 */
+    text-align: center;
+  }
+}
+
+/* 다크모드 톤 보정 (선택) */
+@media (prefers-color-scheme: dark){
+  .show-banner--intro{ background:#151312; border-color:#2b2624 }
+  .show-banner--intro #dday{ background:#1b1816 }
+}
+
+
+/* 7) Social Links — 중앙 정렬 버튼형 ------------------------------------- */
 .social-links{
   display: flex; flex-wrap: wrap; justify-content:center; gap: 12px;
   margin-top: 8px;
 }
 .social{
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 14px; border-radius: 10px;
+  padding: 12px 16px; border-radius: 10px;
   font-weight: 800; letter-spacing: .01em;
   border: 2px solid var(--hair);
   color: #fff; text-decoration: none;
   transition: transform var(--t) ease, box-shadow var(--t) ease, filter var(--t) ease, opacity var(--t) ease;
   box-shadow: var(--shadow-paper);
+  min-height: 44px; /* 터치 타깃 */
 }
 .social i{ font-size: 18px }
 .social span{ line-height: 1 }
@@ -328,11 +429,11 @@ a:hover{
   outline-offset: 3px;
 }
 
-/* 7) Marquee — 상/하단 각 1줄만 ----------------------------------------- */
+/* 8) Optional Marquee ------------------------------------------------------ */
 .marquee{
-  border-top: 2px dotted var(--dash);   /* 위쪽 줄 1개 */
-  border-bottom: 2px dotted var(--dash);/* 아래쪽 줄 1개 */
-  background: none;                     /* 짧은 선처럼 보이던 스트라이프 제거 */
+  border-top: 2px dotted var(--dash);
+  border-bottom: 2px dotted var(--dash);
+  background: none;
   overflow:hidden;
   padding-block:18px;
   margin-top: 0;
@@ -345,9 +446,9 @@ a:hover{
 @keyframes scroll{ 0%{ transform: translateX(0) } 100%{ transform: translateX(-50%) } }
 @media (max-width:560px){ .track{ animation-duration: 34s } }
 
-/* 8) Footer — 마퀴와 경계 겹침 방지 ------------------------------------- */
+/* 9) Footer --------------------------------------------------------------- */
 .footer{
-  border-top: none; /* 마퀴 하단 점선과 겹치지 않도록 제거 */
+  border-top: none;
   background: linear-gradient(180deg,#fff,#f6efe4);
 }
 .foot-inner{
@@ -355,15 +456,50 @@ a:hover{
   font: 900 12px/1 'Space Mono', monospace; color: var(--ink-2)
 }
 
-/* 9) Tiny Screens ---------------------------------------------------------- */
-@media (max-width:620px){
+/* 10) Tiny Screens & Layout Tweaks ---------------------------------------- */
+@media (max-width: 640px){
   .btn{ width:100%; text-align:center }
+  .brand-word{ display:none } /* 로고 텍스트 줄여 모바일 상단 폭 확보 */
 }
-@media (max-width:420px){
-  .brand-word{ display:none }
-  .display--one{ font-size: clamp(54px, 20vw, 120px) }
+@media (max-width: 420px){
+  .display--one{ font-size: clamp(48px, 20vw, 120px) }
+  .pal-head{ gap:8px }
+  .pal-input{ padding:10px }
+  .pal-close{ padding:10px 12px }
 }
 
-/* 10) Clean-ups ------------------------------------------------------------ */
+/* 11) Clean-ups ------------------------------------------------------------ */
 /* 임시 스티커 요소가 HTML에 남아있어도 숨김 */
 .sticker{ display:none !important }
+
+/* 12) Dark Mode (선택) ----------------------------------------------------- */
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#efeae4;
+    --ink-2:#d7cfc9;
+    --muted:#b9afa9;
+    --paper:#151312;
+    --paper-2:#141210;
+    --card:#1b1816;
+    --shadow-paper: 0 1px 0 rgba(0,0,0,.25), 0 10px 24px rgba(0,0,0,.40);
+  }
+  body{ background:
+    radial-gradient(70% 40% at 10% 0%, rgba(43,38,33,.65), transparent 60%),
+    linear-gradient(180deg, var(--paper), var(--paper-2)); }
+  .rail{ background: rgba(26,22,20,.75) }
+  .brand-btn{ background: linear-gradient(180deg,#2b2624,#1f1b19); color:#efeae4 }
+  .menu-toggle{ color:#06221f }
+  .intro-card{ background: var(--card) }
+  .palette .pal-body{ background: var(--card) }
+  .footer{ background: linear-gradient(180deg,#161312,#1b1816) }
+  .show-banner--intro{ background:#151312 }
+}
+
+/* 13) Print --------------------------------------------------------------- */
+@media print{
+  body{ background:#fff }
+  .hero::before, .hero::after,
+  .intro-card::before, .intro-card::after{ display:none }
+  .footer, .rail{ border: none; background:#fff }
+  .intro-card, .pal-body{ box-shadow:none }
+}

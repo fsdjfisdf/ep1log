@@ -101,3 +101,55 @@ palInput?.addEventListener('keydown', (e) => {
     if (link) window.location.href = link.getAttribute('href');
   }
 });
+
+// ===== NEXT SHOW / D-DAY (KST 기준)
+// 고정된 공연일 (KST 자정)
+const SHOW_ISO_KST = '2025-12-19T00:00:00+09:00';
+
+// 날짜 표기 (예: 2025.12.19 (금))
+(function setShowDateText(){
+  const el = document.getElementById('showDate');
+  if (!el) return;
+  const d = new Date(SHOW_ISO_KST);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const weekday = d.toLocaleDateString('ko-KR', { weekday: 'short', timeZone: 'Asia/Seoul' }); // (금)
+  el.textContent = `${y}.${m}.${day} (${weekday})`;
+})();
+
+// D-Day 계산 (KST 기준, 회당 1시간 갱신)
+(function ddayInit(){
+  const el = document.getElementById('dday');
+  if (!el) return;
+
+  const DAY = 24 * 60 * 60 * 1000;
+  const targetMs = Date.parse(SHOW_ISO_KST);
+
+  function update(){
+    // 현재 시각을 KST 기준으로 보정 (KST는 DST 없음 → +9시간 고정)
+    const nowKstMs = Date.now() + 9 * 60 * 60 * 1000;
+    const diff = targetMs - nowKstMs;
+
+    if (diff > 0){
+      // 아직 공연 전: 올림 처리 (하루 미만 남아도 D-1)
+      const daysLeft = Math.ceil(diff / DAY);
+      el.textContent = `D-${daysLeft}`;
+      el.classList.remove('ended');
+    } else {
+      // 공연 당일 또는 이후
+      const daysPast = Math.floor((-diff) / DAY);
+      if (daysPast === 0){
+        el.textContent = 'D-DAY';
+        el.classList.add('ended');
+      } else {
+        el.textContent = `D+${daysPast}`;
+        el.classList.add('ended');
+      }
+    }
+  }
+
+  update();
+  // 매시간 갱신 (부하 최소화)
+  setInterval(update, 60 * 60 * 1000);
+})();

@@ -1,211 +1,314 @@
 /* ==========================================================================
-   EP1LOG — Members page (Scrapbook theme, avatar on the RIGHT)
-   - 전역 styles.css 와 동일한 톤/질감
-   - 히어로(멤버) : 전역 워터마크/점선 규칙 준수
-   - 멤버 카드 : CSS Grid 로 우측 아바타 배치 (HTML 순서 변경 없이)
-   - 접근성/반응형/포커스 디테일 반영
+   EP1LOG — Members (Clean Poster Cards, refined)
+   - 스티커/테이프/사진/모달/더보기 없음
+   - 좌측 얇은 포지션 컬러 바 + 워터마크 모노그램(attr)
+   - Instagram 링크: 그라데이션 테두리(고정), 고요한 호버(회전 없음)
+   - 세심한 포커스/접근성/반응형/프린트/감쇠모션 대응
    ========================================================================== */
 
-/* 1) Hero (members) -------------------------------------------------------- */
+/* ============= Tokens & Base ============================================ */
+:root{
+  /* Theme inks & papers */
+  --ink:#1b1716;
+  --ink-weak:#4a4341;
+  --ink-mute:#756d69;
+  --paper:#fffaf2;
+  --paper-hi:#fffdf8;
+
+  /* Role accents */
+  --accent-drum:#2aa79b;
+  --accent-keys:#bfa45b;
+  --accent-guitar:#b96f4b;
+  --accent-bass:#6b7a4a;
+  --accent-vocal:#6b4a7a;
+
+  /* Layout */
+  --wrap-max:1200px;
+  --gutter:16px;
+  --radius:14px;
+  --border:2px;
+
+  /* Elevation */
+  --shadow-sm:0 1px 0 rgba(0,0,0,.04), 0 10px 24px rgba(0,0,0,.10);
+  --shadow-md:0 6px 22px rgba(0,0,0,.16);
+
+  /* Motion */
+  --dur-fast:.18s;
+  --dur:.24s;
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+
+/* 편집 중 테두리 꺾임 방지 */
+*{ box-sizing: border-box }
+
+/* ============= HERO ===================================================== */
 .member-hero{
   position: relative;
-  padding: clamp(24px, 6vw, 60px) 16px clamp(18px, 5vw, 44px);
-  border-bottom: none; /* 전역 마퀴와 줄 겹침 방지 */
-  background:
-    radial-gradient(60% 40% at 50% 100%, rgba(174,141,116,.16), transparent 60%);
-  max-width: 1200px; margin: 0 auto;
-  text-align: center;
+  padding: clamp(24px, 6vw, 60px) var(--gutter) clamp(18px, 5vw, 44px);
+  border-bottom: none;
+  background: radial-gradient(60% 40% at 50% 100%, rgba(174,141,116,.16), transparent 60%);
+  max-width: var(--wrap-max); margin: 0 auto; text-align: center;
 }
 .member-hero::before{
-  /* 배경 타일 워터마크 (은은하게) */
-  content:"";
-  position:absolute; inset:0;
+  content:""; position:absolute; inset:0;
   background-image: url("../images/ep1log_logo2.png");
-  background-repeat: repeat;
-  background-size: clamp(120px, 14vw, 200px) auto;
-  opacity: .02; pointer-events:none;
-  filter: saturate(.95) contrast(1.02);
+  background-repeat: repeat; background-size: clamp(120px, 14vw, 200px) auto;
+  opacity: .02; pointer-events:none; filter: saturate(.95) contrast(1.02);
 }
 .member-hero::after{
-  /* 중앙 강조 워터마크 */
-  content:"";
-  position:absolute; inset:auto 0 6% 0; margin:0 auto;
+  content:""; position:absolute; inset:auto 0 6% 0; margin:0 auto;
   width: clamp(160px, 28vw, 360px); height: clamp(160px, 28vw, 360px);
   background: url("../images/ep1log_logo2.png") center/contain no-repeat;
   opacity: .05; pointer-events:none;
 }
-
 .member-hero .eyebrow{
-  margin: 2px 0 10px; color:#4a4341;
-  font:900 12px/1 'Space Mono', ui-monospace;
-  letter-spacing:.22em; text-transform: uppercase;
+  margin: 2px 0 10px; color:var(--ink-weak);
+  font:900 12px/1 'Space Mono', ui-monospace; letter-spacing:.22em; text-transform: uppercase;
 }
 .member-hero .display{
   margin:0; font-family:'Bebas Neue', system-ui;
-  font-size: clamp(62px, 16vw, 180px);
-  line-height:.88; letter-spacing:.01em;
+  font-size: clamp(62px, 16vw, 180px); line-height:.88; letter-spacing:.01em;
 }
-.member-hero .display .outline{ color:transparent; -webkit-text-stroke:2px #1b1716 }
+.member-hero .display .outline{ color:transparent; -webkit-text-stroke:2px var(--ink) }
 .member-hero .lede{
-  margin:12px 0 16px; color:#4a4341;
+  margin:12px 0 16px; color:var(--ink-weak);
   font-size: clamp(17px, 2.1vw, 20px); line-height:1.7;
 }
 
-/* 버튼은 전역 .btn 변형만 사용 */
-.member-hero .cta-row{ justify-content:center }
-
-/* 2) Members Section ------------------------------------------------------- */
+/* ============= Section Frame =========================================== */
 .members-section{
-  border-top: 2px dotted #9e8f86;  /* 위쪽 줄 1개 */
-  border-bottom: 2px dotted #9e8f86;
+  border-top: var(--border) dotted #9e8f86; border-bottom: var(--border) dotted #9e8f86;
   background: linear-gradient(180deg, #faf7ef, #ffffff);
   padding: clamp(16px, 4vw, 28px) 0;
 }
 .members-head{
-  max-width:1200px; margin:0 auto 10px; padding: 0 16px 8px;
+  max-width:var(--wrap-max); margin:0 auto 10px; padding: 0 var(--gutter) 8px;
   display:flex; align-items:end; gap:10px; flex-wrap:wrap;
-  border-bottom:2px dashed #9e8f86;
+  border-bottom:var(--border) dashed #9e8f86;
 }
 .members-title{ margin:0; font-weight:900; letter-spacing:.02em; font-size:20px }
-.members-sub{ margin:0; color:#756d69; font-size:14px }
+.members-sub{ margin:0; color:var(--ink-mute); font-size:14px }
+.wrap{ max-width:var(--wrap-max); margin:0 auto; padding:0 var(--gutter) }
 
-.wrap{ max-width:1200px; margin:0 auto; padding:0 16px }
-
+/* ============= Grid ====================================================== */
 .m-grid{
-  display:grid; gap:16px;
+  display:grid; gap:var(--gutter);
   grid-template-columns: repeat(3, 1fr);
 }
-@media (max-width: 980px){
-  .m-grid{ grid-template-columns: repeat(2, 1fr) }
-}
-@media (max-width: 620px){
-  .m-grid{ grid-template-columns: 1fr }
-}
+@media (max-width: 980px){ .m-grid{ grid-template-columns: repeat(2, 1fr) } }
+@media (max-width: 620px){ .m-grid{ grid-template-columns: 1fr } }
 
-/* 3) Member Card (RIGHT avatar via CSS Grid) ------------------------------- */
+/* ============= Role Accent Mapping ====================================== */
+.role-drum{ --accent: var(--accent-drum) }
+.role-keys{ --accent: var(--accent-keys) }
+.role-guitar{ --accent: var(--accent-guitar) }
+.role-bass{ --accent: var(--accent-bass) }
+.role-vocal{ --accent: var(--accent-vocal) }
+
+/* ============= Card (Clean Poster) ====================================== */
 .mcard{
   position:relative;
-  border:2px solid #1b1716;
-  border-radius: 12px;
-  background: #fffaf2;
-  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 10px 24px rgba(0,0,0,.10);
-  padding: 14px;
-  /* Grid: 좌측 텍스트, 우측 아바타 */
-  display:grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto auto;
-  grid-template-areas:
-    "head   avatar"
-    "bio    avatar"
-    "sns    avatar";
-  column-gap: 14px;
-  row-gap: 8px;
-
-  transform: rotate(calc(var(--tilt, -0.4deg)));
-  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+  border:var(--border) solid var(--ink);
+  border-radius:var(--radius);
+  background: linear-gradient(180deg, var(--paper-hi), var(--paper));
+  box-shadow: var(--shadow-sm);
+  padding: 14px 16px 16px 16px;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease), filter var(--dur) var(--ease);
+  outline: none;
+  overflow: hidden; /* 모노그램/테두리 이펙트 잘림 방지 */
+  will-change: transform;
 }
-.mcard:hover{ transform: translateY(-2px) rotate(-0.6deg) }
-.mcard:active{ transform: translateY(-1px) rotate(-0.3deg); filter: contrast(.98) }
+.mcard:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.mcard:active{ transform: translateY(-1px) }
+.mcard:focus-visible{
+  box-shadow: 0 0 0 4px rgba(42,167,155,.22), var(--shadow-md);
+}
 
-/* 와시테이프 */
-.mcard::before,
+/* 좌측 얇은 컬러 바 */
+.mcard::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:6px;
+  border-top-left-radius:calc(var(--radius) - 2px);
+  border-bottom-left-radius:calc(var(--radius) - 2px);
+  background: var(--accent, #9e8f86);
+}
+
+/* 워터마크 모노그램(카드 오른쪽 아래) — data-initial 그대로 표기 */
 .mcard::after{
-  content:""; position:absolute; z-index:1;
-  width: 70px; height: 16px; background: #f1e4b8;
-  border:1px dashed rgba(0,0,0,.16);
-  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 10px 24px rgba(0,0,0,.10);
-}
-.mcard::before{ left: 12px; top: -10px; transform: rotate(-6deg) }
-.mcard::after{ right: 14px; top: -8px; transform: rotate(6deg) }
-
-/* Grid 영역 매핑 (HTML 순서와 무관) */
-.avatar{ grid-area: avatar }
-.mhead{ grid-area: head }
-.bio{ grid-area: bio }
-.sns{ grid-area: sns }
-
-/* 3-1) Avatar (initial chip / optional img) ------------------------------- */
-.avatar{
-  width: 76px; height: 76px; border-radius: 18px;
-  border: 2px solid #1b1716;
-  background: linear-gradient(180deg, #fff, #f7efe2);
-  box-shadow: 0 3px 14px rgba(0,0,0,.20);
-  display:grid; place-items:center;
-
-  /* 우측 정렬 */
-  align-self: start;
-  justify-self: end;
-  margin-left: 8px; /* 텍스트와 살짝 간격 */
-
-  position:relative;
-}
-.avatar::after{
   content: attr(data-initial);
-  font: 900 14px/1 'Space Mono', monospace; color:#111;
-  background: #fff;
-  padding:6px 8px; border-radius:8px; border:2px solid #1b1716;
-  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 10px 24px rgba(0,0,0,.10);
-  transform: rotate(-2deg);
-}
-.avatar.has-img{ overflow:hidden }
-.avatar.has-img::after{ display:none }
-.avatar img{ width:100%; height:100%; object-fit:cover; display:block }
-
-/* 반응형 : 모바일에선 스택 & 중앙 */
-@media (max-width: 620px){
-  .mcard{
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "head"
-      "avatar"
-      "bio"
-      "sns";
-    text-align:left;
-  }
-  .avatar{
-    justify-self: start; align-self: start;
-    margin: 4px 0 6px 0;
-  }
+  position:absolute; right:10px; bottom:6px;
+  font-family:'Bebas Neue', system-ui; font-size:56px; line-height:1;
+  color: rgba(27,23,22,.06); letter-spacing:.02em;
+  pointer-events:none; user-select:none;
+  white-space:nowrap;
 }
 
-/* 3-2) Head --------------------------------------------------------------- */
-.mhead{ margin: 2px 0 6px 0 }
-.mname{
-  margin:0; font-weight:900; letter-spacing:.02em; font-size:18px;
+/* 내용 레이아웃 */
+.head{ margin-left: 6px }
+.name{
+  margin:0; font-weight:900; letter-spacing:.01em; font-size:20px;
+  /* 포인트 라인(밑줄) — 조용히 채워짐 */
+  background: linear-gradient(0deg, var(--accent, #9e8f86), var(--accent, #9e8f86)) bottom left/0% 3px no-repeat;
+  transition: background-size var(--dur) var(--ease);
+  display:inline-block; padding-bottom:2px;
 }
-.mname .en{ font-weight:700; color:#756d69; font-size:.9em }
-.role{
-  margin:6px 0 0 0; color:#4a4341; font-size:14px; letter-spacing:.01em
+.mcard:hover .name{ background-size: 100% 3px }
+.small{ color:var(--ink-mute); font-weight:700; font-size:.9em }
+.roles{ margin:8px 0 0; display:flex; flex-wrap:wrap; gap:6px }
+.pill{
+  display:inline-block; background:#fff; color:#111; border:var(--border) solid var(--ink);
+  border-radius:999px; padding:5px 8px; font: 800 12px/1 'Space Mono', monospace;
+  box-shadow: inset 0 0 0 2px var(--accent, transparent);
+}
+.tag{
+  margin:10px 6px 8px; color:var(--ink-weak); font-size:14px; letter-spacing:.01em;
+  line-height:1.6;
+  /* 두 줄까지만, 넘치면 말줄임 (웹킷 우선) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 
-/* 3-3) Body --------------------------------------------------------------- */
-.bio{
-  margin:8px 0 6px; color:#756d69; line-height:1.7;
-}
+/* ============= Instagram Link (calm, no spin) =========================== */
+.social{ margin: 0 6px 4px }
+.sns.is-muted{ color:var(--ink-mute) }
 
-/* 3-4) SNS --------------------------------------------------------------- */
-.sns{
-  display:inline-block; margin-top:4px;
+/* 기본 캡슐 */
+.ig-mention{
+  position: relative;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #fff; color: #111; text-decoration: none;
   font: 800 12px/1 'Space Mono', monospace;
-  border:2px solid #1b1716; border-radius:999px;
-  padding:7px 9px; background:#fff; color:#111;
-  text-decoration:none;
-  transition: transform .22s ease, filter .22s ease, background .22s ease;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease);
+  isolation: isolate; /* 마스크와 섞임 방지 */
+  border: var(--border) solid var(--ink);
+  max-width: 100%;
+  white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
 }
-.sns:hover{ transform: translateY(-1px) }
-.sns:active{ transform: translateY(0); filter: contrast(.96) }
-.sns.is-muted{ color:#756d69; background:#fafafa; border-style:dashed }
+.ig-mention:hover{ transform: translateY(-1px); background:#fffdf7 }
 
-/* 4) Focus states (키보드 접근성) ----------------------------------------- */
-.mcard:focus-within{
-  box-shadow: 0 0 0 4px rgba(42,167,155,.22),
-              0 1px 0 rgba(0,0,0,.04), 0 10px 24px rgba(0,0,0,.10);
+/* 스토리 링 느낌의 고정 그라데이션 테두리 — 회전 없음 */
+.ig-mention::before{
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit;
+  padding: 2px;                           /* 테두리 두께 */
+  background: conic-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888, #f09433);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;        /* 내부는 투명, 바깥만 보이게 */
+  pointer-events: none;
+  transform: translateZ(0);               /* 렌더 안정화 */
+  opacity: .98;                           /* 살짝 차분하게 */
 }
-.sns:focus-visible{
+/* 호버 시 아주 미세한 두께 변화(회전 대신) */
+@media (prefers-reduced-motion: no-preference){
+  .ig-mention:hover::before{ padding: 3px }
+}
+
+/* 원형 링 아이콘 (기존 .ig-ring 사용 시) */
+.ig-ring{
+  width:16px; height:16px; border-radius:50%;
+  background: conic-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888, #f09433);
+  /* 도넛 모양 */
+  -webkit-mask: radial-gradient(farthest-side, transparent 55%, #000 56%);
+          mask: radial-gradient(farthest-side, transparent 55%, #000 56%);
+  flex:none;
+  transition: -webkit-mask-size var(--dur-fast) var(--ease), mask-size var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease);
+}
+@media (prefers-reduced-motion: no-preference){
+  .ig-mention:hover .ig-ring{
+    /* 회전 없이, 안쪽 구멍을 살짝 키워 얌전한 반응 */
+    -webkit-mask: radial-gradient(farthest-side, transparent 58%, #000 59%);
+            mask: radial-gradient(farthest-side, transparent 58%, #000 59%);
+    filter: saturate(1.02) contrast(1.02);
+  }
+}
+
+/* SVG 카메라 아이콘을 사용할 경우 (선택적) */
+.ig-icon{ width: 16px; height: 16px; display:block; flex: none }
+.ig-icon .stroke{
+  /* inline SVG에 class="stroke"가 있을 때 그라데이션 적용 */
+  stroke: url(#igGrad); stroke-width: 1.7; fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+/* <use href="#igIconSymbol"> 방식은 심볼에 그라데이션이 이미 들어있어 추가 스타일 불필요 */
+
+/* ============= Reveal (부드럽게, 과하지 않게) ========================== */
+.reveal{ opacity:0; transform: translateY(12px) }
+.reveal.in{ opacity:1; transform: translateY(0) }
+.reveal, .reveal.in{ transition: opacity .28s var(--ease), transform .28s var(--ease) }
+/* JS 없이도 보이도록 기본적으로는 표시되게 — 필요 시 body.no-anim로 끌 수 있음 */
+body:not(.enable-reveal) .reveal{ opacity:1; transform:none; transition:none }
+
+/* ============= Accessibility & Utilities ================================ */
+.skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
+.skip-link:focus{
+  position:fixed; left:var(--gutter); top:var(--gutter); width:auto; height:auto;
+  padding:10px 12px; background:#fff; border:var(--border) solid var(--ink); border-radius:8px; z-index:999
+}
+
+/* 링크 포커스 일관화 */
+a:focus-visible{
   outline: 3px solid rgba(42,167,155,.35);
   outline-offset: 3px;
+  border-radius:6px;
 }
 
-/* 5) Micro spacing polish -------------------------------------------------- */
-.mcard > *:first-child{ margin-top: 2px }
-.mcard > *:last-child{ margin-bottom: 2px }
+/* 긴 핸들/태그가 카드 밖으로 새지 않도록 */
+.mcard .tag,
+.ig-mention{ overflow-wrap: anywhere }
+
+/* ============= Footer ==================================================== */
+.footer{ border-top: var(--border) dotted #9e8f86; background:#fff }
+.foot-inner{
+  max-width:var(--wrap-max); margin:0 auto; padding:16px; color:var(--ink-mute);
+  display:flex; align-items:center; gap:8px
+}
+.dot{ opacity:.5 }
+
+/* ============= Motion/Contrast Preferences ============================== */
+@media (prefers-reduced-motion: reduce){
+  .mcard, .mcard:hover, .mcard:active,
+  .ig-mention, .ig-mention::before, .ig-ring,
+  .reveal, .reveal.in{
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* (선택) 다크모드 대응 — 글로벌 styles.css가 따로 있다면 조정하세요 */
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#efeae4;
+    --ink-weak:#d7cfc9;
+    --ink-mute:#b9afa9;
+    --paper:#151312;
+    --paper-hi:#1a1716;
+    --shadow-sm: 0 1px 0 rgba(0,0,0,.25), 0 10px 24px rgba(0,0,0,.40);
+    --shadow-md: 0 6px 22px rgba(0,0,0,.55);
+  }
+  .members-section{ background: linear-gradient(180deg, #161412, #1c1917) }
+  .member-hero::before, .member-hero::after{ opacity:.06 }
+  .mcard{ background: linear-gradient(180deg, var(--paper-hi), var(--paper)) }
+  .ig-mention{ background:#151312; color:#efeae4; border-color:#2b2624 }
+  .ig-mention:hover{ background:#1b1816 }
+  .skip-link:focus{ background:#151312 }
+}
+
+/* ============= Print ===================================================== */
+@media print{
+  body{ background:#fff }
+  .member-hero::before, .member-hero::after{ display:none }
+  .members-section{ background:#fff; border:none; padding:0 }
+  .members-head{ border:none }
+  .m-grid{ grid-template-columns: 1fr 1fr; gap:12px }
+  .mcard{
+    box-shadow:none; background:#fff; border-color:#000;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .ig-mention{ border-color:#000 }
+}

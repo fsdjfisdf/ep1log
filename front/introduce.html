@@ -18,58 +18,34 @@
 
   <!-- 상단 레일 -->
   <header class="rail">
-    <!-- EP1LOG: 홈으로 이동 -->
     <a href="index.html" class="brand-btn" aria-label="EP1LOG 홈">
       <span class="brand-mark" aria-hidden="true">E</span>
       <span class="brand-word">EP1LOG</span>
     </a>
-
-    <!-- MENU: 팔레트 열기 -->
-    <button
-      id="menuToggle"
-      class="menu-toggle"
-      aria-controls="palette"
-      aria-expanded="false"
-      aria-label="메뉴 열기"
-    >
+    <button id="menuToggle" class="menu-toggle" aria-controls="palette" aria-expanded="false" aria-label="메뉴 열기">
       MENU
     </button>
   </header>
 
-  <!-- MENU 팔레트 -->
-  <aside
-    id="palette"
-    class="palette"
-    aria-hidden="true"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="palInput"
-  >
+  <!-- MENU 팔레트 (옵션) -->
+  <aside id="palette" class="palette" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="palInput">
     <div class="pal-body">
       <div class="pal-head">
-        <input
-          id="palInput"
-          class="pal-input"
-          type="text"
-          placeholder="Type to jump…  ⌘/Ctrl + K"
-          aria-label="빠른 이동"
-        />
+        <input id="palInput" class="pal-input" type="text" placeholder="Type to jump…  ⌘/Ctrl + K" aria-label="빠른 이동" />
         <button id="palClose" class="pal-close" aria-label="닫기">×</button>
       </div>
-
       <ul class="pal-list" id="palList" role="listbox" aria-label="메뉴">
         <li><a href="introduce.html" aria-selected="true">→ Members</a></li>
         <li><a href="reservation.html">→ Reservation</a></li>
         <li><a href="fanboard.html">→ Fan Board</a></li>
         <li><a href="store.html">→ Goods Store</a></li>
       </ul>
-
       <p class="pal-hint">ESC to close · ↑↓ to navigate · Enter to go</p>
     </div>
   </aside>
 
   <main id="main">
-    <!-- HERO: 포스터 느낌의 섹션 -->
+    <!-- HERO -->
     <section class="poster member-hero">
       <div class="poster-col text">
         <p class="eyebrow">LINE-UP · PYEONGTAEK / KR</p>
@@ -78,43 +54,132 @@
       </div>
     </section>
 
-    <!-- MEMBERS GRID -->
+    <!-- MEMBERS — Clean Poster Cards -->
     <section class="members-section" aria-labelledby="membersTitle">
       <div class="wrap">
         <header class="members-head">
           <h2 id="membersTitle" class="members-title">Line-up</h2>
-          <p class="members-sub">Start it · Log it · End it</p>
+          <p class="members-sub">ep1log</p>
         </header>
 
-        <div class="m-grid">
-          <!-- 정현우 -->
-          <article class="mcard">
-            <header class="mhead">
-              <h3 class="mname">정현우 <span class="en">(curr)</span></h3>
-              <p class="role">보컬 · 세컨기타</p>
+        <div class="m-grid" id="memberGrid">
+          <!-- 각 카드: role-* 로 포인트 컬러, data-initial로 워터마크 텍스트 자동 표시 -->
+          <article class="mcard role-drum reveal" tabindex="0" data-initial="김성">
+            <header class="head">
+              <h3 class="name">김성태 <span class="small">(팀장)</span></h3>
+              <p class="roles"><span class="pill">드럼</span><span class="pill">리더십</span></p>
             </header>
-            <p class="bio">어쩌라고</p>
-            <a class="sns" href="https://instagram.com/curr_ioi" target="_blank" rel="noreferrer">@curr_ioi</a>
+            <p class="tag">발라드를 사랑하는 드러머</p>
+            <p class="social">
+              <a class="ig-mention" href="https://instagram.com/taetae_oovv" target="_blank" rel="noreferrer" aria-label="Instagram @taetae_oovv">
+                <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="igGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%"  stop-color="#f09433"/>
+                      <stop offset="25%" stop-color="#e6683c"/>
+                      <stop offset="50%" stop-color="#dc2743"/>
+                      <stop offset="75%" stop-color="#cc2366"/>
+                      <stop offset="100%" stop-color="#bc1888"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="4" class="stroke"/>
+                  <circle cx="12" cy="12" r="4" class="stroke"/>
+                  <circle cx="17" cy="7" r="1.2" fill="url(#igGrad)"/>
+                </svg>
+                <span class="ig-user">@taetae_oovv</span>
+              </a>
+            </p>
           </article>
 
-          <!-- 송바다 -->
-          <article class="mcard">
-            <header class="mhead">
-              <h3 class="mname">송바다</h3>
-              <p class="role">보컬 · 세컨기타 · 세컨건반</p>
+          <article class="mcard role-keys reveal" tabindex="0" data-initial="김하">
+            <header class="head">
+              <h3 class="name">김하영</h3>
+              <p class="roles"><span class="pill">메인건반</span></p>
             </header>
-            <p class="bio">개 지리는 감성보컬</p>
-            <a class="sns" href="https://instagram.com/socean970923" target="_blank" rel="noreferrer">@socean970923</a>
+            <p class="tag">술이 없으면 창백해지는 메인건반</p>
+            <p class="social">
+              <a class="ig-mention" href="https://instagram.com/hy_ch_1009" target="_blank" rel="noreferrer" aria-label="Instagram @hy_ch_1009">
+                <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="#igIconSymbol" />
+                </svg>
+                <span class="ig-user">@hy_ch_1009</span>
+              </a>
+            </p>
           </article>
 
-          <!-- 감지성 -->
-          <article class="mcard">
-            <header class="mhead">
-              <h3 class="mname">감지성</h3>
-              <p class="role">베이스</p>
+          <article class="mcard role-guitar reveal" tabindex="0" data-initial="최상">
+            <header class="head">
+              <h3 class="name">최상혁</h3>
+              <p class="roles"><span class="pill">메인기타</span></p>
             </header>
-            <p class="bio">개 힙한 베이시스트</p>
-            <span class="sns is-muted">—</span>
+            <p class="tag">프로그래머 기타리스트</p>
+            <p class="social">
+              <a class="ig-mention" href="https://instagram.com/tourdeforce_9901" target="_blank" rel="noreferrer" aria-label="Instagram @tourdeforce_9901">
+                <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="#igIconSymbol" />
+                </svg>
+                <span class="ig-user">@tourdeforce_9901</span>
+              </a>
+            </p>
+          </article>
+
+          <article class="mcard role-vocal reveal" tabindex="0" data-initial="장소">
+            <header class="head">
+              <h3 class="name">장소연</h3>
+              <p class="roles"><span class="pill">보컬</span></p>
+            </header>
+            <p class="tag">짱짱한 고음 보컬</p>
+            <p class="social"><span class="sns is-muted">—</span></p>
+          </article>
+
+          <article class="mcard role-vocal reveal" tabindex="0" data-initial="정현">
+            <header class="head">
+              <h3 class="name">정현우 <span class="small">(curr)</span></h3>
+              <p class="roles"><span class="pill">보컬</span><span class="pill">세컨기타</span></p>
+            </header>
+            <p class="tag">어쩌라고</p>
+            <p class="social">
+              <a class="ig-mention" href="https://instagram.com/curr_ioi" target="_blank" rel="noreferrer" aria-label="Instagram @curr_ioi">
+                <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="#igIconSymbol" />
+                </svg>
+                <span class="ig-user">@curr_ioi</span>
+              </a>
+            </p>
+          </article>
+
+          <article class="mcard role-vocal reveal" tabindex="0" data-initial="송바">
+            <header class="head">
+              <h3 class="name">송바다</h3>
+              <p class="roles"><span class="pill">보컬</span><span class="pill">세컨기타</span></p>
+            </header>
+            <p class="tag">개 미친 감성 보컬</p>
+            <p class="social">
+              <a class="ig-mention" href="https://instagram.com/socean970923" target="_blank" rel="noreferrer" aria-label="Instagram @socean970923">
+                <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="#igIconSymbol" />
+                </svg>
+                <span class="ig-user">@socean970923</span>
+              </a>
+            </p>
+          </article>
+
+          <article class="mcard role-bass reveal" tabindex="0" data-initial="감지">
+            <header class="head">
+              <h3 class="name">감지성</h3>
+              <p class="roles"><span class="pill">베이스</span></p>
+            </header>
+            <p class="tag">개 잘생긴 베이스</p>
+            <p class="social"><span class="sns is-muted">—</span></p>
+          </article>
+
+          <article class="mcard role-keys reveal" tabindex="0" data-initial="박지">
+            <header class="head">
+              <h3 class="name">박지원</h3>
+              <p class="roles"><span class="pill">세컨건반</span></p>
+            </header>
+            <p class="tag">행님</p>
+            <p class="social"><span class="sns is-muted">—</span></p>
           </article>
         </div>
       </div>
@@ -129,9 +194,26 @@
     </div>
   </footer>
 
-  <!-- 글로벌 스크립트 -->
-  <script src="js/app.js"></script>
-  <!-- 이 페이지 전용 스크립트 -->
-  <script src="js/introduce.js"></script>
+  <!-- 스크립트 (사이트 전역/페이지용이 있으면 유지) -->
+  <script src="js/app.js" defer></script>
+  <script src="js/introduce.js" defer></script>
+
+  <!-- SVG 재사용 심볼 (인스타 아이콘 그라데이션 정의) -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="igGradSymbol" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"  stop-color="#f09433"/>
+        <stop offset="25%" stop-color="#e6683c"/>
+        <stop offset="50%" stop-color="#dc2743"/>
+        <stop offset="75%" stop-color="#cc2366"/>
+        <stop offset="100%" stop-color="#bc1888"/>
+      </linearGradient>
+      <symbol id="igIconSymbol" viewBox="0 0 24 24">
+        <rect x="3.5" y="3.5" width="17" height="17" rx="4" fill="none" stroke="url(#igGradSymbol)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="12" cy="12" r="4" fill="none" stroke="url(#igGradSymbol)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="17" cy="7" r="1.2" fill="url(#igGradSymbol)"/>
+      </symbol>
+    </defs>
+  </svg>
 </body>
 </html>

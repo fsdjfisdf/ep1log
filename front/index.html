@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EP1LOG — Scrapbook Theme</title>
+  <title>EP1LOG — Main</title>
 
   <!-- 타이포: 디스플레이 + 산세리프 + 모노 -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -56,12 +56,16 @@
       <!-- 슬로건 -->
       <p class="lede lede--center">Start it. Log it. End it.</p>
 
+      <!-- NEXT SHOW / D-DAY -->
+
+
       <!-- CTA 3개: 멤버소개 / 예약 / 팬보드 -->
       <nav class="cta-row cta-row--center" aria-label="주요 바로가기">
         <a class="btn btn--primary" href="introduce.html" aria-label="멤버 소개">MEMBERS</a>
         <a class="btn btn--accent"  href="reservation.html" aria-label="예약">RESERVATION</a>
         <a class="btn btn--ghost"   href="fanboard.html" aria-label="팬보드">FAN BOARD</a>
       </nav>
+      
 
       <!-- 팀 소개 + SNS -->
 <section class="intro-card" aria-labelledby="introTitle">
@@ -69,15 +73,23 @@
     <h2 id="introTitle" class="intro-title">About EP1LOG</h2>
   </header>
   <p class="intro-lead">
-    EP1LOG는 시작하고(EP1), 기록하고(LOG), 어쩌고 저쩌고 BTS, 봉준호, 손흥민, ep1log Let's go
+    EP1LOG는 시작하고(EP1), 기록하고(LOG), BTS, 봉준호, 손흥민, ep1log Let's go
   </p>
+
+  <div class="show-banner show-banner--intro" role="status" aria-live="polite">
+  <span class="show-chip">NEXT CONCERT</span>
+  <time id="showDate" datetime="2025-12-19">2025.12.19 (금)</time>
+  <span class="show-sep" aria-hidden="true">•</span>
+  <strong class="dday" id="dday">D-123</strong>
+</div>
+  
 
   <!-- 소셜 링크 -->
   <div class="social-links" role="group" aria-label="소셜 링크">
     <a class="social social--yt" href="https://www.youtube.com/@ep1log" target="_blank" rel="noopener noreferrer" aria-label="YouTube로 이동">
       <i class="fab fa-youtube" aria-hidden="true"></i><span>YouTube</span>
     </a>
-    <a class="social social--ig" href="https://www.instagram.com/ep1log" target="_blank" rel="noopener noreferrer" aria-label="Instagram으로 이동">
+    <a class="social social--ig" href="https://www.instagram.com/ep1_log" target="_blank" rel="noopener noreferrer" aria-label="Instagram으로 이동">
       <i class="fab fa-instagram" aria-hidden="true"></i><span>Instagram</span>
     </a>
   </div>
