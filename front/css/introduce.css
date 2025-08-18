@@ -281,23 +281,7 @@ a:focus-visible{
 }
 
 /* (선택) 다크모드 대응 — 글로벌 styles.css가 따로 있다면 조정하세요 */
-@media (prefers-color-scheme: dark){
-  :root{
-    --ink:#efeae4;
-    --ink-weak:#d7cfc9;
-    --ink-mute:#b9afa9;
-    --paper:#151312;
-    --paper-hi:#1a1716;
-    --shadow-sm: 0 1px 0 rgba(0,0,0,.25), 0 10px 24px rgba(0,0,0,.40);
-    --shadow-md: 0 6px 22px rgba(0,0,0,.55);
-  }
-  .members-section{ background: linear-gradient(180deg, #161412, #1c1917) }
-  .member-hero::before, .member-hero::after{ opacity:.06 }
-  .mcard{ background: linear-gradient(180deg, var(--paper-hi), var(--paper)) }
-  .ig-mention{ background:#151312; color:#efeae4; border-color:#2b2624 }
-  .ig-mention:hover{ background:#1b1816 }
-  .skip-link:focus{ background:#151312 }
-}
+
 
 /* ============= Print ===================================================== */
 @media print{

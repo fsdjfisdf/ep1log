@@ -391,11 +391,7 @@ a:hover{
   }
 }
 
-/* 다크모드 톤 보정 (선택) */
-@media (prefers-color-scheme: dark){
-  .show-banner--intro{ background:#151312; border-color:#2b2624 }
-  .show-banner--intro #dday{ background:#1b1816 }
-}
+
 
 
 /* 7) Social Links — 중앙 정렬 버튼형 ------------------------------------- */
@@ -472,28 +468,7 @@ a:hover{
 /* 임시 스티커 요소가 HTML에 남아있어도 숨김 */
 .sticker{ display:none !important }
 
-/* 12) Dark Mode (선택) ----------------------------------------------------- */
-@media (prefers-color-scheme: dark){
-  :root{
-    --ink:#efeae4;
-    --ink-2:#d7cfc9;
-    --muted:#b9afa9;
-    --paper:#151312;
-    --paper-2:#141210;
-    --card:#1b1816;
-    --shadow-paper: 0 1px 0 rgba(0,0,0,.25), 0 10px 24px rgba(0,0,0,.40);
-  }
-  body{ background:
-    radial-gradient(70% 40% at 10% 0%, rgba(43,38,33,.65), transparent 60%),
-    linear-gradient(180deg, var(--paper), var(--paper-2)); }
-  .rail{ background: rgba(26,22,20,.75) }
-  .brand-btn{ background: linear-gradient(180deg,#2b2624,#1f1b19); color:#efeae4 }
-  .menu-toggle{ color:#06221f }
-  .intro-card{ background: var(--card) }
-  .palette .pal-body{ background: var(--card) }
-  .footer{ background: linear-gradient(180deg,#161312,#1b1816) }
-  .show-banner--intro{ background:#151312 }
-}
+
 
 /* 13) Print --------------------------------------------------------------- */
 @media print{
