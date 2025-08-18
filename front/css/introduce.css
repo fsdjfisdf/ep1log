@@ -3,7 +3,8 @@
    - 스티커/테이프/사진/모달/더보기 없음
    - 좌측 얇은 포지션 컬러 바 + 워터마크 모노그램(attr)
    - Instagram 링크: 그라데이션 테두리(고정), 고요한 호버(회전 없음)
-   - 세심한 포커스/접근성/반응형/프린트/감쇠모션 대응
+   - YouTube / SoundCloud 칩 추가
+   - 포커스/접근성/반응형/프린트/감쇠모션 대응
    ========================================================================== */
 
 /* ============= Tokens & Base ============================================ */
@@ -170,78 +171,74 @@
   -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 
-/* ============= Instagram Link (calm, no spin) =========================== */
-.social{ margin: 0 6px 4px }
+/* ============= Social row & chips ======================================= */
+.social{
+  margin: 0 6px 6px;
+  display:flex; flex-wrap:wrap; gap:8px;
+}
 .sns.is-muted{ color:var(--ink-mute) }
 
-/* 기본 캡슐 */
-.ig-mention{
+/* 공통 캡슐 톤 (IG/YT/SC) */
+.ig-mention, .yt-mention, .sc-mention{
   position: relative;
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: #fff; color: #111; text-decoration: none;
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:#fff; color:#111; text-decoration:none;
   font: 800 12px/1 'Space Mono', monospace;
-  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease);
-  isolation: isolate; /* 마스크와 섞임 방지 */
   border: var(--border) solid var(--ink);
-  max-width: 100%;
-  white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease);
+  max-width:100%; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;
 }
-.ig-mention:hover{ transform: translateY(-1px); background:#fffdf7 }
+.ig-mention:hover, .yt-mention:hover, .sc-mention:hover{
+  transform: translateY(-1px); background:#fffdf7;
+}
 
-/* 스토리 링 느낌의 고정 그라데이션 테두리 — 회전 없음 */
+/* ============= Instagram (고정 링, NO spin) ============================= */
 .ig-mention::before{
   content: "";
   position: absolute; inset: 0; border-radius: inherit;
-  padding: 2px;                           /* 테두리 두께 */
+  padding: 2px; /* 테두리 두께 */
   background: conic-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888, #f09433);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
-          mask-composite: exclude;        /* 내부는 투명, 바깥만 보이게 */
+          mask-composite: exclude; /* 내부 투명, 외곽만 보이게 */
   pointer-events: none;
-  transform: translateZ(0);               /* 렌더 안정화 */
-  opacity: .98;                           /* 살짝 차분하게 */
-}
-/* 호버 시 아주 미세한 두께 변화(회전 대신) */
-@media (prefers-reduced-motion: no-preference){
-  .ig-mention:hover::before{ padding: 3px }
-}
-
-/* 원형 링 아이콘 (기존 .ig-ring 사용 시) */
-.ig-ring{
-  width:16px; height:16px; border-radius:50%;
-  background: conic-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888, #f09433);
-  /* 도넛 모양 */
-  -webkit-mask: radial-gradient(farthest-side, transparent 55%, #000 56%);
-          mask: radial-gradient(farthest-side, transparent 55%, #000 56%);
-  flex:none;
-  transition: -webkit-mask-size var(--dur-fast) var(--ease), mask-size var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease);
+  transform: translateZ(0);
+  opacity: .98;
 }
 @media (prefers-reduced-motion: no-preference){
-  .ig-mention:hover .ig-ring{
-    /* 회전 없이, 안쪽 구멍을 살짝 키워 얌전한 반응 */
-    -webkit-mask: radial-gradient(farthest-side, transparent 58%, #000 59%);
-            mask: radial-gradient(farthest-side, transparent 58%, #000 59%);
-    filter: saturate(1.02) contrast(1.02);
-  }
+  .ig-mention:hover::before{ padding: 3px } /* 회전 대신 두께 변화 */
 }
-
-/* SVG 카메라 아이콘을 사용할 경우 (선택적) */
-.ig-icon{ width: 16px; height: 16px; display:block; flex: none }
+.ig-icon{ width:16px; height:16px; display:block; flex:none }
 .ig-icon .stroke{
   /* inline SVG에 class="stroke"가 있을 때 그라데이션 적용 */
   stroke: url(#igGrad); stroke-width: 1.7; fill: none; stroke-linecap: round; stroke-linejoin: round;
 }
-/* <use href="#igIconSymbol"> 방식은 심볼에 그라데이션이 이미 들어있어 추가 스타일 불필요 */
+
+/* ============= YouTube =================================================== */
+.yt-icon{ width:16px; height:16px; display:block; flex:none }
+.yt-icon .fill{ fill:#ff0000 }      /* YT 브랜드 레드 */
+.yt-label{ font-weight:900; letter-spacing:.01em }
+
+/* ============= SoundCloud =============================================== */
+.sc-icon{ width:16px; height:16px; display:block; flex:none }
+.sc-icon .fill{ fill:#ff7700 }      /* SC 브랜드 오렌지 */
+.sc-label{ font-weight:900; letter-spacing:.01em }
+
+/* 모바일에서도 칩 텍스트는 한 줄 유지 */
+@media (max-width: 560px){
+  .social{ gap:6px }
+  .ig-mention, .yt-mention, .sc-mention{ white-space:nowrap }
+}
 
 /* ============= Reveal (부드럽게, 과하지 않게) ========================== */
 .reveal{ opacity:0; transform: translateY(12px) }
 .reveal.in{ opacity:1; transform: translateY(0) }
 .reveal, .reveal.in{ transition: opacity .28s var(--ease), transform .28s var(--ease) }
-/* JS 없이도 보이도록 기본적으로는 표시되게 — 필요 시 body.no-anim로 끌 수 있음 */
+/* JS 없이도 보이도록 기본적으로 표시 — 필요 시 body.no-anim로 끌 수 있음 */
 body:not(.enable-reveal) .reveal{ opacity:1; transform:none; transition:none }
 
 /* ============= Accessibility & Utilities ================================ */
@@ -260,7 +257,7 @@ a:focus-visible{
 
 /* 긴 핸들/태그가 카드 밖으로 새지 않도록 */
 .mcard .tag,
-.ig-mention{ overflow-wrap: anywhere }
+.ig-mention, .yt-mention, .sc-mention{ overflow-wrap: anywhere }
 
 /* ============= Footer ==================================================== */
 .footer{ border-top: var(--border) dotted #9e8f86; background:#fff }
@@ -273,15 +270,13 @@ a:focus-visible{
 /* ============= Motion/Contrast Preferences ============================== */
 @media (prefers-reduced-motion: reduce){
   .mcard, .mcard:hover, .mcard:active,
-  .ig-mention, .ig-mention::before, .ig-ring,
+  .ig-mention, .ig-mention::before, .ig-icon,
+  .yt-mention, .yt-icon, .sc-mention, .sc-icon,
   .reveal, .reveal.in{
     transition: none !important;
     transform: none !important;
   }
 }
-
-/* (선택) 다크모드 대응 — 글로벌 styles.css가 따로 있다면 조정하세요 */
-
 
 /* ============= Print ===================================================== */
 @media print{
@@ -294,5 +289,5 @@ a:focus-visible{
     box-shadow:none; background:#fff; border-color:#000;
     break-inside: avoid; page-break-inside: avoid;
   }
-  .ig-mention{ border-color:#000 }
+  .ig-mention, .yt-mention, .sc-mention{ border-color:#000 }
 }
